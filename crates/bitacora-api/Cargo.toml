@@ -1,0 +1,10 @@
+[package]
+name = "bitacora-api"
+version = "0.1.0"
+edition = "2021"
+description = "HTTP API server for Bitacora"
+
+[dependencies]
+bitacora-core = { path = "../bitacora-core" }
+tokio = { workspace = true }
+serde = { workspace = true }

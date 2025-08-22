@@ -1,0 +1,43 @@
+# Configuración de Producción - Bitacora V1.0
+
+[server]
+host = "0.0.0.0"
+port = 8080
+workers = 8
+
+[database]
+type = "mongodb"
+
+[database.mongodb]
+uri = "${MONGODB_CONNECTION_STRING}"
+database_name = "bitacora_prod"
+max_connections = 200
+connect_timeout = 10
+idle_timeout = 300
+
+[database.sqlite]
+path = "/app/data/bitacora_fallback.db"
+max_connections = 5
+
+[logging]
+level = "info"
+format = "json"
+output = "file"
+file_path = "/app/logs/bitacora.log"
+
+[features]
+admin_api = true
+health_checks = true
+metrics = true
+telemetry = true
+
+[security]
+cors_enabled = true
+cors_origins = ["https://yourdomain.com"]
+rate_limiting = true
+api_key_required = true
+jwt_secret = "${JWT_SECRET}"
+
+[copilot_integration]
+enabled = true
+webhook_secret = "${COPILOT_WEBHOOK_SECRET}"
