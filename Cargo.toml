@@ -1,9 +1,11 @@
 [workspace]
 members = [
     "crates/bitacora-core",
-    "crates/bitacora-templates", 
-    "crates/bitacora-api",
+    "crates/bitacora-config",
+    "crates/bitacora-templates",
+    "crates/bitacora-storage",
     "crates/bitacora-backup",
+    "crates/bitacora-api",
 ]
 resolver = "2"
 

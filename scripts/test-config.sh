@@ -1,7 +1,71 @@
 #!/bin/bash
-# Script para testing de configuración de base de datos
+
+# Test Configuration System Script
+# This script tests the bitacora-config system in different scenarios
 
 set -e
+
+echo "🔧 Testing Bitacora Configuration System"
+echo "======================================="
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+echo -e "${YELLOW}Test 1: Compilation check${NC}"
+cargo check --package bitacora-config --quiet || {
+    echo -e "${RED}✗ Configuration compilation failed${NC}"
+    exit 1
+}
+echo -e "${GREEN}✓ Configuration compilation passed${NC}"
+
+echo -e "${YELLOW}Test 2: Unit tests${NC}"
+cargo test --package bitacora-config --quiet || {
+    echo -e "${RED}✗ Configuration unit tests failed${NC}"
+    exit 1
+}
+echo -e "${GREEN}✓ Configuration unit tests passed${NC}"
+
+echo -e "${YELLOW}Test 3: Environment configs validation${NC}"
+for env in development staging production; do
+    echo "  Checking $env.toml..."
+    if [[ ! -f "crates/bitacora-config/config/$env.toml" ]]; then
+        echo -e "${RED}✗ Missing $env.toml${NC}"
+        exit 1
+    fi
+done
+echo -e "${GREEN}✓ All environment configs present${NC}"
+
+echo -e "${YELLOW}Test 4: Config structure validation${NC}"
+required_files=(
+    "crates/bitacora-config/src/lib.rs"
+    "crates/bitacora-config/src/database.rs"
+    "crates/bitacora-config/src/server.rs"
+    "crates/bitacora-config/src/logging.rs"
+    "crates/bitacora-config/src/integration.rs"
+)
+
+for file in "${required_files[@]}"; do
+    if [[ ! -f "$file" ]]; then
+        echo -e "${RED}✗ Missing required file: $file${NC}"
+        exit 1
+    fi
+done
+echo -e "${GREEN}✓ All required config files present${NC}"
+
+echo ""
+echo -e "${GREEN}🎉 All configuration tests passed!${NC}"
+echo ""
+echo -e "${YELLOW}Configuration System Summary:${NC}"
+echo "  ✓ Type-safe configuration with validation"
+echo "  ✓ Environment-specific configs (dev, staging, prod)"
+echo "  ✓ Environment variable overrides supported"
+echo "  ✓ Database connection string generation"
+echo "  ✓ Server, logging, and integration configs"
+echo ""
+echo -e "${GREEN}✅ Configuration system is ready for Storage Layer integration.${NC}"
 
 echo "🔧 Bitacora V1.0 - Database Configuration Tester"
 echo "==============================================="
