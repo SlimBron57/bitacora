@@ -4,8 +4,17 @@ members = [
     "crates/bitacora-config",
     "crates/bitacora-templates",
     "crates/bitacora-storage",
+    "crates/bitacora-git",
+    "crates/bitacora-session",
     "crates/bitacora-backup",
     "crates/bitacora-api",
+    # Próximo a implementar
+    "crates/bitacora-commands",
+    # Observability & Monitoring Systems (to be implemented)
+    # "crates/monitor",
+    # "crates/reporter/core",
+    # "crates/reporter/production", 
+    # "crates/reporter/dev",
 ]
 resolver = "2"
 
