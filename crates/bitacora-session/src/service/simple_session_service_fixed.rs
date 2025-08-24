@@ -247,7 +247,7 @@ impl SessionService for SessionServiceImpl {
         })
     }
 
-    async fn update_session_state(
+    async fn set_session_state(
         &self,
         _session_id: &SessionId,
         _state: SessionState,
@@ -293,20 +293,18 @@ impl SessionService for SessionServiceImpl {
         Ok(Vec::new())
     }
 
-    async fn update_action(
+    async fn remove_action(
         &self,
         _session_id: &SessionId,
         _action_id: &ActionId,
-        _action: Action,
     ) -> std::result::Result<(), SessionError> {
         Err(SessionError::ConfigurationError {
             message: "Action management not implemented in simplified version".to_string(),
         })
     }
 
-    async fn subscribe_events(
+    async fn subscribe_to_events(
         &self,
-        _session_id: &SessionId,
     ) -> std::result::Result<tokio::sync::mpsc::Receiver<SessionEvent>, SessionError> {
         Err(SessionError::ConfigurationError {
             message: "Event system not implemented in simplified version".to_string(),
@@ -316,7 +314,6 @@ impl SessionService for SessionServiceImpl {
     async fn get_session_events(
         &self,
         _session_id: &SessionId,
-        _limit: Option<usize>,
     ) -> std::result::Result<Vec<SessionEvent>, SessionError> {
         Ok(Vec::new())
     }

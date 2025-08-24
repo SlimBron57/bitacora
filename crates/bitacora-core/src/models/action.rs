@@ -5,6 +5,9 @@ use chrono::{DateTime, Utc};
 use uuid::Uuid;
 use std::collections::HashMap;
 
+/// Type alias for action identifiers
+pub type ActionId = Uuid;
+
 /// Representa una acción específica realizada dentro de una sesión de trabajo
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Action {
