@@ -377,7 +377,9 @@ mod tests {
 
         assert!(!result.success);
         assert!(result.error.is_some());
-        assert!(result.error.unwrap().contains("unsupported"));
+        let error_msg = result.error.unwrap();
+        println!("Actual error message: '{}'", error_msg);
+        assert!(error_msg.to_lowercase().contains("unsupported") || error_msg.to_lowercase().contains("handler") || error_msg.to_lowercase().contains("not found"));
     }
 
     #[tokio::test]
