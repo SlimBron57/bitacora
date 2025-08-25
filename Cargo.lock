@@ -622,6 +622,7 @@ dependencies = [
  "bitacora-config",
  "bitacora-core",
  "bitacora-git",
+ "bitacora-records",
  "bitacora-session",
  "bitacora-storage",
  "bitacora-templates",
@@ -684,6 +685,22 @@ dependencies = [
  "tokio",
  "tokio-test",
  "tracing",
+]
+
+[[package]]
+name = "bitacora-records"
+version = "0.1.0"
+dependencies = [
+ "async-trait",
+ "bitacora-core",
+ "bitacora-storage",
+ "chrono",
+ "serde_json",
+ "thiserror 1.0.69",
+ "tokio",
+ "tokio-test",
+ "tracing",
+ "uuid",
 ]
 
 [[package]]

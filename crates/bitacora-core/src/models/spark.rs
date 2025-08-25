@@ -86,7 +86,7 @@ pub enum ImportanceLevel {
 }
 
 /// Estado de seguimiento del spark
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub enum SparkStatus {
     /// Recién capturado
     Captured,

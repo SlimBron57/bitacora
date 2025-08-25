@@ -6,6 +6,7 @@ members = [
     "crates/bitacora-storage",
     "crates/bitacora-git",
     "crates/bitacora-session",
+    "crates/bitacora-records",
     "crates/bitacora-backup",
     "crates/bitacora-api",
     # Próximo a implementar

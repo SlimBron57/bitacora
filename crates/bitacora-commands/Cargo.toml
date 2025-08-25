@@ -10,6 +10,7 @@ license = "MIT OR Apache-2.0"
 bitacora-core = { path = "../bitacora-core" }
 bitacora-config = { path = "../bitacora-config" }
 bitacora-git = { path = "../bitacora-git" }
+bitacora-records = { path = "../bitacora-records" }
 bitacora-session = { path = "../bitacora-session" }
 bitacora-storage = { path = "../bitacora-storage" }
 bitacora-templates = { path = "../bitacora-templates" }
