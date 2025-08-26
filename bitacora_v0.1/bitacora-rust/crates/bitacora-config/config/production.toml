@@ -1,0 +1,115 @@
+# Production environment configuration
+environment = "production"
+
+[server]
+host = "0.0.0.0"
+port = 3000
+cors_enabled = true
+cors_origins = [
+    "https://bitacora.example.com",
+    "https://app.bitacora.example.com"
+]
+
+# Rate limiting is more restrictive in production
+[server.rate_limit]
+enabled = true
+requests_per_minute = 60
+burst = 10
+window_seconds = 60
+
+[database]
+provider = "mongodb"
+
+[database.mongodb]
+# All sensitive values should be set via environment variables:
+# BITACORA_DATABASE__MONGODB__HOST
+# BITACORA_DATABASE__MONGODB__PORT
+# BITACORA_DATABASE__MONGODB__DATABASE
+# BITACORA_DATABASE__MONGODB__USERNAME
+# BITACORA_DATABASE__MONGODB__PASSWORD
+# BITACORA_DATABASE__MONGODB__AUTH_SOURCE
+timeout_seconds = 30
+tls = true
+
+[database.pool]
+max_connections = 50
+min_connections = 5
+connection_timeout = 30
+idle_timeout = 600
+
+[logging]
+level = "info"
+format = "json"
+
+[logging.file]
+path = "/var/log/bitacora/bitacora.log"
+rotate = true
+max_size = 104857600  # 100MB
+max_files = 30
+compress = true
+
+[logging.performance]
+enabled = true
+slow_request_threshold_ms = 2000
+database_queries = false
+external_calls = true
+include_sizes = false
+
+# Production logging filters - reduce noise
+[[logging.filters]]
+target = "mongodb"
+level = "error"
+
+[[logging.filters]]
+target = "hyper"
+level = "error"
+
+[[logging.filters]]
+target = "tower"
+level = "error"
+
+[[logging.filters]]
+target = "reqwest"
+level = "error"
+
+[integration.backup]
+enabled = true
+frequency_hours = 6  # More frequent in production
+
+[integration.backup.local]
+enabled = true
+path = "/var/backups/bitacora"
+retention_days = 7  # Keep local backups for 1 week
+
+[integration.backup.encryption]
+enabled = true
+# Encryption key should be set via: BITACORA_INTEGRATION__BACKUP__ENCRYPTION__KEY
+
+# Production S3 backup configuration
+# All values should be set via environment variables:
+# [integration.backup.s3]
+# endpoint = "https://s3.amazonaws.com"
+# region = "us-east-1"
+# bucket = "bitacora-production-backups"
+# access_key = "..."  # BITACORA_INTEGRATION__BACKUP__S3__ACCESS_KEY
+# secret_key = "..."  # BITACORA_INTEGRATION__BACKUP__S3__SECRET_KEY
+# prefix = "prod/"
+
+[integration.notifications]
+enabled = true
+# Email notifications for critical issues
+# [integration.notifications.email]
+# smtp_server = "smtp.example.com"
+# smtp_port = 587
+# username = "..."     # BITACORA_INTEGRATION__NOTIFICATIONS__EMAIL__USERNAME
+# password = "..."     # BITACORA_INTEGRATION__NOTIFICATIONS__EMAIL__PASSWORD
+# from = "bitacora@example.com"
+# to = ["admin@example.com", "team@example.com"]
+# tls = true
+
+[integration.monitoring]
+enabled = true
+# [integration.monitoring.prometheus]
+# endpoint = "/metrics"
+# prefix = "bitacora_"
+# interval = 30

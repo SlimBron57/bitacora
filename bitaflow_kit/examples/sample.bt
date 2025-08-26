@@ -1,0 +1,15 @@
+---
+alias: BITA-TPL-DEMO-v1
+name: Demo
+slug: demo
+kind: TPL
+version: 1
+---
+
+# Título de ejemplo
+**Objetivo:** {{objetivo}}
+
+Diagrama:
+```
+A ↦ (B + C) ↦ D
+```

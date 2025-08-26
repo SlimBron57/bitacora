@@ -1,0 +1,55 @@
+# Base configuration for Bitacora V1.0
+# This file contains common settings shared across all environments
+
+[server]
+max_body_size = 16777216  # 16MB
+request_timeout = 30
+keepalive = 60
+workers = 0  # Auto-detect
+
+[server.rate_limit]
+enabled = true
+requests_per_minute = 100
+burst = 20
+window_seconds = 60
+
+[database.pool]
+max_connections = 10
+min_connections = 1
+connection_timeout = 30
+idle_timeout = 300
+
+[logging]
+console = true
+format = "pretty"
+
+[logging.fields]
+timestamp = true
+level = true
+module = true
+location = false
+thread_id = false
+request_id = true
+user_id = true
+session_id = true
+
+[integration.git]
+enabled = true
+auto_commit_threshold = 5
+auto_push_threshold = 3
+branch_pattern = "YYYYMMDD-HHMM_{topic}"
+commit_message_template = "Bitacora session: {session_id} - {summary}"
+
+[integration.backup]
+enabled = true
+frequency_hours = 24
+
+[integration.backup.local]
+enabled = true
+path = "./backups"
+retention_days = 30
+compress = true
+
+[integration.backup.encryption]
+enabled = true
+key_derivation = "pbkdf2"

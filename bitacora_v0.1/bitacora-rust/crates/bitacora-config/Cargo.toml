@@ -1,0 +1,20 @@
+[package]
+name = "bitacora-config"
+version = "0.1.0"
+edition = "2021"
+description = "Configuration management for Bitacora V1.0"
+license = "MIT"
+
+[dependencies]
+bitacora-core = { path = "../bitacora-core" }
+serde = { version = "1.0", features = ["derive"] }
+toml = "0.8"
+figment = { version = "0.10", features = ["toml", "env"] }
+thiserror = "1.0"
+url = { version = "2.0", features = ["serde"] }
+tracing = "0.1"
+num_cpus = "1.0"
+
+[dev-dependencies]
+tempfile = "3.0"
+tokio-test = "0.4"

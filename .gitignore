@@ -1,0 +1,126 @@
+# Rust compilation artifacts
+/target/
+**/target/
+Cargo.lock
+*.pdb
+
+# Debug builds
+debug/
+release/
+
+# Test artifacts
+/test-results/
+/test-outputs/
+
+# IDE files
+.vscode/settings.json
+.vscode/launch.json
+.vscode/tasks.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+*.pid
+*.seed
+*.coverage
+.nyc_output
+
+# Environment files
+.env
+.env.local
+.env.production
+.env.staging
+
+# Cache directories
+.cache/
+cache/
+**/cache/
+
+# Build outputs
+dist/
+build/
+out/
+
+# Node.js (for VS Code extension)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+logs/
+*.log
+**/logs/
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Test coverage
+coverage/
+*.lcov
+
+# Documentation build
+docs/_build/
+site/
+
+# Local configuration
+config/local.json
+config/development.json
+
+# Personal notes and drafts
+drafts/
+personal/
+*.draft
+
+# Archive files
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Bitacora specific
+/data/
+/migrations/applied/
+/tmp/
+**/tmp/
+session_*.json
+*.session
+
+# Rust specific additions
+**/*.rs.bk
+*.orig
+.cargo/config
+
+# WebAssembly
+*.wasm
+pkg/
+
+# Profiling
+perf.data
+perf.data.old
+callgrind.out.*

@@ -1,0 +1,43 @@
+[package]
+name = "bitacora-api"
+version = "0.1.0"
+edition = "2021"
+description = "HTTP API server for Bitacora - REST endpoints for PROJECT→TOPIC→ACTION + SPARK"
+
+[[bin]]
+name = "bitacora-api"
+path = "src/main.rs"
+
+[[bin]]
+name = "simple-api"
+path = "src/main_simple.rs"
+
+[[bin]]
+name = "minimal-api"
+path = "src/main_minimal.rs"
+
+[dependencies]
+bitacora-core = { path = "../bitacora-core" }
+bitacora-storage = { path = "../bitacora-storage" }
+bitacora-records = { path = "../bitacora-records" }
+# bitacora-commands = { path = "../bitacora-commands" }  # Temporalmente deshabilitado por errores de compilación
+bitacora-session = { path = "../bitacora-session" }
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = "0.3"
+async-trait = { workspace = true }
+
+# Web framework
+axum = "0.7"
+tower = "0.4"
+tower-http = { version = "0.5", features = ["cors", "trace", "timeout"] }
+hyper = { version = "1.0", features = ["full"] }
+
+# API documentation
+utoipa = { version = "4.0", features = ["axum_extras", "chrono", "uuid"] }
+utoipa-swagger-ui = { version = "4.0", features = ["axum"] }

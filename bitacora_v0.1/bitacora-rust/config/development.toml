@@ -1,0 +1,49 @@
+# Configuración de Desarrollo - Bitacora V1.0
+
+[server]
+host = "0.0.0.0"
+port = 8080
+workers = 4
+
+[database]
+# Tipo: "mongodb", "sqlite", "postgresql" 
+type = "mongodb"
+
+[database.mongodb]
+uri = "${MONGODB_URI}"
+database_name = "${MONGODB_DATABASE}"
+max_connections = 100
+connect_timeout = 30
+idle_timeout = 600
+
+[database.sqlite]
+path = "${SQLITE_PATH:-./data/bitacora.db}"
+max_connections = 10
+
+[database.postgresql]
+host = "${POSTGRES_HOST:-localhost}"
+port = "${POSTGRES_PORT:-5432}"
+database = "${POSTGRES_DB:-bitacora}"
+username = "${POSTGRES_USER:-bitacora}"
+password = "${POSTGRES_PASSWORD}"
+max_connections = 50
+
+[logging]
+level = "debug"
+format = "json"
+output = "stdout"
+
+[features]
+admin_api = true
+health_checks = true
+metrics = true
+telemetry = true
+
+[security]
+cors_enabled = true
+rate_limiting = true
+api_key_required = false  # Para desarrollo
+
+[copilot_integration]
+enabled = true
+webhook_secret = "${COPILOT_WEBHOOK_SECRET:-dev_secret}"

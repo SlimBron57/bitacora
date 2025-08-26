@@ -1,0 +1,51 @@
+# Development environment configuration
+environment = "development"
+
+[server]
+host = "127.0.0.1"
+port = 3000
+cors_enabled = true
+cors_origins = ["*"]
+
+[database]
+provider = "mongodb"
+
+[database.mongodb]
+host = "localhost"
+port = 27017
+database = "bitacora_dev"
+username = "bitacora"
+# Password should be set via environment variable: BITACORA_DATABASE__MONGODB__PASSWORD
+timeout_seconds = 30
+tls = false
+
+[database.sqlite]
+path = "./data/dev/bitacora.db"
+wal_mode = true
+foreign_keys = true
+
+[logging]
+level = "debug"
+format = "pretty"
+
+[logging.performance]
+enabled = true
+slow_request_threshold_ms = 500
+database_queries = true
+external_calls = true
+include_sizes = true
+
+# Example filters to reduce noise in development
+[[logging.filters]]
+target = "mongodb"
+level = "warn"
+
+[[logging.filters]]
+target = "hyper"
+level = "info"
+
+[integration.notifications]
+enabled = false
+
+[integration.monitoring]
+enabled = false

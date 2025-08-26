@@ -1,0 +1,84 @@
+# Staging environment configuration
+environment = "staging"
+
+[server]
+host = "0.0.0.0"
+port = 3000
+cors_enabled = true
+cors_origins = [
+    "https://staging.bitacora.example.com",
+    "http://localhost:3000"
+]
+
+[database]
+provider = "mongodb"
+
+[database.mongodb]
+host = "staging-mongodb.internal"
+port = 27017
+database = "bitacora_staging"
+# Credentials should be set via environment variables:
+# BITACORA_DATABASE__MONGODB__USERNAME
+# BITACORA_DATABASE__MONGODB__PASSWORD
+timeout_seconds = 30
+tls = true
+auth_source = "admin"
+
+[database.pool]
+max_connections = 20
+min_connections = 2
+
+[logging]
+level = "info"
+format = "json"
+
+[logging.file]
+path = "./logs/bitacora.log"
+rotate = true
+max_size = 52428800  # 50MB
+max_files = 10
+compress = true
+
+[logging.performance]
+enabled = true
+slow_request_threshold_ms = 1000
+database_queries = false
+external_calls = true
+include_sizes = false
+
+# Reduce noise from dependencies
+[[logging.filters]]
+target = "mongodb"
+level = "warn"
+
+[[logging.filters]]
+target = "hyper"
+level = "warn"
+
+[[logging.filters]]
+target = "tower"
+level = "warn"
+
+[integration.backup]
+enabled = true
+frequency_hours = 12
+
+[integration.backup.local]
+enabled = true
+path = "/var/backups/bitacora"
+retention_days = 14
+
+# S3 backup configuration (set via environment variables)
+# [integration.backup.s3]
+# endpoint = "https://s3.amazonaws.com"
+# region = "us-east-1" 
+# bucket = "bitacora-staging-backups"
+# access_key = "..."  # Set via BITACORA_INTEGRATION__BACKUP__S3__ACCESS_KEY
+# secret_key = "..."  # Set via BITACORA_INTEGRATION__BACKUP__S3__SECRET_KEY
+# prefix = "staging/"
+
+[integration.notifications]
+enabled = false
+
+[integration.monitoring]
+enabled = false
