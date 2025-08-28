@@ -3,7 +3,7 @@
 //! Sparks capture insights, learnings, and cross-cutting observations at any level
 
 use axum::{
-    extract::{Path, Query, State},
+    extract::{Query, State},
     http::StatusCode,
     response::Result as AxumResult,
     Json,
@@ -15,23 +15,11 @@ use crate::{
         sparks::{SparkDto, CreateSparkRequest, SparkSummaryDto, SparkAnalyticsDto},
         common::{ApiResponse, PaginationParams, FilterParams},
     },
-    errors::{ApiError, ApiResult},
+    errors::ApiError,
     handlers::projects::AppState,
 };
 
 /// Create a new spark insight
-#[utoipa::path(
-    post,
-    path = "/api/v1/sparks",
-    request_body = CreateSparkRequest,
-    responses(
-        (status = 201, description = "Spark created successfully", body = ApiResponse<SparkDto>),
-        (status = 400, description = "Invalid spark data", body = ApiError),
-        (status = 422, description = "Validation error", body = ApiError),
-        (status = 500, description = "Internal server error", body = ApiError)
-    ),
-    tag = "sparks"
-)]
 pub async fn create_spark(
     State(_state): State<AppState>,
     Json(request): Json<CreateSparkRequest>,
@@ -75,25 +63,6 @@ pub async fn create_spark(
 }
 
 /// Get sparks with filtering and pagination
-#[utoipa::path(
-    get,
-    path = "/api/v1/sparks",
-    params(
-        PaginationParams,
-        FilterParams,
-        ("context_level" = Option<String>, Query, description = "Filter by context level (project, topic, action, global)"),
-        ("spark_type" = Option<String>, Query, description = "Filter by spark type"),
-        ("impact" = Option<String>, Query, description = "Filter by impact level"),
-        ("reviewed" = Option<bool>, Query, description = "Filter by review status"),
-    ),
-    responses(
-        (status = 200, description = "List of sparks retrieved successfully", 
-         body = ApiResponse<Vec<SparkSummaryDto>>),
-        (status = 400, description = "Invalid query parameters", body = ApiError),
-        (status = 500, description = "Internal server error", body = ApiError)
-    ),
-    tag = "sparks"
-)]
 pub async fn get_sparks(
     State(_state): State<AppState>,
     Query(_pagination): Query<PaginationParams>,
@@ -124,16 +93,6 @@ pub async fn get_sparks(
 }
 
 /// Get spark analytics and insights
-#[utoipa::path(
-    get,
-    path = "/api/v1/sparks/analytics",
-    responses(
-        (status = 200, description = "Spark analytics retrieved successfully", 
-         body = ApiResponse<SparkAnalyticsDto>),
-        (status = 500, description = "Internal server error", body = ApiError)
-    ),
-    tag = "sparks"
-)]
 pub async fn get_spark_analytics(
     State(_state): State<AppState>,
 ) -> AxumResult<Json<ApiResponse<SparkAnalyticsDto>>> {

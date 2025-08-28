@@ -10,7 +10,7 @@ use std::collections::HashMap;
 use crate::{
     dto::{
         common::{ApiResponse, PaginationParams},
-        health::HealthStatus,
+        health::HealthResponse,
         projects::{ProjectDto, ProjectStatus},
         topics::{
             TopicDto as TopicResponse, CreateTopicRequest, UpdateTopicRequest, 
@@ -25,35 +25,13 @@ use crate::{
 };
 
 /// Health check endpoint - returns API status
-#[utoipa::path(
-    get,
-    path = "/health",
-    tag = "Health",
-    responses(
-        (status = 200, description = "API is healthy", body = ApiResponse<HealthStatus>)
-    )
-)]
-pub async fn health_check() -> Result<Json<ApiResponse<HealthStatus>>, ApiError> {
-    let health_status = HealthStatus {
-        status: "healthy".to_string(),
-        timestamp: Utc::now(),
-        version: "0.1.0".to_string(),
-        uptime: "24h".to_string(),
-    };
+pub async fn health_check() -> Result<Json<ApiResponse<HealthResponse>>, ApiError> {
+    let health_response = HealthResponse::healthy();
     
-    Ok(Json(ApiResponse::success(health_status)))
+    Ok(Json(ApiResponse::success(health_response)))
 }
 
 /// Get all projects with pagination
-#[utoipa::path(
-    get,
-    path = "/projects",
-    tag = "Projects",
-    params(PaginationParams),
-    responses(
-        (status = 200, description = "Projects retrieved successfully", body = ApiResponse<Vec<ProjectDto>>)
-    )
-)]
 pub async fn get_projects(
     Query(pagination): Query<PaginationParams>,
 ) -> Result<Json<ApiResponse<Vec<ProjectDto>>>, ApiError> {
@@ -96,15 +74,6 @@ pub async fn get_projects(
 }
 
 /// Get topics with pagination
-#[utoipa::path(
-    get,
-    path = "/topics",
-    tag = "Topics",
-    params(PaginationParams),
-    responses(
-        (status = 200, description = "Topics retrieved successfully", body = ApiResponse<Vec<TopicResponse>>)
-    )
-)]
 pub async fn get_topics(
     Query(pagination): Query<PaginationParams>,
 ) -> Result<Json<ApiResponse<Vec<TopicResponse>>>, ApiError> {
@@ -170,18 +139,6 @@ pub async fn get_topics(
 }
 
 /// Get specific topic by ID
-#[utoipa::path(
-    get,
-    path = "/topics/{id}",
-    tag = "Topics",
-    params(
-        ("id" = Uuid, Path, description = "Topic ID")
-    ),
-    responses(
-        (status = 200, description = "Topic retrieved successfully", body = ApiResponse<TopicResponse>),
-        (status = 404, description = "Topic not found")
-    )
-)]
 pub async fn get_topic_by_id(
     Path(id): Path<Uuid>,
 ) -> Result<Json<ApiResponse<TopicResponse>>, ApiError> {
@@ -208,15 +165,6 @@ pub async fn get_topic_by_id(
 }
 
 /// Create new topic
-#[utoipa::path(
-    post,
-    path = "/topics",
-    tag = "Topics",
-    request_body = CreateTopicRequest,
-    responses(
-        (status = 201, description = "Topic created successfully", body = ApiResponse<TopicResponse>)
-    )
-)]
 pub async fn create_topic(
     Json(request): Json<CreateTopicRequest>,
 ) -> Result<Json<ApiResponse<TopicResponse>>, ApiError> {
@@ -242,30 +190,17 @@ pub async fn create_topic(
 }
 
 /// Update existing topic
-#[utoipa::path(
-    put,
-    path = "/topics/{id}",
-    tag = "Topics",
-    params(
-        ("id" = Uuid, Path, description = "Topic ID")
-    ),
-    request_body = UpdateTopicRequest,
-    responses(
-        (status = 200, description = "Topic updated successfully", body = ApiResponse<TopicResponse>),
-        (status = 404, description = "Topic not found")
-    )
-)]
 pub async fn update_topic(
     Path(id): Path<Uuid>,
     Json(request): Json<UpdateTopicRequest>,
 ) -> Result<Json<ApiResponse<TopicResponse>>, ApiError> {
     let updated_topic = TopicResponse {
         id,
-        project_id: Uuid::new_v4(),
+        project_id: Uuid::new_v4(), // Mock existing project id
         title: request.title.unwrap_or_else(|| "Updated Topic".to_string()),
         description: request.description,
-        status: request.status.unwrap_or(TopicStatus::InProgress),
-        priority: request.priority.unwrap_or(TopicPriority::Medium),
+        status: request.status.unwrap_or_default(),
+        priority: request.priority.unwrap_or_default(),
         tags: request.tags.unwrap_or_default(),
         metadata: request.metadata.unwrap_or_default(),
         created_at: Utc::now() - chrono::Duration::hours(1), // Mock creation time
@@ -276,20 +211,12 @@ pub async fn update_topic(
         completed_actions: 0,
         completion_percentage: 0.0,
     };
-    
+
     Ok(Json(ApiResponse::success(updated_topic)))
 }
 
 /// Get actions with pagination
-#[utoipa::path(
-    get,
-    path = "/actions",
-    tag = "Actions",
-    params(PaginationParams),
-    responses(
-        (status = 200, description = "Actions retrieved successfully", body = ApiResponse<Vec<ActionResponse>>)
-    )
-)]
+/// Get all actions with pagination
 pub async fn get_actions(
     Query(pagination): Query<PaginationParams>,
 ) -> Result<Json<ApiResponse<Vec<ActionResponse>>>, ApiError> {
@@ -370,18 +297,6 @@ pub async fn get_actions(
 }
 
 /// Get specific action by ID
-#[utoipa::path(
-    get,
-    path = "/actions/{id}",
-    tag = "Actions",
-    params(
-        ("id" = Uuid, Path, description = "Action ID")
-    ),
-    responses(
-        (status = 200, description = "Action retrieved successfully", body = ApiResponse<ActionResponse>),
-        (status = 404, description = "Action not found")
-    )
-)]
 pub async fn get_action_by_id(
     Path(id): Path<Uuid>,
 ) -> Result<Json<ApiResponse<ActionResponse>>, ApiError> {
@@ -412,15 +327,6 @@ pub async fn get_action_by_id(
 }
 
 /// Create new action
-#[utoipa::path(
-    post,
-    path = "/actions",
-    tag = "Actions",
-    request_body = CreateActionRequest,
-    responses(
-        (status = 201, description = "Action created successfully", body = ApiResponse<ActionResponse>)
-    )
-)]
 pub async fn create_action(
     Json(request): Json<CreateActionRequest>,
 ) -> Result<Json<ApiResponse<ActionResponse>>, ApiError> {
@@ -451,19 +357,6 @@ pub async fn create_action(
 }
 
 /// Update existing action
-#[utoipa::path(
-    put,
-    path = "/actions/{id}",
-    tag = "Actions",
-    params(
-        ("id" = Uuid, Path, description = "Action ID")
-    ),
-    request_body = UpdateActionRequest,
-    responses(
-        (status = 200, description = "Action updated successfully", body = ApiResponse<ActionResponse>),
-        (status = 404, description = "Action not found")
-    )
-)]
 pub async fn update_action(
     Path(id): Path<Uuid>,
     Json(request): Json<UpdateActionRequest>,
@@ -502,18 +395,6 @@ pub async fn update_action(
 }
 
 /// Delete action
-#[utoipa::path(
-    delete,
-    path = "/actions/{id}",
-    tag = "Actions",
-    params(
-        ("id" = Uuid, Path, description = "Action ID")
-    ),
-    responses(
-        (status = 200, description = "Action deleted successfully"),
-        (status = 404, description = "Action not found")
-    )
-)]
 pub async fn delete_action(
     Path(_id): Path<Uuid>,
 ) -> Result<Json<ApiResponse<String>>, ApiError> {
@@ -521,18 +402,6 @@ pub async fn delete_action(
 }
 
 /// Complete action
-#[utoipa::path(
-    post,
-    path = "/actions/{id}/complete",
-    tag = "Actions",
-    params(
-        ("id" = Uuid, Path, description = "Action ID")
-    ),
-    responses(
-        (status = 200, description = "Action completed successfully", body = ApiResponse<ActionResponse>),
-        (status = 404, description = "Action not found")
-    )
-)]
 pub async fn complete_action(
     Path(id): Path<Uuid>,
 ) -> Result<Json<ApiResponse<ActionResponse>>, ApiError> {

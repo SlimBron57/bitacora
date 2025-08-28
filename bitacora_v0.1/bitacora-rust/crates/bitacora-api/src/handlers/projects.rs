@@ -16,7 +16,7 @@ use crate::{
         projects::{ProjectDto, CreateProjectRequest, UpdateProjectRequest, ProjectSummaryDto},
         common::{ApiResponse, PaginationParams, PaginatedResponse, FilterParams},
     },
-    errors::{ApiError, ApiResult},
+    errors::ApiError,
 };
 
 // TODO: Replace with actual service when repository layer is integrated
@@ -29,21 +29,6 @@ pub struct AppState {
 }
 
 /// List all projects with pagination and filtering
-#[utoipa::path(
-    get,
-    path = "/api/v1/projects",
-    params(
-        PaginationParams,
-        FilterParams
-    ),
-    responses(
-        (status = 200, description = "List of projects retrieved successfully", 
-         body = ApiResponse<PaginatedResponse<ProjectSummaryDto>>),
-        (status = 400, description = "Invalid query parameters", body = ApiError),
-        (status = 500, description = "Internal server error", body = ApiError)
-    ),
-    tag = "projects"
-)]
 pub async fn list_projects(
     State(_state): State<AppState>,
     Query(pagination): Query<PaginationParams>,
@@ -85,18 +70,6 @@ pub async fn list_projects(
 }
 
 /// Create a new project
-#[utoipa::path(
-    post,
-    path = "/api/v1/projects",
-    request_body = CreateProjectRequest,
-    responses(
-        (status = 201, description = "Project created successfully", body = ApiResponse<ProjectDto>),
-        (status = 400, description = "Invalid project data", body = ApiError),
-        (status = 422, description = "Validation error", body = ApiError),
-        (status = 500, description = "Internal server error", body = ApiError)
-    ),
-    tag = "projects"
-)]
 pub async fn create_project(
     State(_state): State<AppState>,
     Json(request): Json<CreateProjectRequest>,
@@ -136,19 +109,6 @@ pub async fn create_project(
 }
 
 /// Get a specific project by ID
-#[utoipa::path(
-    get,
-    path = "/api/v1/projects/{project_id}",
-    params(
-        ("project_id" = Uuid, Path, description = "Project unique identifier")
-    ),
-    responses(
-        (status = 200, description = "Project retrieved successfully", body = ApiResponse<ProjectDto>),
-        (status = 404, description = "Project not found", body = ApiError),
-        (status = 500, description = "Internal server error", body = ApiError)
-    ),
-    tag = "projects"
-)]
 pub async fn get_project(
     State(_state): State<AppState>,
     Path(project_id): Path<Uuid>,
@@ -182,22 +142,6 @@ pub async fn get_project(
 }
 
 /// Update an existing project
-#[utoipa::path(
-    put,
-    path = "/api/v1/projects/{project_id}",
-    params(
-        ("project_id" = Uuid, Path, description = "Project unique identifier")
-    ),
-    request_body = UpdateProjectRequest,
-    responses(
-        (status = 200, description = "Project updated successfully", body = ApiResponse<ProjectDto>),
-        (status = 400, description = "Invalid project data", body = ApiError),
-        (status = 404, description = "Project not found", body = ApiError),
-        (status = 422, description = "Validation error", body = ApiError),
-        (status = 500, description = "Internal server error", body = ApiError)
-    ),
-    tag = "projects"
-)]
 pub async fn update_project(
     State(_state): State<AppState>,
     Path(project_id): Path<Uuid>,
@@ -249,20 +193,6 @@ pub async fn update_project(
 }
 
 /// Delete a project
-#[utoipa::path(
-    delete,
-    path = "/api/v1/projects/{project_id}",
-    params(
-        ("project_id" = Uuid, Path, description = "Project unique identifier")
-    ),
-    responses(
-        (status = 200, description = "Project deleted successfully", body = ApiResponse<()>),
-        (status = 404, description = "Project not found", body = ApiError),
-        (status = 409, description = "Project cannot be deleted (has dependencies)", body = ApiError),
-        (status = 500, description = "Internal server error", body = ApiError)
-    ),
-    tag = "projects"
-)]
 pub async fn delete_project(
     State(_state): State<AppState>,
     Path(project_id): Path<Uuid>,
@@ -283,7 +213,7 @@ pub async fn delete_project(
     
     // TODO: Implement actual project deletion in repository
     
-    Ok(Json(ApiResponse::message_only("Project deleted successfully")))
+    Ok(Json(ApiResponse::<()>::message_only("Project deleted successfully")))
 }
 
 #[cfg(test)]

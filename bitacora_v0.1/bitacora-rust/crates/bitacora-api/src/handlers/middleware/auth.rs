@@ -1,8 +1,8 @@
 //! Authentication middleware (placeholder for future implementation)
 
 use axum::{
-    extract::{Request, State},
-    http::{HeaderMap, StatusCode},
+    extract::Request,
+    http::HeaderMap,
     middleware::Next,
     response::Response,
 };

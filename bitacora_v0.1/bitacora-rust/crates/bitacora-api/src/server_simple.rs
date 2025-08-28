@@ -11,8 +11,7 @@ use tower_http::{
     cors::{Any, CorsLayer},
     timeout::TimeoutLayer,
 };
-use utoipa::OpenApi;
-use utoipa_swagger_ui::SwaggerUi;
+// Documentation generation removed
 
 use crate::{
     handlers_simple::{
@@ -22,57 +21,11 @@ use crate::{
         get_actions, get_action_by_id, create_action, update_action, delete_action, complete_action
     },
     dto::{
-        health::HealthStatus,
-        projects::{ProjectDto, CreateProjectRequest},
-        topics::{TopicDto as TopicResponse, CreateTopicRequest, UpdateTopicRequest},
-        actions::{ActionDto as ActionResponse, CreateActionRequest, UpdateActionRequest},
-        common::{ApiResponse, PaginationParams},
+        common::ApiResponse,
     },
 };
 
-#[derive(OpenApi)]
-#[openapi(
-    paths(
-        health_check,
-        get_projects,
-        get_topics,
-        get_topic_by_id,
-        create_topic,
-        update_topic,
-        get_actions,
-        get_action_by_id,
-        create_action,
-        update_action,
-        delete_action,
-        complete_action
-    ),
-    components(schemas(
-        ApiResponse<String>,
-        ApiResponse<HealthStatus>,
-        ApiResponse<Vec<ProjectDto>>,
-        ApiResponse<Vec<TopicResponse>>,
-        ApiResponse<TopicResponse>,
-        ApiResponse<Vec<ActionResponse>>,
-        ApiResponse<ActionResponse>,
-        HealthStatus,
-        ProjectDto,
-        CreateProjectRequest,
-        TopicResponse,
-        CreateTopicRequest,
-        UpdateTopicRequest,
-        ActionResponse,
-        CreateActionRequest,
-        UpdateActionRequest,
-        PaginationParams
-    )),
-    tags(
-        (name = "Health", description = "Health check endpoints"),
-        (name = "Projects", description = "Project management endpoints"),
-        (name = "Topics", description = "Topic management endpoints"),
-        (name = "Actions", description = "Action management endpoints")
-    )
-)]
-struct SimpleApiDoc;
+// Documentation generation removed
 
 /// Root handler
 async fn root_handler() -> Json<ApiResponse<Value>> {
@@ -98,15 +51,13 @@ pub fn create_app() -> Router {
     let health_routes = Router::new()
         .route("/health", get(health_check));
 
-    // Documentation routes  
-    let docs_routes = SwaggerUi::new("/swagger-ui")
-        .url("/api-docs/openapi.json", SimpleApiDoc::openapi());
+    // Documentation removed
 
     // Build the main router
     Router::new()
         .nest("/api/v1", api_routes)
         .merge(health_routes)
-        .merge(docs_routes.into())
+    // docs removed
         .route("/", get(root_handler))
         .layer(
             ServiceBuilder::new()

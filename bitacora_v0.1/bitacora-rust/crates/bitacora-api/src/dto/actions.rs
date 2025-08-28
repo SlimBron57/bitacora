@@ -1,31 +1,25 @@
 //! DTOs for Action operations in Bitacora API
 
 use serde::{Deserialize, Serialize};
-use utoipa::ToSchema;
 use uuid::Uuid;
 use chrono::{DateTime, Utc};
 
 /// Action data transfer object
-#[derive(Debug, Serialize, Deserialize, Clone, ToSchema)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct ActionDto {
     /// Unique action identifier
-    #[schema(example = "550e8400-e29b-41d4-a716-446655440002")]
     pub id: Uuid,
     
     /// Parent topic identifier
-    #[schema(example = "550e8400-e29b-41d4-a716-446655440001")]
     pub topic_id: Uuid,
     
     /// Parent project identifier
-    #[schema(example = "550e8400-e29b-41d4-a716-446655440000")]
     pub project_id: Uuid,
     
     /// Action title
-    #[schema(example = "Create user table migration")]
     pub title: String,
     
     /// Action description
-    #[schema(example = "Create database migration for user table with all required fields")]
     pub description: Option<String>,
     
     /// Action status
@@ -38,7 +32,6 @@ pub struct ActionDto {
     pub priority: ActionPriority,
     
     /// Action tags for categorization
-    #[schema(example = json!(["database", "migration", "users"]))]
     pub tags: Vec<String>,
     
     /// Action metadata as key-value pairs
@@ -60,11 +53,9 @@ pub struct ActionDto {
     pub due_date: Option<DateTime<Utc>>,
     
     /// Estimated completion time in hours
-    #[schema(example = 2.5)]
     pub estimated_hours: Option<f32>,
     
     /// Actual time spent in hours
-    #[schema(example = 3.25)]
     pub actual_hours: Option<f32>,
     
     /// Action notes and comments
@@ -81,7 +72,7 @@ pub struct ActionDto {
 pub type ActionResponse = ActionDto;
 
 /// Action status enumeration
-#[derive(Debug, Serialize, Deserialize, Clone, ToSchema)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum ActionStatus {
     /// Action is planned but not started
@@ -99,7 +90,7 @@ pub enum ActionStatus {
 }
 
 /// Action type/category enumeration
-#[derive(Debug, Serialize, Deserialize, Clone, ToSchema)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum ActionType {
     /// Development/coding task
@@ -127,7 +118,7 @@ pub enum ActionType {
 }
 
 /// Action priority enumeration
-#[derive(Debug, Serialize, Deserialize, Clone, ToSchema)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum ActionPriority {
     /// Low priority action
@@ -141,18 +132,15 @@ pub enum ActionPriority {
 }
 
 /// Request to create a new action
-#[derive(Debug, Deserialize, ToSchema)]
+#[derive(Debug, Deserialize)]
 pub struct CreateActionRequest {
     /// Parent topic identifier (required)
-    #[schema(example = "550e8400-e29b-41d4-a716-446655440001")]
     pub topic_id: Uuid,
     
     /// Action title (required)
-    #[schema(example = "Implement user authentication")]
     pub title: String,
     
     /// Action description (optional)
-    #[schema(example = "Implement JWT-based user authentication with login/logout")]
     pub description: Option<String>,
     
     /// Initial status (defaults to Todo)
@@ -165,7 +153,6 @@ pub struct CreateActionRequest {
     pub priority: Option<ActionPriority>,
     
     /// Action tags for categorization
-    #[schema(example = json!(["auth", "jwt", "security"]))]
     pub tags: Option<Vec<String>>,
     
     /// Action metadata as key-value pairs
@@ -175,7 +162,6 @@ pub struct CreateActionRequest {
     pub due_date: Option<DateTime<Utc>>,
     
     /// Estimated completion time in hours
-    #[schema(example = 4.0)]
     pub estimated_hours: Option<f32>,
     
     /// Initial notes
@@ -189,14 +175,12 @@ pub struct CreateActionRequest {
 }
 
 /// Request to update an existing action
-#[derive(Debug, Deserialize, ToSchema)]
+#[derive(Debug, Deserialize)]
 pub struct UpdateActionRequest {
     /// Updated action title (optional)
-    #[schema(example = "Updated action title")]
     pub title: Option<String>,
     
     /// Updated action description (optional)
-    #[schema(example = "Updated description with new requirements")]
     pub description: Option<String>,
     
     /// Updated action status (optional)
@@ -209,7 +193,6 @@ pub struct UpdateActionRequest {
     pub priority: Option<ActionPriority>,
     
     /// Updated action tags (optional, replaces existing tags)
-    #[schema(example = json!(["auth", "oauth", "security", "api"]))]
     pub tags: Option<Vec<String>>,
     
     /// Updated action metadata (optional, merges with existing)
@@ -219,11 +202,9 @@ pub struct UpdateActionRequest {
     pub due_date: Option<DateTime<Utc>>,
     
     /// Updated estimated completion time in hours
-    #[schema(example = 6.5)]
     pub estimated_hours: Option<f32>,
     
     /// Updated actual time spent in hours
-    #[schema(example = 5.25)]
     pub actual_hours: Option<f32>,
     
     /// Updated notes
@@ -237,7 +218,7 @@ pub struct UpdateActionRequest {
 }
 
 /// Action summary for list views
-#[derive(Debug, Serialize, ToSchema)]
+#[derive(Debug, Serialize)]
 pub struct ActionSummaryDto {
     pub id: Uuid,
     pub topic_id: Uuid,
@@ -253,7 +234,7 @@ pub struct ActionSummaryDto {
 }
 
 /// Action with context information
-#[derive(Debug, Serialize, ToSchema)]
+#[derive(Debug, Serialize)]
 pub struct ActionWithContextDto {
     #[serde(flatten)]
     pub action: ActionDto,

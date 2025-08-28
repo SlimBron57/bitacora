@@ -1,16 +1,14 @@
 //! DTOs for Spark operations in Bitacora API (Transversal Insights Service)
 
 use serde::{Deserialize, Serialize};
-use utoipa::ToSchema;
 use uuid::Uuid;
 use chrono::{DateTime, Utc};
 
 /// Spark data transfer object
 /// Sparks capture insights, learnings, and cross-cutting observations at any level
-#[derive(Debug, Serialize, Deserialize, Clone, ToSchema)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct SparkDto {
     /// Unique spark identifier
-    #[schema(example = "550e8400-e29b-41d4-a716-446655440003")]
     pub id: Uuid,
     
     /// Context where the spark was captured (project, topic, or action)
@@ -20,22 +18,18 @@ pub struct SparkDto {
     pub spark_type: SparkType,
     
     /// Spark title/summary
-    #[schema(example = "Discovered better approach for API authentication")]
     pub title: String,
     
     /// Detailed spark content
-    #[schema(example = "Found that using OAuth2 with JWT would be more scalable than custom session management")]
     pub content: String,
     
     /// Spark insights and learnings
-    #[schema(example = "This approach reduces server memory usage and enables better horizontal scaling")]
     pub insights: Option<String>,
     
     /// Impact level of this spark
     pub impact: SparkImpact,
     
     /// Spark tags for categorization
-    #[schema(example = json!(["architecture", "scalability", "auth"]))]
     pub tags: Vec<String>,
     
     /// Related entities (projects, topics, actions)
@@ -64,7 +58,7 @@ pub struct SparkDto {
 }
 
 /// Context where a spark was captured
-#[derive(Debug, Serialize, Deserialize, Clone, ToSchema)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct SparkContext {
     /// Level where spark was captured
     pub level: ContextLevel,
@@ -73,12 +67,11 @@ pub struct SparkContext {
     pub entity_id: Uuid,
     
     /// Human-readable context description
-    #[schema(example = "While working on user authentication in Project Alpha")]
     pub description: String,
 }
 
 /// Level in the hierarchy where spark was captured
-#[derive(Debug, Serialize, Deserialize, Clone, ToSchema)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum ContextLevel {
     /// Spark captured at project level
@@ -92,7 +85,7 @@ pub enum ContextLevel {
 }
 
 /// Type/category of spark
-#[derive(Debug, Serialize, Deserialize, Clone, ToSchema)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum SparkType {
     /// Learning or insight gained
@@ -118,7 +111,7 @@ pub enum SparkType {
 }
 
 /// Impact level of the spark
-#[derive(Debug, Serialize, Deserialize, Clone, ToSchema)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum SparkImpact {
     /// Low impact - minor insight
@@ -132,7 +125,7 @@ pub enum SparkImpact {
 }
 
 /// Related entity reference
-#[derive(Debug, Serialize, Deserialize, Clone, ToSchema)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct RelatedEntity {
     /// Type of related entity
     pub entity_type: EntityType,
@@ -145,7 +138,7 @@ pub struct RelatedEntity {
 }
 
 /// Type of entity
-#[derive(Debug, Serialize, Deserialize, Clone, ToSchema)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum EntityType {
     Project,
@@ -154,10 +147,9 @@ pub enum EntityType {
 }
 
 /// Actionable item derived from spark
-#[derive(Debug, Serialize, Deserialize, Clone, ToSchema)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct ActionItem {
     /// Brief description of the action
-    #[schema(example = "Update authentication documentation")]
     pub description: String,
     /// Priority of this action item
     pub priority: ActionItemPriority,
@@ -168,7 +160,7 @@ pub struct ActionItem {
 }
 
 /// Priority of action items derived from sparks
-#[derive(Debug, Serialize, Deserialize, Clone, ToSchema)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum ActionItemPriority {
     Low,
@@ -177,7 +169,7 @@ pub enum ActionItemPriority {
 }
 
 /// Request to create a new spark
-#[derive(Debug, Deserialize, ToSchema)]
+#[derive(Debug, Deserialize)]
 pub struct CreateSparkRequest {
     /// Context where the spark is captured (required)
     pub context: SparkContext,
@@ -186,11 +178,9 @@ pub struct CreateSparkRequest {
     pub spark_type: SparkType,
     
     /// Spark title/summary (required)
-    #[schema(example = "Better error handling pattern discovered")]
     pub title: String,
     
     /// Detailed spark content (required)
-    #[schema(example = "Using Result<T, E> with custom error types provides better error context")]
     pub content: String,
     
     /// Spark insights and learnings (optional)
@@ -200,7 +190,6 @@ pub struct CreateSparkRequest {
     pub impact: Option<SparkImpact>,
     
     /// Spark tags for categorization
-    #[schema(example = json!(["error-handling", "rust", "patterns"]))]
     pub tags: Option<Vec<String>>,
     
     /// Related entities
@@ -217,7 +206,7 @@ pub struct CreateSparkRequest {
 }
 
 /// Request to update an existing spark
-#[derive(Debug, Deserialize, ToSchema)]
+#[derive(Debug, Deserialize)]
 pub struct UpdateSparkRequest {
     /// Updated spark title (optional)
     pub title: Option<String>,
@@ -251,7 +240,7 @@ pub struct UpdateSparkRequest {
 }
 
 /// Spark summary for list views
-#[derive(Debug, Serialize, ToSchema)]
+#[derive(Debug, Serialize)]
 pub struct SparkSummaryDto {
     pub id: Uuid,
     pub title: String,
@@ -265,7 +254,7 @@ pub struct SparkSummaryDto {
 }
 
 /// Spark analytics and insights
-#[derive(Debug, Serialize, ToSchema)]
+#[derive(Debug, Serialize)]
 pub struct SparkAnalyticsDto {
     pub total_sparks: u32,
     pub sparks_by_type: std::collections::HashMap<String, u32>,
@@ -275,7 +264,7 @@ pub struct SparkAnalyticsDto {
     pub top_tags: Vec<TagCount>,
 }
 
-#[derive(Debug, Serialize, ToSchema)]
+#[derive(Debug, Serialize)]
 pub struct TagCount {
     pub tag: String,
     pub count: u32,

@@ -1,27 +1,23 @@
 //! DTOs for Topic operations in Bitacora API
 
 use serde::{Deserialize, Serialize};
-use utoipa::ToSchema;
+// utoipa schema derivations removed
 use uuid::Uuid;
 use chrono::{DateTime, Utc};
 
 /// Topic data transfer object
-#[derive(Debug, Serialize, Deserialize, Clone, ToSchema)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct TopicDto {
     /// Unique topic identifier
-    #[schema(example = "550e8400-e29b-41d4-a716-446655440001")]
     pub id: Uuid,
     
     /// Parent project identifier
-    #[schema(example = "550e8400-e29b-41d4-a716-446655440000")]
     pub project_id: Uuid,
     
     /// Topic title
-    #[schema(example = "Database Design")]
     pub title: String,
     
     /// Topic description
-    #[schema(example = "Design the database schema for user management")]
     pub description: Option<String>,
     
     /// Topic status
@@ -31,7 +27,6 @@ pub struct TopicDto {
     pub priority: TopicPriority,
     
     /// Topic tags for categorization
-    #[schema(example = json!(["database", "schema", "users"]))]
     pub tags: Vec<String>,
     
     /// Topic metadata as key-value pairs
@@ -44,23 +39,18 @@ pub struct TopicDto {
     pub updated_at: DateTime<Utc>,
     
     /// Estimated completion time in hours
-    #[schema(example = 8.5)]
     pub estimated_hours: Option<f32>,
     
     /// Actual time spent in hours
-    #[schema(example = 6.25)]
     pub actual_hours: Option<f32>,
     
     /// Number of actions in this topic
-    #[schema(example = 4)]
     pub action_count: u32,
     
     /// Number of completed actions in this topic
-    #[schema(example = 2)]
     pub completed_actions: u32,
     
     /// Topic completion percentage (0-100)
-    #[schema(example = 50.0)]
     pub completion_percentage: f32,
 }
 
@@ -68,7 +58,7 @@ pub struct TopicDto {
 pub type TopicResponse = TopicDto;
 
 /// Topic status enumeration
-#[derive(Debug, Serialize, Deserialize, Clone, ToSchema)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum TopicStatus {
     /// Topic is planned but not started
@@ -86,7 +76,7 @@ pub enum TopicStatus {
 }
 
 /// Topic priority enumeration
-#[derive(Debug, Serialize, Deserialize, Clone, ToSchema)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum TopicPriority {
     /// Low priority topic
@@ -100,18 +90,15 @@ pub enum TopicPriority {
 }
 
 /// Request to create a new topic
-#[derive(Debug, Deserialize, ToSchema)]
+#[derive(Debug, Deserialize)]
 pub struct CreateTopicRequest {
     /// Parent project identifier (required)
-    #[schema(example = "550e8400-e29b-41d4-a716-446655440000")]
     pub project_id: Uuid,
     
     /// Topic title (required)
-    #[schema(example = "API Endpoint Design")]
     pub title: String,
     
     /// Topic description (optional)
-    #[schema(example = "Design REST API endpoints for user authentication")]
     pub description: Option<String>,
     
     /// Initial status (defaults to Planned)
@@ -121,26 +108,22 @@ pub struct CreateTopicRequest {
     pub priority: Option<TopicPriority>,
     
     /// Topic tags for categorization
-    #[schema(example = json!(["api", "rest", "authentication"]))]
     pub tags: Option<Vec<String>>,
     
     /// Topic metadata as key-value pairs
     pub metadata: Option<std::collections::HashMap<String, serde_json::Value>>,
     
     /// Estimated completion time in hours
-    #[schema(example = 12.0)]
     pub estimated_hours: Option<f32>,
 }
 
 /// Request to update an existing topic
-#[derive(Debug, Deserialize, ToSchema)]
+#[derive(Debug, Deserialize)]
 pub struct UpdateTopicRequest {
     /// Updated topic title (optional)
-    #[schema(example = "Updated API Endpoint Design")]
     pub title: Option<String>,
     
     /// Updated topic description (optional)
-    #[schema(example = "Updated description with additional requirements")]
     pub description: Option<String>,
     
     /// Updated topic status (optional)
@@ -150,23 +133,20 @@ pub struct UpdateTopicRequest {
     pub priority: Option<TopicPriority>,
     
     /// Updated topic tags (optional, replaces existing tags)
-    #[schema(example = json!(["api", "graphql", "authentication", "authorization"]))]
     pub tags: Option<Vec<String>>,
     
     /// Updated topic metadata (optional, merges with existing)
     pub metadata: Option<std::collections::HashMap<String, serde_json::Value>>,
     
     /// Updated estimated completion time in hours
-    #[schema(example = 15.5)]
     pub estimated_hours: Option<f32>,
     
     /// Updated actual time spent in hours
-    #[schema(example = 8.75)]
     pub actual_hours: Option<f32>,
 }
 
 /// Topic summary for list views
-#[derive(Debug, Serialize, ToSchema)]
+#[derive(Debug, Serialize)]
 pub struct TopicSummaryDto {
     pub id: Uuid,
     pub project_id: Uuid,
@@ -180,7 +160,7 @@ pub struct TopicSummaryDto {
 }
 
 /// Topic with project information
-#[derive(Debug, Serialize, ToSchema)]
+#[derive(Debug, Serialize)]
 pub struct TopicWithProjectDto {
     #[serde(flatten)]
     pub topic: TopicDto,

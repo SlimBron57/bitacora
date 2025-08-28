@@ -19,16 +19,13 @@ use tower_http::{
     LatencyUnit,
 };
 use tracing::Level;
-use utoipa::OpenApi;
-use utoipa_swagger_ui::SwaggerUi;
 
 use crate::{
     handlers::{
-        projects::{AppState, ProjectService},
-        health, projects, topics, actions, sparks,
+        projects::AppState,
+        health, projects, topics, actions,
     },
     errors::ApiError,
-    ApiDoc,
 };
 
 /// Main API server structure
@@ -58,8 +55,7 @@ impl ApiServer {
         let listener = tokio::net::TcpListener::bind(&self.addr).await?;
         
         tracing::info!("🌟 Bitacora API is ready!");
-        tracing::info!("📖 API Documentation: http://{}/swagger-ui", self.addr);
-        tracing::info!("🔍 Health Check: http://{}/health", self.addr);
+        tracing::info!(" Health Check: http://{}/health", self.addr);
         
         axum::serve(listener, self.app).await?;
         
@@ -89,7 +85,7 @@ fn create_router(state: AppState) -> Router {
         .route("/topics/:topic_id", put(topics::update_topic))
         .route("/topics/:topic_id", delete(topics::delete_topic))
         // Action routes
-        .route("/actions", get(actions::list_actions))
+        .route("/actions", get(actions::get_actions))
         .route("/actions", post(actions::create_action))
         .route("/actions/:action_id", get(actions::get_action))
         .route("/actions/:action_id", put(actions::update_action))
@@ -105,18 +101,14 @@ fn create_router(state: AppState) -> Router {
         .route("/live", get(health::liveness_check))
         .route("/version", get(health::version_info));
 
-    // Documentation routes
-    let docs_routes = Router::new()
-        .merge(SwaggerUi::new("/swagger-ui")
-            .url("/api-docs/openapi.json", ApiDoc::openapi()));
+    // Documentation generation removed - no docs routes
 
     Router::new()
         // API v1 routes
         .nest("/api/v1", api_routes)
         // Health routes (no versioning)
         .merge(health_routes)
-        // Documentation
-        .merge(docs_routes)
+    // Documentation generation removed
         // Root route
         .route("/", get(root_handler))
         // Global middleware
@@ -142,16 +134,8 @@ fn create_middleware_stack() -> ServiceBuilder<Stack<
     >
 >> {
     ServiceBuilder::new()
-        // Request timeout
-        .layer(TimeoutLayer::new(Duration::from_secs(30)))
-        // CORS
-        .layer(
-            CorsLayer::new()
-                .allow_origin(Any)
-                .allow_methods([Method::GET, Method::POST, Method::PUT, Method::DELETE, Method::OPTIONS])
-                .allow_headers([header::CONTENT_TYPE, header::AUTHORIZATION])
-                .max_age(Duration::from_secs(3600))
-        )
+        // Body size limit (10MB) - innermost layer
+        .layer(DefaultBodyLimit::max(10 * 1024 * 1024))
         // Request tracing
         .layer(
             TraceLayer::new_for_http()
@@ -163,8 +147,16 @@ fn create_middleware_stack() -> ServiceBuilder<Stack<
                         .latency_unit(LatencyUnit::Millis)
                 )
         )
-        // Body size limit (10MB)
-        .layer(DefaultBodyLimit::max(10 * 1024 * 1024))
+        // CORS
+        .layer(
+            CorsLayer::new()
+                .allow_origin(Any)
+                .allow_methods([Method::GET, Method::POST, Method::PUT, Method::DELETE, Method::OPTIONS])
+                .allow_headers([header::CONTENT_TYPE, header::AUTHORIZATION])
+                .max_age(Duration::from_secs(3600))
+        )
+        // Request timeout - outermost layer
+        .layer(TimeoutLayer::new(Duration::from_secs(30)))
 }
 
 /// Root handler - API information
@@ -173,7 +165,7 @@ async fn root_handler() -> impl IntoResponse {
         "name": "Bitacora API",
         "version": env!("CARGO_PKG_VERSION"),
         "description": "REST API for Bitacora - PROJECT→TOPIC→ACTION + SPARK architecture",
-        "documentation": "/swagger-ui",
+    // documentation removed
         "health": "/health",
         "status": "operational"
     }))
@@ -207,9 +199,8 @@ mod tests {
     }
 
     #[test]
-    fn test_openapi_generation() {
-        let openapi = ApiDoc::openapi();
-        assert_eq!(openapi.info.title, "Bitacora API");
-        assert_eq!(openapi.info.version, "1.0.0");
+    fn test_middleware_stack_creation() {
+        // Test that middleware stack can be created
+        let _middleware = create_middleware_stack();
     }
 }

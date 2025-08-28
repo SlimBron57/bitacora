@@ -1,10 +1,9 @@
 //! Common DTOs and shared structures for the Bitacora API
 
 use serde::{Deserialize, Serialize};
-use utoipa::{IntoParams, ToSchema};
 
 /// Standard API response wrapper
-#[derive(Debug, Serialize, ToSchema)]
+#[derive(Debug, Serialize)]
 pub struct ApiResponse<T> {
     pub success: bool,
     pub data: Option<T>,
@@ -42,7 +41,7 @@ impl<T> ApiResponse<T> {
 }
 
 /// Pagination parameters for list endpoints
-#[derive(Debug, Deserialize, IntoParams, ToSchema)]
+#[derive(Debug, Deserialize)]
 pub struct PaginationParams {
     /// Page number (1-based)
     #[serde(default = "default_page")]
@@ -63,7 +62,7 @@ pub struct PaginationParams {
 /// Alias for backward compatibility
 pub type PaginationQuery = PaginationParams;
 
-#[derive(Debug, Deserialize, Serialize, ToSchema)]
+#[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "lowercase")]
 pub enum SortOrder {
     Asc,
@@ -71,13 +70,13 @@ pub enum SortOrder {
 }
 
 /// Paginated response wrapper
-#[derive(Debug, Serialize, ToSchema)]
+#[derive(Debug, Serialize)]
 pub struct PaginatedResponse<T> {
     pub items: Vec<T>,
     pub pagination: PaginationMeta,
 }
 
-#[derive(Debug, Serialize, ToSchema)]
+#[derive(Debug, Serialize)]
 pub struct PaginationMeta {
     pub page: u32,
     pub limit: u32,
@@ -133,7 +132,7 @@ fn default_limit() -> u32 { 20 }
 fn default_sort_order() -> SortOrder { SortOrder::Asc }
 
 /// Filter parameters for searching
-#[derive(Debug, Deserialize, IntoParams)]
+#[derive(Debug, Deserialize)]
 pub struct FilterParams {
     /// Search query string
     pub q: Option<String>,
@@ -150,23 +149,21 @@ pub struct FilterParams {
 }
 
 /// Health check response
-#[derive(Debug, Serialize, ToSchema)]
+#[derive(Debug, Serialize)]
 pub struct HealthResponse {
     pub status: HealthStatus,
     pub timestamp: chrono::DateTime<chrono::Utc>,
     pub version: String,
     pub services: Vec<ServiceHealth>,
 }
-
-#[derive(Debug, Clone, Serialize, ToSchema)]
+#[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "lowercase")]
 pub enum HealthStatus {
     Healthy,
     Degraded,
     Unhealthy,
 }
-
-#[derive(Debug, Serialize, ToSchema)]
+#[derive(Debug, Serialize)]
 pub struct ServiceHealth {
     pub name: String,
     pub status: HealthStatus,

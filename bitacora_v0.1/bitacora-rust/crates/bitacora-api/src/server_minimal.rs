@@ -11,30 +11,16 @@ use tower_http::{
     cors::{Any, CorsLayer},
     timeout::TimeoutLayer,
 };
-use utoipa::OpenApi;
-use utoipa_swagger_ui::SwaggerUi;
+// Documentation generation removed
 
 use crate::{
     handlers_simple::health_check,
     dto::{
-        health::HealthStatus,
         common::ApiResponse,
     },
 };
 
-#[derive(OpenApi)]
-#[openapi(
-    paths(health_check),
-    components(schemas(
-        ApiResponse<String>,
-        ApiResponse<HealthStatus>,
-        HealthStatus,
-    )),
-    tags(
-        (name = "Health", description = "Health check endpoints"),
-    )
-)]
-struct MinimalApiDoc;
+// Documentation generation removed
 
 /// Root handler
 async fn root_handler() -> Json<ApiResponse<Value>> {
@@ -51,14 +37,12 @@ pub fn create_minimal_app() -> Router {
     let health_routes = Router::new()
         .route("/health", get(health_check));
 
-    // Documentation routes
-    let docs_routes = SwaggerUi::new("/swagger-ui")
-        .url("/api-docs/openapi.json", MinimalApiDoc::openapi());
+    // Documentation removed
 
     // Build the main router
     Router::new()
         .merge(health_routes)
-        .merge(docs_routes.into())
+    // docs removed
         .route("/", get(root_handler))
         .layer(
             ServiceBuilder::new()

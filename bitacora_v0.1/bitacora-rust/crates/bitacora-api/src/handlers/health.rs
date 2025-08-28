@@ -7,20 +7,10 @@ use axum::{
 };
 use chrono::Utc;
 use std::collections::HashMap;
-use utoipa::openapi;
 
 use crate::dto::common::{HealthResponse, HealthStatus, ServiceHealth};
 
 /// Health check endpoint
-#[utoipa::path(
-    get,
-    path = "/health",
-    responses(
-        (status = 200, description = "System health check", body = HealthResponse),
-        (status = 503, description = "System unhealthy", body = HealthResponse)
-    ),
-    tag = "health"
-)]
 pub async fn health_check() -> AxumResult<(StatusCode, Json<HealthResponse>)> {
     // TODO: Add real health checks for services
     let mut services = Vec::new();
@@ -75,15 +65,6 @@ pub async fn health_check() -> AxumResult<(StatusCode, Json<HealthResponse>)> {
 }
 
 /// Readiness check endpoint (for Kubernetes)
-#[utoipa::path(
-    get,
-    path = "/ready",
-    responses(
-        (status = 200, description = "Service is ready"),
-        (status = 503, description = "Service not ready")
-    ),
-    tag = "health"
-)]
 pub async fn readiness_check() -> AxumResult<StatusCode> {
     // TODO: Add readiness checks (database connection, required services)
     // For now, always return ready
@@ -91,29 +72,12 @@ pub async fn readiness_check() -> AxumResult<StatusCode> {
 }
 
 /// Liveness check endpoint (for Kubernetes)
-#[utoipa::path(
-    get,
-    path = "/live",
-    responses(
-        (status = 200, description = "Service is alive"),
-        (status = 503, description = "Service not responding")
-    ),
-    tag = "health"
-)]
 pub async fn liveness_check() -> AxumResult<StatusCode> {
     // For liveness, we just need to respond - if we can respond, we're alive
     Ok(StatusCode::OK)
 }
 
 /// API version information
-#[utoipa::path(
-    get,
-    path = "/version",
-    responses(
-        (status = 200, description = "API version information", body = HashMap<String, String>)
-    ),
-    tag = "health"
-)]
 pub async fn version_info() -> AxumResult<Json<HashMap<String, String>>> {
     let mut info = HashMap::new();
     info.insert("name".to_string(), env!("CARGO_PKG_NAME").to_string());

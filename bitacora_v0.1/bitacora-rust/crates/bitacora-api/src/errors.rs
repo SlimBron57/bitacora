@@ -8,13 +8,13 @@ use axum::response::{IntoResponse, Response};
 use axum::Json;
 use serde::{Deserialize, Serialize};
 use std::fmt;
-use utoipa::ToSchema;
+// utoipa schema derivations removed
 
 /// Standard API result type
 pub type ApiResult<T> = Result<T, ApiError>;
 
 /// Comprehensive API error types with HTTP status code mapping
-#[derive(Debug, Clone, Serialize, Deserialize, ToSchema)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "type", content = "details")]
 pub enum ApiError {
     /// Resource not found (404)
@@ -64,13 +64,13 @@ pub enum ApiError {
     },
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, ToSchema)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ValidationFieldError {
     pub field: String,
     pub message: String,
 }
 
-#[derive(Serialize, ToSchema)]
+#[derive(Serialize, Deserialize)]
 pub struct ErrorResponse {
     pub error: ApiError,
     pub timestamp: chrono::DateTime<chrono::Utc>,

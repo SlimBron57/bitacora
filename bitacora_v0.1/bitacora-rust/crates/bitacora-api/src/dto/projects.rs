@@ -1,30 +1,30 @@
 //! DTOs for Project operations in Bitacora API
 
 use serde::{Deserialize, Serialize};
-use utoipa::ToSchema;
+// utoipa schema derivations removed
 use uuid::Uuid;
 use chrono::{DateTime, Utc};
 
 /// Project data transfer object
-#[derive(Debug, Serialize, Deserialize, Clone, ToSchema)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct ProjectDto {
     /// Unique project identifier
-    #[schema(example = "550e8400-e29b-41d4-a716-446655440000")]
+    // #[schema(example = "550e8400-e29b-41d4-a716-446655440000")]
     pub id: Uuid,
     
     /// Project name
-    #[schema(example = "My Awesome Project")]
+    // #[schema(example = "My Awesome Project")]
     pub name: String,
     
     /// Project description
-    #[schema(example = "A comprehensive project to build amazing software")]
+    // #[schema(example = "A comprehensive project to build amazing software")]
     pub description: Option<String>,
     
     /// Project status
     pub status: ProjectStatus,
     
     /// Project tags for categorization
-    #[schema(example = json!(["development", "rust", "api"]))]
+    // #[schema(example = json!(["development", "rust", "api"]))]
     pub tags: Vec<String>,
     
     /// Project metadata as key-value pairs
@@ -37,24 +37,24 @@ pub struct ProjectDto {
     pub updated_at: DateTime<Utc>,
     
     /// Number of topics in this project
-    #[schema(example = 5)]
+    // #[schema(example = 5)]
     pub topic_count: u32,
     
     /// Number of completed actions in this project
-    #[schema(example = 12)]
+    // #[schema(example = 12)]
     pub completed_actions: u32,
     
     /// Total number of actions in this project  
-    #[schema(example = 20)]
+    // #[schema(example = 20)]
     pub total_actions: u32,
     
     /// Project completion percentage (0-100)
-    #[schema(example = 60.0)]
+    // #[schema(example = 60.0)]
     pub completion_percentage: f32,
 }
 
 /// Project status enumeration
-#[derive(Debug, Serialize, Deserialize, Clone, ToSchema)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum ProjectStatus {
     /// Project is being planned
@@ -72,21 +72,21 @@ pub enum ProjectStatus {
 }
 
 /// Request to create a new project
-#[derive(Debug, Deserialize, ToSchema)]
+#[derive(Debug, Deserialize)]
 pub struct CreateProjectRequest {
     /// Project name (required)
-    #[schema(example = "My New Project")]
+    // #[schema(example = "My New Project")]
     pub name: String,
     
     /// Project description (optional)
-    #[schema(example = "Description of what this project aims to achieve")]
+    // #[schema(example = "Description of what this project aims to achieve")]
     pub description: Option<String>,
     
     /// Initial status (defaults to Planning)
     pub status: Option<ProjectStatus>,
     
     /// Project tags for categorization
-    #[schema(example = json!(["web", "frontend", "react"]))]
+    // #[schema(example = json!(["web", "frontend", "react"]))]
     pub tags: Option<Vec<String>>,
     
     /// Project metadata as key-value pairs
@@ -94,21 +94,21 @@ pub struct CreateProjectRequest {
 }
 
 /// Request to update an existing project
-#[derive(Debug, Deserialize, ToSchema)]
+#[derive(Debug, Deserialize)]
 pub struct UpdateProjectRequest {
     /// Updated project name (optional)
-    #[schema(example = "Updated Project Name")]
+    // #[schema(example = "Updated Project Name")]
     pub name: Option<String>,
     
     /// Updated project description (optional)
-    #[schema(example = "Updated description with new goals")]
+    // #[schema(example = "Updated description with new goals")]
     pub description: Option<String>,
     
     /// Updated project status (optional)
     pub status: Option<ProjectStatus>,
     
     /// Updated project tags (optional, replaces existing tags)
-    #[schema(example = json!(["web", "backend", "api", "rust"]))]
+    // #[schema(example = json!(["web", "backend", "api", "rust"]))]
     pub tags: Option<Vec<String>>,
     
     /// Updated project metadata (optional, merges with existing)
@@ -116,7 +116,7 @@ pub struct UpdateProjectRequest {
 }
 
 /// Project summary for list views
-#[derive(Debug, Serialize, ToSchema)]
+#[derive(Debug, Serialize)]
 pub struct ProjectSummaryDto {
     pub id: Uuid,
     pub name: String,
@@ -128,7 +128,7 @@ pub struct ProjectSummaryDto {
 }
 
 /// Project statistics
-#[derive(Debug, Serialize, ToSchema)]
+#[derive(Debug, Serialize)]
 pub struct ProjectStatsDto {
     pub total_projects: u32,
     pub active_projects: u32,
