@@ -190,10 +190,27 @@ Esta documentación debe actualizarse cuando:
 ### Current Phase Documentation
 - [CLI Testing Proposal](../docs/CLI_TESTING_PROPOSAL.md) - Next priority: User Experience validation ⭐ **NEW**
 
+## 🧭 Sistema Híbrido de Navegación - Arquitectura Avanzada
+
+**Nueva Arquitectura Documentada:** Sistema híbrido con threading especializado y AI decision engine configurable
+
+### **Documentación Completa del Navigator System:**
+- **[00_INDEX_NAVIGATION.md](../docs/architecture/00_INDEX_NAVIGATION.md)** - Índice principal y guías de lectura
+- **[01_HYBRID_NAVIGATOR_SYSTEM.md](../docs/architecture/01_HYBRID_NAVIGATOR_SYSTEM.md)** - Arquitectura híbrida definitiva
+- **[02_THREADING_SAFETY_MECHANISMS.md](../docs/architecture/02_THREADING_SAFETY_MECHANISMS.md)** - Threading especializado y safety
+- **[03_AI_DECISION_ENGINE.md](../docs/architecture/03_AI_DECISION_ENGINE.md)** - Motor de decisiones AI configurable  
+- **[04_CONFIGURATION_SYSTEM.md](../docs/architecture/04_CONFIGURATION_SYSTEM.md)** - Sistema de configuración multi-scope
+- **[05_CLI_INTEGRATION_STRATEGY.md](../docs/architecture/05_CLI_INTEGRATION_STRATEGY.md)** - Testing + Learning simultáneo
+
+### **Para quien quiera entender el Navigator System:**
+1. **Empezar aquí** → [00_INDEX_NAVIGATION.md](../docs/architecture/00_INDEX_NAVIGATION.md) - Guías de lectura por perfil
+2. **Visión general** → [01_HYBRID_NAVIGATOR_SYSTEM.md](../docs/architecture/01_HYBRID_NAVIGATOR_SYSTEM.md) - Problema resuelto y arquitectura
+3. **Implementación** → Seguir orden recomendado según perfil en el índice
+
 ### Project Status
 - **Current Branch**: `cli-ready-production-20250827`
 - **Overall Progress**: 99% completed
-- **Next Priority**: CLI Testing & User Experience
+- **Next Priority**: Sistema Híbrido de Navegación Implementation
 - **ETA for V1.0**: End of August 2025
 
 ---
