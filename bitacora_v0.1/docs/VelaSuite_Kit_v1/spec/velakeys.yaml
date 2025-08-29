@@ -1,0 +1,61 @@
+velakeys:
+  - code: VELA.MAIN
+    display_name: "Mainsail Key"
+    i18n_es: "Llave Vela Mayor"
+    unlocks: [navigator.templates.base, ai.template.gen, thread.level.2]
+    icon: "⛵️"
+  - code: VELA.JIB
+    display_name: "Jib Key"
+    i18n_es: "Llave Foque"
+    unlocks: [debug.quickscan, review.light, context.pull.fast]
+    icon: "🪢"
+  - code: VELA.STAY
+    display_name: "Staysail Key"
+    i18n_es: "Llave Estay"
+    unlocks: [alias.guard, regex.validator, template.qa]
+    icon: "🧭"
+  - code: VELA.SPI
+    display_name: "Spinnaker Key"
+    i18n_es: "Llave Spinnaker"
+    unlocks: [creator.bursts, marketing.kits, sampling.high]
+    icon: "🎈"
+  - code: VELA.GEN
+    display_name: "Gennaker Key"
+    i18n_es: "Llave Gennaker"
+    unlocks: [ideation.loops, rapid.proto, AB.template.labs]
+    icon: "🌀"
+  - code: VELA.C0
+    display_name: "Code Zero Key"
+    i18n_es: "Llave Code Zero"
+    unlocks: [bootstrap.from.sparse, auto.docs.seed]
+    icon: "💨"
+  - code: VELA.STORM
+    display_name: "Storm Jib Key"
+    i18n_es: "Llave Tormentín"
+    unlocks: [incident.mode, context.min, latency.low]
+    icon: "🌊"
+  - code: VELA.TRY
+    display_name: "Trysail Key"
+    i18n_es: "Llave Vela de Capa"
+    unlocks: [safe.mode, offline.ops, fallback.exec]
+    icon: "🛟"
+  - code: VELA.MIZ
+    display_name: "Mizzen Key"
+    i18n_es: "Llave Mesana"
+    unlocks: [watchers, metrics.stream, auto.triggers]
+    icon: "👀"
+  - code: VELA.FORE
+    display_name: "Foresail Key"
+    i18n_es: "Llave Trinquete"
+    unlocks: [discovery.scan, deps.graph, research.assist]
+    icon: "🔎"
+  - code: VELA.SKIP
+    display_name: "Skipper Key"
+    i18n_es: "Llave Patrón"
+    unlocks: [market.rentals, license.admin, revshare]
+    icon: "⚓️"
+  - code: VELA.SHIP
+    display_name: "Shipwright Key"
+    i18n_es: "Llave Maestro Carpintero"
+    unlocks: [specialist.train, pack.publish, ip.controls]
+    icon: "🪚"

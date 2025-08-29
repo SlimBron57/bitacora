@@ -1,16 +1,33 @@
 # 📚 Índice de Navegación Rápida - Bitacora V1.0
+## 🔥 **NUEVA NAVEGACIÓN: BITAFLOW NAVIGATOR** 🚀
+
+### 🎯 **EL TESORO DE BITACORA - SYSTEM HÍBRIDO REVOLUCIONARIO** ✨
+**Status**: ¡FUNCIONANDO! - 28 Agosto 2025
+**ubicación**: `bitacora-rust/crates/bitacora-navigator/`
+**Descubrimiento**: Autonomous Specialized Navigators con BitaFlow DSL
+
+### 🧭 **Para Desarrolladores usando Navigator System**
+**¡NUEVA RUTA DE NAVEGACIÓN REVOLUCIONARIA!**
+
+1. **🚀 Empezar con Navigator** → [`bitacora-rust/crates/bitacora-navigator/README.md`](../bitacora-rust/crates/bitacora-navigator/README.md) - Quick start del sistema híbrido
+2. **🎯 API Reference** → [`bitacora-rust/crates/bitacora-navigator/docs/API.md`](../bitacora-rust/crates/bitacora-navigator/docs/API.md) - API completa con ejemplos
+3. **📝 Template Creation** → [`bitacora-rust/crates/bitacora-navigator/docs/TEMPLATE_GUIDE.md`](../bitacora-rust/crates/bitacora-navigator/docs/TEMPLATE_GUIDE.md) - Crear templates .bfl
+4. **🏗️ Architecture Deep-dive** → [`bitacora-rust/crates/bitacora-navigator/docs/ARCHITECTURE.md`](../bitacora-rust/crates/bitacora-navigator/docs/ARCHITECTURE.md) - Sistema híbrido técnico
+5. **📊 Status Report** → [`bitacora-rust/crates/bitacora-navigator/BITAFLOW_INTEGRATION_STATUS.md`](../bitacora-rust/crates/bitacora-navigator/BITAFLOW_INTEGRATION_STATUS.md) - Progress tracking
+6. **🔄 Changelog** → [`bitacora-rust/crates/bitacora-navigator/CHANGELOG.md`](../bitacora-rust/crates/bitacora-navigator/CHANGELOG.md) - Version history
 
 ## 🎯 Guías de Lectura por Perfil
 
-### Para el Desarrollador Implementador
+### Para el Desarrollador Implementador  
 **Ruta recomendada para quien va a escribir el código:**
 
 1. **Empezar aquí** → [`README.md`](README.md) - Visión general completa
-2. **Arquitectura** → [`architecture/01_system_overview.md`](architecture/01_system_overview.md) - Entender el diseño SOLID
-3. **Estructura** → [`architecture/02_crates_structure.md`](architecture/02_crates_structure.md) - Detalles de cada crate
-4. **Base de Datos** → [`database/01_mongodb_design.md`](database/01_mongodb_design.md) - Esquemas y colecciones
-5. **Plan de Desarrollo** → [`development/01_development_plan.md`](development/01_development_plan.md) - Fases de implementación
-6. **Integración** → [`integration/01_copilot_integration.md`](integration/01_copilot_integration.md) - API y endpoints
+2. **🔥 NUEVO: Navigator System** → [`bitacora-rust/crates/bitacora-navigator/README.md`](../bitacora-rust/crates/bitacora-navigator/README.md) - Sistema híbrido revolucionario
+3. **Arquitectura** → [`architecture/01_system_overview.md`](architecture/01_system_overview.md) - Entender el diseño SOLID
+4. **Estructura** → [`architecture/02_crates_structure.md`](architecture/02_crates_structure.md) - Detalles de cada crate
+5. **Base de Datos** → [`database/01_mongodb_design.md`](database/01_mongodb_design.md) - Esquemas y colecciones
+6. **Plan de Desarrollo** → [`development/01_development_plan.md`](development/01_development_plan.md) - Fases de implementación
+7. **Integración** → [`integration/01_copilot_integration.md`](integration/01_copilot_integration.md) - API y endpoints
 
 ### Para el Administrador del Sistema
 **Ruta recomendada para quien va a configurar y mantener el sistema:**
@@ -32,6 +49,16 @@
 ---
 
 ## 🔍 Búsqueda Rápida por Tema
+
+### 🔥 **Navigator System Híbrido** (¡NUEVO!)
+| Tema | Documento | Sección Específica |
+|------|-----------|-------------------|
+| Quick Start | [`bitacora-rust/crates/bitacora-navigator/README.md`](../bitacora-rust/crates/bitacora-navigator/README.md) | "🚀 Quick Start" |
+| 4-Level Threading | [`bitacora-rust/crates/bitacora-navigator/docs/ARCHITECTURE.md`](../bitacora-rust/crates/bitacora-navigator/docs/ARCHITECTURE.md) | "Threading System" |
+| BitaFlow Templates | [`bitacora-rust/crates/bitacora-navigator/docs/TEMPLATE_GUIDE.md`](../bitacora-rust/crates/bitacora-navigator/docs/TEMPLATE_GUIDE.md) | "Creating Templates" |
+| AI Decision Engine | [`bitacora-rust/crates/bitacora-navigator/docs/API.md`](../bitacora-rust/crates/bitacora-navigator/docs/API.md) | "AIDecisionEngine" |
+| Autonomous Navigation | [`bitacora-rust/crates/bitacora-navigator/docs/ARCHITECTURE.md`](../bitacora-rust/crates/bitacora-navigator/docs/ARCHITECTURE.md) | "Autonomous Execution" |
+| Template Execution | [`bitacora-rust/crates/bitacora-navigator/docs/API.md`](../bitacora-rust/crates/bitacora-navigator/docs/API.md) | "Template Loading" |
 
 ### Arquitectura y Diseño
 | Tema | Documento | Sección Específica |
@@ -77,11 +104,23 @@
 
 ## 📋 Checklists de Implementación
 
+### 🔥 **Navigator System Setup (¡NUEVO!)** ✅
+- ✅ Implementar HybridNavigator core architecture  
+- ✅ Configurar 4-Level Threading System (SparkIsolated, ProjectIsolated, TopicSerial, FullSerial)
+- ✅ Desarrollar AI Decision Engine con rule-based system
+- ✅ Implementar Safety Controller con deadlock detection
+- ✅ Crear BitaFlow DSL Integration engine  
+- ✅ Implementar Template Execution Engine con autonomy levels
+- ✅ Crear AliasValidator para BITA-NAV-* templates
+- ✅ Generar documentación profesional completa
+- ✅ Validar sistema con integration tests (19/19 passing)
+- ✅ Demo funcionando: 45 actions ejecutadas en 4.4s
+
 ### Setup Inicial ✅
-- [ ] Leer [`README.md`](README.md) completo
-- [ ] Revisar [`architecture/01_system_overview.md`](architecture/01_system_overview.md)
-- [ ] Entender [`architecture/02_crates_structure.md`](architecture/02_crates_structure.md)
-- [ ] Configurar environment de desarrollo según [`development/01_development_plan.md`](development/01_development_plan.md)
+- ✅ Leer [`README.md`](README.md) completo
+- ✅ Revisar [`architecture/01_system_overview.md`](architecture/01_system_overview.md)
+- ✅ Entender [`architecture/02_crates_structure.md`](architecture/02_crates_structure.md)
+- ✅ Configurar environment de desarrollo según [`development/01_development_plan.md`](development/01_development_plan.md)
 
 ### Implementación Core ⚙️
 - [ ] Implementar `bitacora-core` según especificaciones
@@ -119,15 +158,31 @@
 
 ## 🚀 Quick Start Commands
 
+### 🔥 **Para usar Navigator System inmediatamente:**
+```bash
+# 1. Navegar al Navigator System
+cd bitacora-rust/crates/bitacora-navigator
+
+# 2. Ejecutar demos del sistema híbrido
+cargo run --example basic_usage
+
+# 3. Correr tests de integration
+cargo test
+
+# 4. Ejecutar template específico
+cargo run --example bitaflow_demo
+
+# 5. Ver documentación API
+cargo doc --open
+```
+
 ### Para comenzar desarrollo inmediatamente:
 ```bash
-# 1. Clonar y setup inicial
-git clone <repository>
-cd bitacora-rust
+# 1. Clonar y posicionarse
+cd bitacora-rust/
 
-# 2. Leer documentación esencial
-cat _map/README.md
-cat _map/architecture/01_system_overview.md
+# 2. Build completo
+cargo build --all
 
 # 3. Setup desarrollo
 ./scripts/setup.sh  # Cuando esté implementado

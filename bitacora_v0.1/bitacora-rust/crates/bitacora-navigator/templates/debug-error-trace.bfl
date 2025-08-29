@@ -1,0 +1,177 @@
+---
+name: "Error Trace Navigation Template"
+alias: BITA-NAV-DEBUG-ERROR-TRACE-v1
+description: "Autonomous navigator for debugging and error tracing"
+domain: debug
+topic: error-trace
+version: 1
+autonomy_level: Interactive
+thread_level: ProjectIsolated
+variables:
+  error_type: "runtime"
+  severity: "high"
+  stack_trace_available: "true"
+  file_count: "5"
+  expertise_domain: "debugging"
+---
+
+# 🐛 Error Trace Navigator - Template Autónomo
+
+## Objetivo Principal
+**Navegación autónoma especializada en debugging de errores con stack trace disponible**
+
+Objetivo: {{objetivo_debug}}
+Error Message: {{error_message}}
+Stack Files: {{stack_files}}
+
+## Flujo de Navegación Especializado
+```
+Stack_Trace ↦ (Source_Analysis + Log_Context) ↦ Pattern_Detection
+      ↓                                              ↓
+Error_Context ↦ Similar_Issues ↦ Solution_Suggestions ↦ Fix_Recommendations
+```
+
+## Fases de Ejecución
+
+### Fase 1: Análisis Automático del Stack Trace
+;; Completamente autónomo - Sin confirmación requerida
+;; Thread Level: spark_isolated (Nivel 0)
+
+**Acciones Inmediatas:**
+1. **Extraer archivos del stack trace** → `{{stack_trace_files}}`
+2. **Identificar línea principal del error** → `{{error_line}}`
+3. **Mapear dependencias entre archivos** → `{{file_dependencies}}`
+4. **Buscar cambios recientes en archivos afectados** → `{{recent_changes}}`
+
+```
+File_Analysis ↦ Line_Context + Change_History ↦ Impact_Map
+```
+
+### Fase 2: Construcción de Contexto de Error
+;; Autónomo con límites definidos
+;; Máximo 10 archivos, máximo 5 minutos de análisis
+
+**Acciones Contextuales:**
+1. **Leer contexto alrededor del error** (±20 líneas)
+2. **Identificar funciones/métodos involucrados** → `{{error_functions}}`
+3. **Buscar patrones similares en codebase** → `{{similar_patterns}}`
+4. **Analizar logs relacionados** → `{{related_logs}}`
+
+### Fase 3: Detección de Patrones y Sugerencias
+;; Semi-autónomo - Puede pedir confirmación para análisis profundo
+
+**Pattern Matching:**
+- ¿Buscar en issues cerrados similares? `{{ask_issue_history}}`
+- ¿Analizar commits que tocaron estas líneas? `{{ask_commit_analysis}}`
+- ¿Ejecutar análisis de regresión? `{{ask_regression_analysis}}`
+
+## Variables de Template
+
+### Variables de Input (Proporcionadas por contexto)
+- `{{error_message}}` - Mensaje principal del error
+- `{{stack_trace}}` - Stack trace completo
+- `{{error_file}}` - Archivo principal donde ocurrió el error
+- `{{error_line}}` - Número de línea del error
+- `{{project_context}}` - Contexto del proyecto actual
+
+### Variables Calculadas (Generadas por el template)
+- `{{stack_trace_files}}` - Lista de archivos únicos en stack trace
+- `{{error_functions}}` - Funciones involucradas en el error
+- `{{similar_patterns}}` - Patrones similares encontrados
+- `{{recent_changes}}` - Cambios recientes relevantes
+- `{{related_logs}}` - Logs relacionados al timeframe del error
+- `{{suggested_fixes}}` - Lista de posibles soluciones
+
+### Variables de Control (Configuración del template)
+- `{{max_analysis_time}}` - Tiempo máximo de análisis (default: 5 min)
+- `{{max_files_analyzed}}` - Máximo archivos a analizar (default: 10)
+- `{{confidence_threshold}}` - Threshold para sugerencias (default: 0.7)
+
+## Outputs Esperados
+
+### 1. Diagnóstico Inmediato
+```
+🔍 ERROR ANALYSIS COMPLETE
+
+📍 Primary Error:
+   File: {{error_file}}:{{error_line}}
+   Function: {{primary_function}}
+   Message: {{error_message}}
+
+📊 Impact Analysis:
+   Files Affected: {{stack_trace_files.count}}
+   Functions Involved: {{error_functions.count}}
+   Confidence: {{analysis_confidence}}%
+```
+
+### 2. Contexto Enriquecido  
+```
+🧠 CONTEXT ENRICHMENT
+
+🔗 Dependencies:
+{{#each file_dependencies}}
+   {{source}} → {{target}} ({{relationship}})
+{{/each}}
+
+📅 Recent Changes:
+{{#each recent_changes}}
+   {{file}} - {{author}} - {{time_ago}}
+   "{{commit_message}}"
+{{/each}}
+```
+
+### 3. Sugerencias de Solución
+```
+💡 SOLUTION SUGGESTIONS
+
+🎯 High Confidence ({{high_confidence_count}}):
+{{#each high_confidence_suggestions}}
+   ✅ {{suggestion}}
+   📄 Evidence: {{evidence}}
+   🔧 Fix: {{fix_approach}}
+{{/each}}
+
+🤔 Medium Confidence ({{medium_confidence_count}}):
+{{#each medium_confidence_suggestions}}
+   ⚠️ {{suggestion}}
+   📊 Similarity: {{similarity_score}}%
+{{/each}}
+```
+
+## Métricas de Template
+
+### Performance Metrics
+- `execution_time`: Tiempo total de ejecución
+- `files_analyzed`: Número de archivos analizados
+- `patterns_found`: Patrones similares detectados
+- `suggestions_generated`: Número de sugerencias generadas
+
+### Quality Metrics  
+- `user_satisfaction`: Rating del usuario (1-5)
+- `solution_accuracy`: ¿La sugerencia resolvió el problema?
+- `false_positive_rate`: Tasa de sugerencias incorrectas
+- `time_to_resolution`: Tiempo hasta resolución del issue
+
+### Learning Metrics
+- `template_improvements`: Mejoras aplicadas automáticamente
+- `pattern_recognition_accuracy`: Precisión en detección de patrones
+- `context_relevance_score`: Relevancia del contexto generado
+
+## Condiciones de Evolución del Template
+
+### Auto-Evolution Triggers
+- `success_rate < 0.6` → Revisar lógica de pattern matching
+- `execution_time > 10_min` → Optimizar análisis de archivos
+- `false_positive_rate > 0.3` → Ajustar confidence thresholds
+- `user_satisfaction < 3.0` → Revisar outputs y sugerencias
+
+### Versioning Strategy
+- **v1**: Template básico con stack trace analysis
+- **v2**: Agregar machine learning para pattern detection  
+- **v3**: Integrar con external debugging tools
+- **v4**: Cross-project pattern analysis
+
+;; Template creado por: BitaFlow AI Engine
+;; Generado: {{generation_timestamp}}
+;; Última actualización: {{last_update_timestamp}}
+;; Próxima revisión: {{next_review_timestamp}}

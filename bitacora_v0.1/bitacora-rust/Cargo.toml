@@ -9,6 +9,8 @@ members = [
     "crates/bitacora-records",
     "crates/bitacora-backup",
     "crates/bitacora-api",
+    "crates/bitacora-navigator",
+    "crates/bitacora-ai-generator",
     # Próximo a implementar
     # "crates/bitacora-commands",
     # Observability & Monitoring Systems (to be implemented)
