@@ -29,6 +29,117 @@ pub enum ThreadLevel {
 }
 ```
 
+## 🧵 **ARQUITECTURA DE THREADING: UNA COREOGRAFÍA DE EJECUCIÓN**
+
+En el corazón de nuestro sistema late una arquitectura de threading que desafía las convenciones tradicionales. No se trata simplemente de paralelizar tareas, sino de **orquestar una sinfonía de ejecución** donde cada componente conoce su rol preciso en la composición general.
+
+### **ThreadManager: El Cerebro Central de Coordinación**
+
+El `ThreadManager` representa una **evolución sofisticada** en el manejo de concurrencia, estructurado en cuatro capas jerárquicas que responden a diferentes patrones de dependencia:
+
+**🔥 Nivel 0 - Spark Pool (Concurrencia Máxima):**
+- **Arquitectura**: `Arc<ThreadPool>` con semáforos inteligentes
+- **Estrategia**: Procesamiento paralelo sin restricciones
+- **Justificación Técnica**: Los sparks son unidades computacionales completamente independientes, sin estado compartido ni dependencias mutuas
+- **Ventaja**: Escalabilidad horizontal pura, aprovechando al máximo los recursos de CPU disponibles
+
+**🏗️ Nivel 1 - Project Pool (Aislamiento Estratégico):**
+- **Arquitectura**: Thread pools dedicados con workspace isolation
+- **Estrategia**: Paralelismo controlado con límites de recursos por proyecto
+- **Justificación Técnica**: Proyectos individuales requieren aislamiento de memoria y filesystem para prevenir contaminación cruzada
+- **Ventaja**: Balance óptimo entre rendimiento y estabilidad del sistema
+
+**📋 Nivel 2 - Topic Executor (Secuencialidad Inteligente):**
+- **Arquitectura**: `Arc<Mutex<Executor>>` con lógica de riesgo
+- **Estrategia**: Ejecución serial con evaluación continua de riesgo
+- **Justificación Técnica**: Topics dentro de un proyecto pueden tener dependencias temporales y efectos secundarios acumulativos
+- **Ventaja**: Consistencia garantizada con capacidad de intervención humana ante situaciones de alto riesgo
+
+**⚡ Nivel 3 - Action Executor (Atomicidad Absoluta):**
+- **Arquitectura**: Mutex con validación de estado y rollback automático
+- **Estrategia**: Operaciones atómicas con verificación de integridad
+- **Justificación Técnica**: Actions modifican estado global del sistema, requiriendo transacciones ACID-like
+- **Ventaja**: Imposibilidad de estados inconsistentes, con recuperación automática ante fallos
+
+### **La Filosofía de la Jerarquía**
+
+Esta arquitectura no emerge de decisiones arbitrarias, sino de un **análisis profundo de los patrones de dependencia** en sistemas complejos:
+
+1. **Independencia Total** (Nivel 0): Cuando las tareas son completamente autónomas
+2. **Aislamiento Contextual** (Nivel 1): Cuando las tareas comparten recursos pero no estado
+3. **Dependencias Temporales** (Nivel 2): Cuando el orden de ejecución importa
+4. **Integridad de Estado** (Nivel 3): Cuando las modificaciones deben ser atómicas
+
+### **ThreadLevel: Configuración Adaptativa**
+
+El enum `ThreadLevel` proporciona una **interfaz de configuración elegante** que permite adaptar el comportamiento del sistema según el contexto operativo:
+
+- `Spark(SparkThreadConfig)`: Optimizado para cargas de trabajo masivamente paralelas
+- `Project(ProjectThreadConfig)`: Diseñado para entornos multi-proyecto con aislamiento
+- `Topic(TopicSerialConfig)`: Configurado para workflows secuenciales con evaluación de riesgo
+- `Action(ActionSerialConfig)`: Preparado para operaciones críticas con garantías de atomicidad
+
+Esta arquitectura representa un **avance significativo** en el diseño de sistemas concurrentes, combinando la eficiencia del paralelismo con la robustez de la ejecución controlada.
+
+---
+
+### **Nivel 0: Spark Threading** ✅ FULL CONCURRENCY
+```
+
+## 🧵 **LA DANZA DE LOS THREADS: UNA NARRATIVA TÉCNICA**
+
+Imagina un gran teatro donde múltiples actores representan simultáneamente, pero cada uno conoce perfectamente su rol y cuándo debe esperar su turno. Esta es la esencia de nuestra arquitectura de threading: **una coreografía perfecta entre paralelismo y secuencialidad**.
+
+### **El Director de Orquesta: ThreadManager**
+
+El `ThreadManager` es el **maestro de ceremonias** que coordina cuatro niveles de ejecución, cada uno con su propia estrategia de threading:
+
+**🎭 Nivel 0 - Los Sparks (Máximo Paralelismo):**
+- **spark_pool**: Un grupo de threads listos para procesar múltiples "sparks" simultáneamente
+- **Por qué paralelismo total?** Los sparks son entidades completamente independientes - como actores en escenas separadas que nunca se cruzan
+- **Beneficio**: Máxima velocidad cuando no hay dependencias entre tareas
+
+**🏗️ Nivel 1 - Los Proyectos (Aislamiento Inteligente):**
+- **project_pool**: Threads dedicados a proyectos individuales, con aislamiento de recursos
+- **Por qué aislamiento?** Cada proyecto tiene su propio "escenario" - variables, archivos, contexto único
+- **Beneficio**: Proyectos pueden ejecutarse en paralelo sin interferencias, pero cada uno mantiene su integridad
+
+**📋 Nivel 2 - Los Topics (Secuencialidad Estratégica):**
+- **topic_executor**: Un solo ejecutor serial envuelto en Mutex para acceso controlado
+- **Por qué serial?** Los topics dentro de un proyecto pueden tener dependencias - un topic puede necesitar resultados del anterior
+- **Beneficio**: Consistencia garantizada, con capacidad de pausa para consulta humana cuando el riesgo es alto
+
+**⚡ Nivel 3 - Las Actions (Atomicidad Absoluta):**
+- **action_executor**: Ejecución estrictamente serial con validación de estado
+- **Por qué serial y atómica?** Las actions modifican estado compartido - como escribir en un libro sagrado donde cada palabra cuenta
+- **Beneficio**: Imposibilidad de race conditions, rollback automático ante fallos
+
+### **La Filosofía Detrás de la Arquitectura**
+
+Esta jerarquía de threading refleja una **filosofía de responsabilidad gradual**:
+
+1. **Arriba (Nivel 0)**: Libertad total para maximizar rendimiento
+2. **Medio (Nivel 1)**: Equilibrio entre paralelismo y aislamiento  
+3. **Abajo (Niveles 2-3)**: Prudencia extrema donde la consistencia es crítica
+
+Es como una **flota de barcos** donde:
+- Los barcos pequeños (sparks) navegan libremente en paralelo
+- Los barcos medianos (proyectos) mantienen distancia de seguridad
+- Los barcos grandes (topics/actions) siguen rutas predefinidas y coordinadas
+
+### **ThreadLevel: El Mapa de Navegación**
+
+El enum `ThreadLevel` actúa como **mapa de navegación**, permitiendo configurar cada nivel según sus necesidades específicas:
+
+- `Spark`: Configuración para concurrencia máxima
+- `Project`: Configuración para aislamiento de workspace
+- `Topic`: Configuración para ejecución serial con umbrales de riesgo
+- `Action`: Configuración para operaciones atómicas con validación de estado
+
+Esta arquitectura no es solo código - es una **sinfonía de ejecución** donde cada instrumento (thread) conoce su partitura y momento de entrada.
+
+---
+
 ### **Nivel 0: Spark Threading** ✅ FULL CONCURRENCY
 
 ```rust
