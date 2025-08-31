@@ -1,0 +1,6 @@
+Specialist "Debugger Pro" {
+  needs: [VELA.JIB, VELA.STAY]
+  boosts: [VELA.SPI]
+  export: marketplace
+  revenue_share: { owner: 0.7, platform: 0.3 }
+}

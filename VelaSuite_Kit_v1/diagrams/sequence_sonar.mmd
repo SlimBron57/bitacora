@@ -1,0 +1,7 @@
+sequenceDiagram
+  participant D as Device (VelaSonar)
+  participant B as Backend
+  B-->>D: seed + nonce + params (in MastPolicy)
+  D->>D: Synthesize + play + record + FFT/HMAC
+  D-->>B: proof (HMAC + signature)
+  B->>B: Reconstruct expected + verify + anti-replay

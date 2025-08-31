@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MastPolicy",
+  "type": "object",
+  "required": [
+    "iss",
+    "sub",
+    "exp",
+    "features",
+    "offline_grace_s"
+  ],
+  "properties": {
+    "iss": {
+      "type": "string"
+    },
+    "sub": {
+      "type": "string"
+    },
+    "exp": {
+      "type": "integer"
+    },
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "min_template_versions": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer"
+      }
+    },
+    "allowed_hashes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "offline_grace_s": {
+      "type": "integer"
+    },
+    "app_version": {
+      "type": "string"
+    },
+    "attestation_required": {
+      "type": "boolean"
+    },
+    "audio_challenge": {
+      "type": "object",
+      "required": [
+        "enabled",
+        "sr",
+        "dur_ms",
+        "window",
+        "bins"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "sr": {
+          "type": "integer"
+        },
+        "dur_ms": {
+          "type": "integer"
+        },
+        "window": {
+          "type": "string"
+        },
+        "bins": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

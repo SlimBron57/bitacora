@@ -1,0 +1,9 @@
+masts_enabled: [VELA.MAIN, VELA.JIB]
+offline_grace_s: 604800
+attestation_required: true
+audio_challenge:
+  enabled: true
+  sr: 16000
+  dur_ms: 800
+  window: hann
+  bins: 64

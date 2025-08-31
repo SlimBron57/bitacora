@@ -1,0 +1,4 @@
+NavigatorTemplate "Code Review" {
+  min_keys: [VELA.JIB]
+  rec_keys: [VELA.STAY, VELA.MAIN]
+}

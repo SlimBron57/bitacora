@@ -1,0 +1,11 @@
+Product<License> "Mainsail Key" {
+  alias: VELA.MAIN
+  tier: CORE
+  unlocks: [navigator.templates.base, ai.template.gen, thread.level.2]
+}
+
+Product<License> "Storm Jib Key" {
+  alias: VELA.STORM
+  tier: STORM
+  unlocks: [incident.mode, context.min, latency.low]
+}
