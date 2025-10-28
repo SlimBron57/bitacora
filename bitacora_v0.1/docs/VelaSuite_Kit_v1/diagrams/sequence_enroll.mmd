@@ -1,8 +1,0 @@
-sequenceDiagram
-  participant U as User
-  participant D as Device (VelaLock)
-  participant B as Backend
-  U->>D: Enter PIN/Gesture (OPAQUE)
-  D->>D: Enclave keypair + DEK + wrap(DEK, KEK)
-  D->>B: Attestation (App Attest/Play Integrity)
-  B-->>D: Enroll OK (KeelID registered)

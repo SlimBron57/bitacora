@@ -1,0 +1,22 @@
+# Programa en texto para el segundo engranaje (DSL minimal)
+# El ejecutor 'engranaje_segundo' debe interpretar estas directivas.
+
+INPUT_DIR=./in
+OUTPUT_DIR=./out
+
+# Base de salida para representar los valores (2..36 típicamente)
+BASE=16
+
+# Qué producir
+MODE=per_pixel    # per_pixel: volcar valores por pixel
+# MODE=palette    # palette: extraer paleta de colores única
+# MODE=histogram  # histogram: conteo de frecuencias
+
+# Formato de salida de datos
+FORMAT=hex        # hex | json | csv | bin
+
+# Canales a considerar y orden
+CHANNELS=RGBA     # RGBA | RGB
+
+# Manejo de canal alfa
+ALPHA=keep        # keep | drop

@@ -1,8 +1,0 @@
-sequenceDiagram
-  participant D as Device
-  participant B as Backend
-  D->>B: Request MastPolicy (with attestation)
-  B->>B: Check VelaKeys (on/off-chain) + features
-  B-->>D: COSE MastPolicy (signed)
-  D->>D: Verify signature + sub + exp + hashes
-  D->>D: Unwrap DEK, hoist masts/features

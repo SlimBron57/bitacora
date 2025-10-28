@@ -1,0 +1,5 @@
+Este es un ejemplo de documento entregado por el usuario.
+Tiene texto libre y en cualquier parte incluye los dos tokens requeridos:
+
+42697461
+636f7261
