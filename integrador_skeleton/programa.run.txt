@@ -1,1 +1,0 @@
-./engranaje_segundo --input ./in --output ./out --base 16 --logic ./programa.logic.txt
