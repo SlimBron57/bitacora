@@ -1,6 +1,6 @@
 # COPYRIGHT NOTICE
 
-## Bitácora - AI Memory System with 7D Context Analysis
+## 🜛Bitacora - Sistema de Inteligencia Contextual
 
 Copyright © 2025 Eduardo Gil (Vangijroc)
 
@@ -8,214 +8,208 @@ Copyright © 2025 Eduardo Gil (Vangijroc)
 
 ---
 
-## Copyrighted Components
+## Componentes Protegidos por Copyright
 
-This copyright notice covers all aspects of the Bitácora project, including but not limited to:
+Este aviso de copyright cubre todos los aspectos del proyecto 🜛Bitacora, incluyendo pero no limitado a:
 
-### 1. Source Code
-- All Rust source code in `src/` directory
-- All example implementations in `examples/`
-- All test suites in `tests/`
-- All utility scripts in `scripts/`
-- All configuration files
+### 1. Código Fuente
+- Todo el código fuente del proyecto
+- Implementaciones de ejemplo
+- Suites de prueba
+- Scripts de utilidad
+- Archivos de configuración
 
-### 2. Documentation
-- Technical documentation in `ROADMAP_V2/`
-- Architectural designs in `FUSION_BAYESIANA/`
-- Public-facing documentation in `PUBLIC/`
-- API specifications and diagrams
-- Implementation guides and tutorials
+### 2. Documentación
+- Documentación técnica
+- Diseños arquitectónicos
+- Documentación pública
+- Especificaciones de API
+- Guías de implementación
 
-### 3. Algorithms and Methods
-- Context Token 7D analysis system
-- FBCU (Fractal-Based Compression Unit) algorithm
-- Spherical coordinate biographical storage method
-- Dual-helix architecture (TelescopeDB + VoxelDB)
-- Memory forensics and timeline reconstruction
-- Pixel encoding for multidimensional data
-- Snapshot compression and versioning
+### 3. Algoritmos y Métodos
+- Sistema de análisis contextual multidimensional
+- Algoritmos de compresión semántica avanzada
+- Métodos de almacenamiento biográfico
+- Arquitectura de memoria dual
+- Sistemas de recuperación contextual
+- Técnicas de procesamiento multimodal
 
-### 4. Designs and Concepts
-- TelescopeDB database schema and structure
-- VoxelDB octree indexing system
-- HubSpoke orchestration pattern
-- Sensory Engine multimodal processing
-- Multi-agent routing system
-- MTT-DSL template language
+### 4. Diseños y Conceptos
+- Esquemas de bases de datos
+- Sistemas de indexación
+- Patrones de orquestación
+- Procesamiento multimodal
+- Sistema de enrutamiento multi-agente
+- Lenguajes de plantillas especializados
 
-### 5. Names and Trademarks
-- **Bitácora** (project name)
-- **TelescopeDB** (episodic memory database)
-- **VoxelDB** (procedural memory database)
-- **FBCU** (compression algorithm)
-- **Context Token 7D** (analysis system)
-- **HubSpoke** (orchestration component)
-- **Sensory Engine** (multimodal processor)
+### 5. Nombres y Marcas
+- **🜛Bitacora** (nombre del proyecto)
+- Componentes del sistema (nombres reservados)
+- Algoritmos propietarios (nombres reservados)
+- Sistemas de análisis (nombres reservados)
 
 ---
 
-## Date of First Publication
+## Fecha de Primera Publicación
 
-**October 27, 2025**
+**27 de Octubre, 2025**
 
-This date establishes the **prior art** for all innovations described in this project.
-
----
-
-## Patents Pending
-
-The following provisional patent applications have been prepared/filed:
-
-1. **Multi-Dimensional Context Analysis System**
-   - Application Number: [To be filed]
-   - Invention Date: October 2025
-   - Covers: 7D tensor analysis, spherical coordinate transformation
-
-2. **Fractal-Based Semantic Compression**
-   - Application Number: [To be filed]
-   - Invention Date: October 2025
-   - Covers: FBCU algorithm, pixel encoding, >99% compression ratio
-
-3. **Dual-Helix Memory Architecture**
-   - Application Number: [To be filed]
-   - Invention Date: October 2025
-   - Covers: TelescopeDB + VoxelDB synchronization, hybrid query system
-
-4. **Spherical Coordinate Biographical Storage**
-   - Application Number: [To be filed]
-   - Invention Date: October 2025
-   - Covers: (r, θ, φ) event storage, proximity-based context retrieval
+Esta fecha establece el **prior art** para todas las innovaciones descritas en este proyecto.
 
 ---
 
-## Ownership
+## Patentes en Proceso
 
-All intellectual property rights, including but not limited to:
-- Copyright
-- Patent rights
-- Trade secret rights
-- Trademark rights
-- Moral rights
-- Database rights
+Se han preparado solicitudes de patente provisional para las siguientes innovaciones:
 
-...are owned exclusively by **Eduardo Gil (Vangijroc)**.
+1. **Sistema de Análisis Contextual Multidimensional**
+   - Número de Solicitud: [Por presentar]
+   - Fecha de Invención: Octubre 2025
+   - Cubre: Análisis contextual avanzado y transformaciones de datos
+
+2. **Compresión Semántica Avanzada**
+   - Número de Solicitud: [Por presentar]
+   - Fecha de Invención: Octubre 2025
+   - Cubre: Algoritmos de compresión que preservan significado
+
+3. **Arquitectura de Memoria Dual**
+   - Número de Solicitud: [Por presentar]
+   - Fecha de Invención: Octubre 2025
+   - Cubre: Sistema de sincronización y consulta híbrida
+
+4. **Sistema de Almacenamiento Biográfico Avanzado**
+   - Número de Solicitud: [Por presentar]
+   - Fecha de Invención: Octubre 2025
+   - Cubre: Métodos de almacenamiento y recuperación contextual
 
 ---
 
-## Geographic Coverage
+## Titularidad
 
-This copyright claim is valid in:
-- 🇨🇴 Colombia (country of origin)
-- 🇺🇸 United States (development location)
-- 🌍 All countries signatory to the Berne Convention (automatic copyright)
-- 🌐 All countries signatory to the WIPO Copyright Treaty
+Todos los derechos de propiedad intelectual, incluyendo pero no limitado a:
+- Derechos de autor
+- Derechos de patente
+- Derechos de secreto comercial
+- Derechos de marca registrada
+- Derechos morales
+- Derechos de base de datos
+
+...son propiedad exclusiva de **Eduardo Gil (Vangijroc)**.
 
 ---
 
-## Evidence of Authorship
+## Cobertura Geográfica
 
-### Git Repository
-- Complete git history available with timestamped commits
-- All commits signed by Eduardo Gil (Vangijroc)
-- Repository: [Private - not public yet]
+Esta declaración de copyright es válida en:
+- 🇨🇴 Colombia (país de origen)
+- 🇺🇸 Estados Unidos (lugar de desarrollo)
+- 🌍 Todos los países signatarios de la Convención de Berna (copyright automático)
+- 🌐 Todos los países signatarios del Tratado de Derechos de Autor de la OMPI
 
-### SHA-256 Hash Verification
-A cryptographic hash of this codebase as of October 27, 2025:
+---
+
+## Evidencia de Autoría
+
+### Repositorio Git
+- Historial completo de git disponible con commits con timestamp
+- Todos los commits firmados por Eduardo Gil (Vangijroc)
+- Repositorio: github.com/SlimBron57/bitacora
+
+### Verificación SHA-256
+Hash criptográfico de esta base de código al 27 de Octubre, 2025:
 
 ```
-[To be generated via backup_completo.sh]
+[Generado mediante backup y verificación]
 ```
 
-### OpenTimestamps (Blockchain Proof)
+### OpenTimestamps (Prueba Blockchain)
 ```
-[To be generated - proves existence at specific date]
+[Prueba de existencia en fecha específica mediante blockchain público]
 ```
 
 ---
 
-## Legal Notices
+## Avisos Legales
 
-### 1. No Open Source License
-This project is **NOT** licensed under any open source license (GPL, MIT, Apache, etc.).
+### 1. Sin Licencia de Código Abierto
+Este proyecto **NO** está licenciado bajo ninguna licencia de código abierto (GPL, MIT, Apache, etc.).
 
-The presence of this code in a public repository does NOT grant any rights to use, 
-modify, or distribute it.
+La presencia de este código en un repositorio público NO otorga ningún derecho de uso, modificación o distribución.
 
-### 2. No Implied License
-Viewing this repository does NOT grant you any license or rights.
+### 2. Sin Licencia Implícita
+Ver este repositorio NO te otorga ninguna licencia o derecho.
 
-All rights remain with the copyright holder.
+Todos los derechos permanecen con el titular del copyright.
 
-### 3. DMCA Protection
-This work is protected under the Digital Millennium Copyright Act (DMCA).
+### 3. Protección DMCA
+Este trabajo está protegido bajo la Digital Millennium Copyright Act (DMCA).
 
-Any unauthorized use, reproduction, or distribution may result in:
-- DMCA takedown notices
-- Civil litigation
-- Statutory damages up to $150,000 per infringement (US law)
+Cualquier uso, reproducción o distribución no autorizada puede resultar en:
+- Avisos de eliminación DMCA
+- Litigio civil
+- Daños estatutarios de hasta $150,000 por infracción (ley de EE.UU.)
 
-### 4. Patent Protection
-Use of the described algorithms and methods may infringe on pending patent applications.
+### 4. Protección de Patentes
+El uso de los algoritmos y métodos descritos puede infringir solicitudes de patente pendientes.
 
-Commercial use is PROHIBITED until licensing agreements are established.
+El uso comercial está PROHIBIDO hasta que se establezcan acuerdos de licencia.
 
 ---
 
-## Licensing Inquiries
+## Consultas de Licenciamiento
 
-For commercial licensing, collaboration, or permission requests:
+Para licenciamiento comercial, colaboración o solicitudes de permiso:
 
 **Eduardo Gil (Vangijroc)**  
-Email: [To be provided]  
-GitHub: [Contact via Issues]
+Email: slimbron57@gmail.com  
+GitHub: github.com/SlimBron57/bitacora
 
 ---
 
-## Attribution Requirements
+## Requisitos de Atribución
 
-If referencing this work in academic, research, or educational contexts, please cite:
+Si se hace referencia a este trabajo en contextos académicos, de investigación o educativos, por favor citar:
 
 ```
-Gil, E. (2025). Bitácora: AI Memory System with 7D Context Analysis.
-https://github.com/[to-be-published]
+Gil, E. (2025). 🜛Bitacora: Sistema de Inteligencia Contextual.
+https://github.com/SlimBron57/bitacora
 ```
 
 ---
 
-## Version History
+## Historial de Versiones
 
-| Version | Date | Description |
+| Versión | Fecha | Descripción |
 |---------|------|-------------|
-| 1.0 | 2025-10-27 | Initial copyright notice |
+| 1.0 | 2025-10-27 | Aviso de copyright inicial |
 
 ---
 
-## Contact Information
+## Información de Contacto
 
-**Copyright Holder:**  
+**Titular del Copyright:**  
 Eduardo Gil (Vangijroc)
 
-**Correspondence Address:**  
-[To be provided upon request]
+**Dirección de Correspondencia:**  
+[Proporcionada bajo solicitud]
 
-**Legal Representation:**  
-[To be determined when patent attorney retained]
+**Representación Legal:**  
+[Por determinar cuando se contrate abogado de patentes]
 
 ---
 
 <div align="center">
 
-**🔒 PROPRIETARY AND CONFIDENTIAL 🔒**
+**🔒 PROPIETARIO Y CONFIDENCIAL 🔒**
 
-This document and all associated materials are the confidential, 
-proprietary information of Eduardo Gil (Vangijroc).
+Este documento y todos los materiales asociados son información confidencial y propietaria de Eduardo Gil (Vangijroc).
 
-**Unauthorized disclosure, use, or reproduction is strictly prohibited.**
+**La divulgación, uso o reproducción no autorizados están estrictamente prohibidos.**
 
 </div>
 
 ---
 
-**Last Updated:** October 27, 2025  
-**Document Version:** 1.0  
-**Legal Status:** All Rights Reserved
+**Última Actualización:** 27 de Octubre, 2025  
+**Versión del Documento:** 1.0  
+**Estado Legal:** Todos los Derechos Reservados

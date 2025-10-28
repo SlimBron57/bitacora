@@ -1,8 +1,8 @@
-# 📜 Guía de Patentes Provisionales
+# 📜 Guía de Patentes Provisionales - Bitácora
 
 > **Autor:** Eduardo Gil (Vangijroc)  
 > **Fecha:** 27 de Octubre, 2025  
-> **Propósito:** Guía general sobre el proceso de patente provisional (Provisional Patent Application)
+> **Propósito:** Documentar proceso de patente provisional (Provisional Patent Application)
 
 ---
 
@@ -17,12 +17,12 @@ Una **Provisional Patent Application (PPA)** es un documento que:
 4. **Te permite usar "Patent Pending"** en marketing
 5. **NO es examinada** por la oficina de patentes (solo archivada)
 
-### Beneficios Generales
+### Beneficios para Bitácora
 ✅ **Protección inmediata** mientras recaudas fondos  
 ✅ **Bajo costo** ($130-300 USD dependiendo de tipo de solicitante)  
 ✅ **12 meses** para preparar patente completa  
 ✅ **Establece prior art** contra competidores  
-✅ **Permite decir "Patent Pending"** públicamente  
+✅ **Permite decir "Patent Pending"** en README público  
 
 ---
 
@@ -74,20 +74,20 @@ Recibes:
 
 ### PASO 4: Usar "Patent Pending"
 
-Ahora puedes legalmente incluir en tus materiales:
+Ahora puedes legalmente poner en tu README:
 ```markdown
 **Patents Pending:**
-US Provisional Patent Application No. 63/XXX,XXX
-Filed: [Mes] 2025
+- US Provisional Patent Application No. 63/XXX,XXX (Multi-dimensional Context Analysis System)
+- US Provisional Patent Application No. 63/XXX,XXX (Fractal-Based Semantic Compression)
 ```
 
 ### PASO 5: Convertir a Patente Completa (antes de 12 meses)
 
 Tienes 12 meses para:
-1. Recaudar fondos necesarios ($15k-20k típico)
+1. Recaudar los $15k-20k necesarios
 2. Contratar patent attorney
 3. Preparar Non-Provisional Patent Application
-4. Filing completo con claims formales
+4. Filing completo con claims
 
 ---
 
@@ -106,10 +106,10 @@ Tienes 12 meses para:
 - Filing PCT: ~$1,500-4,000 USD
 - Nacional Phase (cada país): $2k-10k USD por país
 
-### Estrategia Recomendada
-1. **Año 0:** Provisional US ($130-300)
+### Recomendación para Bitácora
+1. **Ahora:** Provisional US ($130-300)
 2. **Año 1:** Non-Provisional US + PCT filing ($5k-10k)
-3. **Año 2-3:** Nacional Phase en países clave
+3. **Año 2-3:** Nacional Phase en países clave (Colombia, EU, China)
 
 ---
 
@@ -133,24 +133,25 @@ Tienes 12 meses para:
 4. Examen de fondo
 5. Concesión (2-4 años total)
 
-### Ventaja
+### Ventaja para ti
 Como colombiano, puedes aplicar en Colombia primero y luego reclamar "priority date" en USA/PCT.
 
 ---
 
-## 💰 Estrategia de Costos
+## 💰 Estrategia Recomendada para Bitácora
 
-### FASE 1: Protección Inmediata ($300)
+### FASE 1: Protección Inmediata (Ahora - $300)
 ```
-✅ Provisional Patent US
+✅ Provisional Patent US (uspto.gov)
+   - Context Token 7D System
    - Costo: $130-300
    - Duración: 12 meses
    - Beneficio: "Patent Pending" + fecha establecida
 ```
 
-### FASE 2: Después del Lanzamiento ($10k)
+### FASE 2: Después del Lanzamiento (Año 1 - $10k)
 ```
-Cuando se recauden fondos:
+Cuando recauden $15k-20k:
 
 ✅ Non-Provisional US ($5k-10k)
    - Contratar patent attorney
@@ -162,15 +163,125 @@ Cuando se recauden fondos:
    - 30 meses para decidir países
 ```
 
-### FASE 3: Expansión Global ($20k-50k)
+### FASE 3: Expansión Global (Año 2-3 - $20k-50k)
 ```
-Si hay éxito comercial:
+Si Bitácora tiene éxito comercial:
 
 ✅ Nacional Phase PCT
    - Colombia (origen, económico)
    - EU (mercado grande)
    - China (protección contra copias)
 ```
+
+---
+
+## 📝 Qué Patentar en Bitácora
+
+### Innovación #1: Sistema Context Token 7D
+**Título:** "Multi-Dimensional Context Analysis System for AI Interactions"
+
+**Claims clave:**
+- Análisis simultáneo en 7 dimensiones
+- Conversión a coordenadas esféricas
+- Scoring >100% (breakthrough 133.8)
+
+**Prior art diferente:** Sistemas existentes usan 1-3 dimensiones max
+
+---
+
+### Innovación #2: FBCU Compression
+**Título:** "Fractal-Based Semantic Compression for Natural Language"
+
+**Claims clave:**
+- Compresión >99% con recuperabilidad semántica
+- Encoding fractal de dimensiones 7D
+- Pixel storage en RGB
+
+**Prior art diferente:** Compresión tradicional pierde semántica
+
+---
+
+### Innovación #3: Dual-Helix Memory
+**Título:** "Dual-Database Architecture for Episodic and Procedural AI Memory"
+
+**Claims clave:**
+- TelescopeDB (esférico) + VoxelDB (cúbico)
+- Sincronización bidireccional
+- Query híbrido <50ms
+
+**Prior art diferente:** Sistemas actuales usan una sola DB o RAG simple
+
+---
+
+### Innovación #4: Geometría Esférica Biográfica
+**Título:** "Spherical Coordinate System for Biographical Memory Storage"
+
+**Claims clave:**
+- Coordenadas (r, θ, φ) para experiencias
+- Distancia euclidiana en espacio esférico
+- Query por proximidad conceptual
+
+**Prior art diferente:** Almacenamiento biográfico es lineal (timestamps)
+
+---
+
+## 🚨 ACCIÓN INMEDIATA RECOMENDADA
+
+### Esta Semana (Costo: $0)
+
+1. **Documentar innovaciones** ✅
+   ```bash
+   # Ya lo hicimos - ver este archivo
+   ```
+
+2. **OpenTimestamps** ✅
+   ```bash
+   # Próximo script: opentimestamp.sh
+   # Costo: $0 (blockchain público)
+   ```
+
+3. **Backup encriptado** ✅
+   ```bash
+   ./scripts/backup_completo.sh  # Ya creado
+   gpg --symmetric backup.tar.gz
+   # Subir a Google Drive encriptado
+   ```
+
+---
+
+### Próximas 2 Semanas (Costo: $130-300)
+
+4. **Preparar Provisional Patent** 📝
+   - Usar plantilla USPTO
+   - Describir Context Token 7D
+   - Describir FBCU Compression
+   - Describir Dual-Helix
+   - Incluir diagramas de ROADMAP_V2
+
+5. **Filing USPTO Online** 💰
+   - Micro Entity ($130) si eres individuo
+   - Small Entity ($260) si planeas formar startup
+   - Recibir Application Number
+
+6. **Actualizar README público** ✅
+   ```markdown
+   **Patents Pending:**
+   US Provisional Patent Application No. 63/XXX,XXX
+   Filed: October 2025
+   ```
+
+---
+
+### Año 1 (Cuando tengas $15k-20k)
+
+7. **Contratar Patent Attorney**
+   - Buscar especializado en software/AI
+   - Preparar Non-Provisional Application
+   - Filing USPTO completo
+
+8. **PCT Filing** (opcional)
+   - Si planeas expandir internacionalmente
+   - Protección en 157 países
 
 ---
 
@@ -190,7 +301,7 @@ Si hay éxito comercial:
 - **Website:** https://www.wipo.int/pct/en/
 - **ePCT Filing:** https://pct.wipo.int/ePCT/
 
-### Patent Attorneys
+### Patent Attorneys (USA)
 - **FindLaw:** https://www.findlaw.com
 - **Martindale:** https://www.martindale.com
 - **USPTO Directory:** https://www.uspto.gov/learning-and-resources/ip-policy/public-information/oedci-products
@@ -204,7 +315,7 @@ Si hay éxito comercial:
 
 **Ventajas:**
 - Costo bajo ($130-300)
-- Rápido (se puede hacer en días)
+- Rápido (puedes hacerlo esta semana)
 - Establece fecha de invención
 
 **Desventajas:**
@@ -233,124 +344,61 @@ Si NO quieres patentar pero SÍ prevenir que otros patenten:
 
 ---
 
-## 🎯 Estrategia General Recomendada
+## 🎯 Decisión Recomendada para Bitácora
 
-### Cronograma Típico
+### Estrategia "Provisional Ahora, Completa Después"
 
 ```
-MES 0 (Ahora):
-├─ Provisional Patent ($130-300)
-├─ Documentación técnica
-└─ Establecer prior art público
+AHORA (Octubre 2025):
+├─ Provisional Patent US ($130-300)
+├─ OpenTimestamps ($0)
+├─ Backup encriptado ($0)
+└─ README público con "Patent Pending"
 
-MES 1-12:
-├─ Desarrollo de producto
-├─ Recaudación de fondos
-└─ Preparación de non-provisional
+LANZAMIENTO (2026):
+├─ Recaudar $15k-20k
+├─ Non-Provisional Patent US
+└─ PCT Filing (opcional)
 
-MES 12:
-├─ Non-Provisional Patent ($5k-10k)
-├─ PCT Filing (opcional)
-└─ Contratación de patent attorney
-
-AÑO 2-3:
-├─ Examen de patente
-├─ Nacional Phase (países clave)
-└─ Emisión de patente
+EXPANSIÓN (2027+):
+├─ Nacional Phase en países clave
+└─ Patentes adicionales (mejoras)
 ```
+
+### Por Qué Esta Estrategia Funciona
+1. **Protección inmediata** con costo mínimo
+2. **12 meses** para recaudar fondos
+3. **"Patent Pending"** ayuda con marketing/inversores
+4. **Flexibilidad** para decidir países después
 
 ---
 
-## 📝 Preparación de Documentos
+## 📞 Próximo Paso Concreto
 
-### Estructura Típica de Provisional Patent
+### TODO: Crear Provisional Patent Document
 
-```markdown
-1. TÍTULO
-   - Descriptivo y claro
-   - Máximo 500 caracteres
+```bash
+# Archivo a crear:
+PUBLIC/PROVISIONAL_PATENT_CONTEXT_7D.md
 
-2. CAMPO TÉCNICO
-   - Área tecnológica
-   - Dominio de aplicación
-
-3. ANTECEDENTES
-   - Estado del arte actual
-   - Problemas existentes
-   - Limitaciones de soluciones previas
-
-4. RESUMEN DE LA INVENCIÓN
-   - Qué problema resuelve
-   - Cómo lo resuelve (general)
-   - Ventajas principales
-
-5. DESCRIPCIÓN DETALLADA
-   - Componentes del sistema
-   - Funcionamiento
-   - Ejemplos de uso
-
-6. DIAGRAMAS
-   - Arquitectura general
-   - Flujos de proceso
-   - Casos de uso
+# Contenido:
+- Título de invención
+- Campo técnico
+- Prior art (qué existe hoy)
+- Problema que resuelves
+- Descripción de tu solución
+- Diagramas/ejemplos
+- Ventajas sobre prior art
 ```
 
----
-
-## ⚠️ Errores Comunes a Evitar
-
-### ❌ NO Hacer:
-- Revelar invención públicamente ANTES de filing
-- Esperar más de 12 meses para non-provisional
-- Incluir información insuficiente en provisional
-- Copiar descripciones de otros sin citar prior art
-- Olvidar mantener evidencia de fecha de concepción
-
-### ✅ SÍ Hacer:
-- Documentar todo el proceso de desarrollo
-- Mantener lab notebooks con fechas
-- Usar OpenTimestamps para prueba de fecha
-- Guardar backups encriptados
-- Consultar con attorney antes de publicar detalles
-
----
-
-## 🔐 Protección Adicional Recomendada
-
-### Antes del Filing:
-1. **OpenTimestamps**
-   - Prueba blockchain de existencia
-   - Costo: $0
-   - Timestamp inmutable
-
-2. **Backup Encriptado**
-   - Google Drive/Dropbox encriptado
-   - Multiple copias
-   - Hash SHA-256 documentado
-
-3. **Git Repository**
-   - Commits con timestamp
-   - Historia completa de desarrollo
-   - Evidencia de autoría
-
-4. **Notario Público** (Opcional)
-   - Notarización de documentos clave
-   - Costo: ~$50-100
-   - Valor legal adicional
+¿Quieres que te ayude a redactar el documento provisional ahora? Puedo usar la documentación de ROADMAP_V2 como base. 🚀
 
 ---
 
 <div align="center">
 
-**💎 La protección de tu propiedad intelectual es una inversión en tu futuro 💎**
+**💎 La presión crea diamantes - El proceso crea patentes 💎**
 
-*Invierte tiempo y recursos en proteger tus innovaciones antes de compartirlas públicamente*
+*Eduardo Gil (Vangijroc) - 2025*
 
 </div>
-
----
-
-**Última Actualización:** 27 de Octubre, 2025  
-**Versión:** 1.0
-
-**Descargo de Responsabilidad:** Esta guía es informativa y no constituye asesoría legal. Consulta con un patent attorney licenciado para tu situación específica.

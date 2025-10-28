@@ -1,0 +1,221 @@
+# COPYRIGHT NOTICE
+
+## Bitácora - AI Memory System with 7D Context Analysis
+
+Copyright © 2025 Eduardo Gil (Vangijroc)
+
+### All Rights Reserved
+
+---
+
+## Copyrighted Components
+
+This copyright notice covers all aspects of the Bitácora project, including but not limited to:
+
+### 1. Source Code
+- All Rust source code in `src/` directory
+- All example implementations in `examples/`
+- All test suites in `tests/`
+- All utility scripts in `scripts/`
+- All configuration files
+
+### 2. Documentation
+- Technical documentation in `ROADMAP_V2/`
+- Architectural designs in `FUSION_BAYESIANA/`
+- Public-facing documentation in `PUBLIC/`
+- API specifications and diagrams
+- Implementation guides and tutorials
+
+### 3. Algorithms and Methods
+- Context Token 7D analysis system
+- FBCU (Fractal-Based Compression Unit) algorithm
+- Spherical coordinate biographical storage method
+- Dual-helix architecture (TelescopeDB + VoxelDB)
+- Memory forensics and timeline reconstruction
+- Pixel encoding for multidimensional data
+- Snapshot compression and versioning
+
+### 4. Designs and Concepts
+- TelescopeDB database schema and structure
+- VoxelDB octree indexing system
+- HubSpoke orchestration pattern
+- Sensory Engine multimodal processing
+- Multi-agent routing system
+- MTT-DSL template language
+
+### 5. Names and Trademarks
+- **Bitácora** (project name)
+- **TelescopeDB** (episodic memory database)
+- **VoxelDB** (procedural memory database)
+- **FBCU** (compression algorithm)
+- **Context Token 7D** (analysis system)
+- **HubSpoke** (orchestration component)
+- **Sensory Engine** (multimodal processor)
+
+---
+
+## Date of First Publication
+
+**October 27, 2025**
+
+This date establishes the **prior art** for all innovations described in this project.
+
+---
+
+## Patents Pending
+
+The following provisional patent applications have been prepared/filed:
+
+1. **Multi-Dimensional Context Analysis System**
+   - Application Number: [To be filed]
+   - Invention Date: October 2025
+   - Covers: 7D tensor analysis, spherical coordinate transformation
+
+2. **Fractal-Based Semantic Compression**
+   - Application Number: [To be filed]
+   - Invention Date: October 2025
+   - Covers: FBCU algorithm, pixel encoding, >99% compression ratio
+
+3. **Dual-Helix Memory Architecture**
+   - Application Number: [To be filed]
+   - Invention Date: October 2025
+   - Covers: TelescopeDB + VoxelDB synchronization, hybrid query system
+
+4. **Spherical Coordinate Biographical Storage**
+   - Application Number: [To be filed]
+   - Invention Date: October 2025
+   - Covers: (r, θ, φ) event storage, proximity-based context retrieval
+
+---
+
+## Ownership
+
+All intellectual property rights, including but not limited to:
+- Copyright
+- Patent rights
+- Trade secret rights
+- Trademark rights
+- Moral rights
+- Database rights
+
+...are owned exclusively by **Eduardo Gil (Vangijroc)**.
+
+---
+
+## Geographic Coverage
+
+This copyright claim is valid in:
+- 🇨🇴 Colombia (country of origin)
+- 🇺🇸 United States (development location)
+- 🌍 All countries signatory to the Berne Convention (automatic copyright)
+- 🌐 All countries signatory to the WIPO Copyright Treaty
+
+---
+
+## Evidence of Authorship
+
+### Git Repository
+- Complete git history available with timestamped commits
+- All commits signed by Eduardo Gil (Vangijroc)
+- Repository: [Private - not public yet]
+
+### SHA-256 Hash Verification
+A cryptographic hash of this codebase as of October 27, 2025:
+
+```
+[To be generated via backup_completo.sh]
+```
+
+### OpenTimestamps (Blockchain Proof)
+```
+[To be generated - proves existence at specific date]
+```
+
+---
+
+## Legal Notices
+
+### 1. No Open Source License
+This project is **NOT** licensed under any open source license (GPL, MIT, Apache, etc.).
+
+The presence of this code in a public repository does NOT grant any rights to use, 
+modify, or distribute it.
+
+### 2. No Implied License
+Viewing this repository does NOT grant you any license or rights.
+
+All rights remain with the copyright holder.
+
+### 3. DMCA Protection
+This work is protected under the Digital Millennium Copyright Act (DMCA).
+
+Any unauthorized use, reproduction, or distribution may result in:
+- DMCA takedown notices
+- Civil litigation
+- Statutory damages up to $150,000 per infringement (US law)
+
+### 4. Patent Protection
+Use of the described algorithms and methods may infringe on pending patent applications.
+
+Commercial use is PROHIBITED until licensing agreements are established.
+
+---
+
+## Licensing Inquiries
+
+For commercial licensing, collaboration, or permission requests:
+
+**Eduardo Gil (Vangijroc)**  
+Email: [To be provided]  
+GitHub: [Contact via Issues]
+
+---
+
+## Attribution Requirements
+
+If referencing this work in academic, research, or educational contexts, please cite:
+
+```
+Gil, E. (2025). Bitácora: AI Memory System with 7D Context Analysis.
+https://github.com/[to-be-published]
+```
+
+---
+
+## Version History
+
+| Version | Date | Description |
+|---------|------|-------------|
+| 1.0 | 2025-10-27 | Initial copyright notice |
+
+---
+
+## Contact Information
+
+**Copyright Holder:**  
+Eduardo Gil (Vangijroc)
+
+**Correspondence Address:**  
+[To be provided upon request]
+
+**Legal Representation:**  
+[To be determined when patent attorney retained]
+
+---
+
+<div align="center">
+
+**🔒 PROPRIETARY AND CONFIDENTIAL 🔒**
+
+This document and all associated materials are the confidential, 
+proprietary information of Eduardo Gil (Vangijroc).
+
+**Unauthorized disclosure, use, or reproduction is strictly prohibited.**
+
+</div>
+
+---
+
+**Last Updated:** October 27, 2025  
+**Document Version:** 1.0  
+**Legal Status:** All Rights Reserved

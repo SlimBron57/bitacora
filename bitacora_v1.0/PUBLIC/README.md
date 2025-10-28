@@ -1,4 +1,4 @@
-# 🔥 Bitácora - Sistema de Inteligencia Contextual
+# 🔥 🜛Bitacora - Sistema de Inteligencia Contextual
 
 > **Proyecto de investigación iniciado:** Octubre 2025  
 > **Autor:** Eduardo Gil (Vangijroc)  
@@ -9,7 +9,7 @@
 
 ## 📋 Descripción General
 
-**Bitácora** es un sistema de inteligencia artificial avanzado que implementa técnicas innovadoras para el análisis contextual profundo de interacciones entre usuarios y sistemas de IA.
+**🜛Bitacora** es un sistema de inteligencia artificial avanzado que implementa técnicas innovadoras para el análisis contextual profundo de interacciones entre usuarios y sistemas de IA.
 
 El proyecto aborda limitaciones fundamentales de los sistemas de IA conversacionales actuales mediante:
 
@@ -105,7 +105,7 @@ Herramientas de investigación con análisis multidimensional de corpus y sistem
 **Octubre 2025** - Primera implementación funcional
 
 ### Prior Art
-Este repositorio público establece "prior art" para las innovaciones técnicas de Bitácora. La implementación completa permanece privada durante el proceso de registro de patentes.
+Este repositorio público establece "prior art" para las innovaciones técnicas de 🜛Bitacora. La implementación completa permanece privada durante el proceso de registro de patentes.
 
 ---
 
@@ -163,7 +163,7 @@ La documentación pública del proyecto incluye:
 
 ## ⚠️ Disclaimer
 
-Este README establece la **fecha de invención pública** del proyecto Bitácora para efectos de protección de propiedad intelectual. Los detalles técnicos específicos, algoritmos e implementaciones permanecen confidenciales.
+Este README establece la **fecha de invención pública** del proyecto 🜛Bitacora para efectos de protección de propiedad intelectual. Los detalles técnicos específicos, algoritmos e implementaciones permanecen confidenciales.
 
 **Última actualización:** 27 de Octubre, 2025
 
@@ -171,7 +171,7 @@ Este README establece la **fecha de invención pública** del proyecto Bitácora
 
 <div align="center">
 
-**🔥 Bitácora - Donde tu historia se convierte en inteligencia 🔥**
+**🔥 🜛Bitacora - Donde tu historia se convierte en inteligencia 🔥**
 
 *"Dos inteligencias, una guía, infinitas posibilidades"*
 
