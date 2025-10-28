@@ -13,3 +13,6 @@ bitacora_v1.0/*
 
 # EXCEPTO PUBLIC/
 !bitacora_v1.0/PUBLIC/
+
+# Excluir guía de patentes (privada)
+bitacora_v1.0/PUBLIC/PROVISIONAL_PATENT_GUIDE.md
