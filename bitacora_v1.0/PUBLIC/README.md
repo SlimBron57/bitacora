@@ -1,6 +1,7 @@
 # 🔥 🜛Bitacora - Sistema de Inteligencia Contextual
 
-> **Proyecto de investigación iniciado:** Octubre 2025  
+> **Proyecto de investigación iniciado:** Julio 2025  
+> **Proyecto de investigación publicado:** Octubre 2025  
 > **Autor:** Eduardo Gil (Vangijroc)  
 > **Estado:** En desarrollo - Tecnología no revelada públicamente  
 > **Versión actual:** Pre-alpha v1.0
@@ -52,6 +53,9 @@ Representación de información en estructuras geométricas no tradicionales que
 ### Compresión Semántica Avanzada
 Algoritmo especializado de compresión que preserva el significado completo de la información con ratios de eficiencia superiores a sistemas tradicionales.
 
+### IceBreaker Engine (Nuevo ✨)
+Sistema de establecimiento orgánico de relación inicial con usuarios nuevos. Utiliza templates que generan instrucciones para LLMs (no respuestas hardcodeadas), permitiendo conversaciones únicas y naturales mientras recopila información clave: nombre, intereses, sentimiento emocional. Progresa a través de 4 stages hasta establecer relación suficiente para modo productivo.
+
 ### Arquitectura de Memoria Dual
 Sistema complementario de almacenamiento que separa:
 - **Memoria Episódica**: Eventos y experiencias
@@ -83,7 +87,7 @@ Sistemas con memoria contextual profunda que mantienen continuidad entre sesione
 Herramientas de análisis biográfico para coaching, desarrollo personal y seguimiento de progreso educativo.
 
 ### Cloud Local - Soberanía de Datos
-Tus datos son propiedad del usuario, no de grandes corporaciones. Arquitectura local-first que garantiza privacidad total sin dependencia de servicios externos.
+Los datos son propiedad del usuario, no de grandes corporaciones. Arquitectura local-first que garantiza privacidad total sin dependencia de servicios externos.
 
 ### Control Parental para IA
 Sistema de supervisión y control para el uso responsable de inteligencias artificiales en menores de edad bajo responsabilidad familiar.
@@ -157,7 +161,6 @@ La documentación pública del proyecto incluye:
 - `README.md` - Descripción general del proyecto (este documento)
 - `COPYRIGHT` - Información de derechos de autor
 - `LICENSE` - Términos de uso y restricciones
-- `PROVISIONAL_PATENT_GUIDE.md` - Guía para protección de propiedad intelectual
 
 ---
 
