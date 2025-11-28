@@ -61,17 +61,31 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         println!("📋 Vamos a conocernos un poco antes de empezar...\n");
         
         let mut icebreaker = IceBreakerEngine::new(memory_bridge.clone())?;
+        let mut conversation_history: Vec<(String, String)> = Vec::new(); // (role, message)
         
         // Ice-breaking loop
         while !icebreaker.is_ice_broken() {
             // Get prompt for current stage
-            let prompt = icebreaker.get_current_prompt()?;
+            let base_prompt = icebreaker.get_current_prompt()?;
+            
+            // Build full prompt with conversation history
+            let mut full_prompt = base_prompt.clone();
+            if !conversation_history.is_empty() {
+                full_prompt.push_str("\n\nHistorial de conversación:\n");
+                for (role, msg) in &conversation_history {
+                    full_prompt.push_str(&format!("{}: {}\n", role, msg));
+                }
+                full_prompt.push_str("\nContinúa la conversación de forma natural y coherente con el historial.");
+            }
             
             // ✅ Task 7.2: Real LLM integration via HubSpoke
-            let ctx7d = ContextTensor7D::from_prompt(&prompt);
-            let response = hub.query_with_routing(&prompt, &ctx7d, "user_demo").await
+            let ctx7d = ContextTensor7D::from_prompt(&full_prompt);
+            let response = hub.query_with_routing(&full_prompt, &ctx7d, "user_demo").await
                 .map_err(|e| format!("LLM query failed: {:?}", e))?;
             let llm_response = response.text;
+            
+            // Store in history
+            conversation_history.push(("Bitácora".to_string(), llm_response.clone()));
             
             println!("🤖 Bitácora: {}", llm_response);
             println!("   (via {} | {:.3}s | ${:.4})", 
@@ -95,6 +109,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 println!("\n👋 ¡Hasta pronto!");
                 return Ok(());
             }
+            
+            // Store user input in history
+            conversation_history.push(("Usuario".to_string(), user_input.to_string()));
             
             // Process response and advance stage
             let result = icebreaker.process_user_response(user_input)?;
