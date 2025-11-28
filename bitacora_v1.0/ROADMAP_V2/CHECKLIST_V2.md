@@ -1028,17 +1028,79 @@ Siguiendo [METODOLOGIA_V1_6_GIT_CHECKLIST.md](METODOLOGIA_V1_6_GIT_CHECKLIST.md)
 - Checklist: Enhanced format with commit hashes
 - Validation: Automated sync checking
 
-### Phase 7: REST API Layer (Target: v1.1.0)
+### Phase 7: CLI 100% Functional (Target: v1.1.0)
 
-**Branch:** `feature/v1.1-rest-api`  
-**Estado:** 🔮 PLANNED  
+**Branch:** `feature/v1.1-cli-complete`  
+**Estado:** 🔮 PLANNED - PRIORITY 1 🔥  
 **ETA:** 2-3 weeks  
 **Dependencies:** [Phase 6 Complete ✅]  
-**Related Docs:** [03_API_ENDPOINTS.md](FUSION_BAYESIANA/03_API_ENDPOINTS.md)
+**Related Docs:** [examples/test_conversation_e2e.rs](../examples/test_conversation_e2e.rs)
+
+#### Rationale
+
+**Estrategia:** CLI primero, REST después.
+
+- ✅ **CLI = Lógica de negocio pura** (menos complejo, valida 100% funcionalidad)
+- ⏸️ **REST = Exposición de lógica** (más complejo, requiere CLI funcionando)
+
+Si CLI funciona 100% → lógica está probada → REST es solo "wrapping".
 
 #### Scope
 
-REST API endpoints for biographical data management, including authentication, rate limiting, and OpenAPI documentation.
+Implementar CLI interactivo completo con IceBreaker + HubSpoke + LLM real (no stubs).
+
+#### Success Criteria
+
+- [ ] CLI conversacional 100% funcional (no stubs)
+- [ ] IceBreaker completo (4+ stages, biografía almacenada)
+- [ ] HubSpoke + LLM real integrado (no simulate_llm_response)
+- [ ] 5 cognitive modes operacionales desde CLI
+- [ ] Conversación fluida end-to-end
+
+#### Tasks (Preview - 12 total)
+
+- [ ] 7.1 - Integrar HubSpoke con LLM real (OpenAI/Anthropic API)
+- [ ] 7.2 - Reemplazar simulate_llm_response() por hub_spoke.query()
+- [ ] 7.3 - IceBreaker CLI: 4 stages completos (Introduction → Biography → Preferences → Confirmation)
+- [ ] 7.4 - CLI: Guardar biografía en TelescopeDB automáticamente
+- [ ] 7.5 - CLI: 5 cognitive modes (Operational, Procedural, Learning, Conversational, Light)
+- [ ] 7.6 - CLI: Context Token 7D enhancement (topic + tone dinámicos)
+- [ ] 7.7 - CLI: Historial conversacional (memory bridge queries)
+- [ ] 7.8 - CLI: Comandos especiales (/help, /reset, /status, /exit)
+- [ ] 7.9 - Integration tests E2E (IceBreaker → Conversation → Memory)
+- [ ] 7.10 - Error handling robusto (network, LLM, storage)
+- [ ] 7.11 - Performance validation (<500ms response p95)
+- [ ] 7.12 - Documentation: CLI user guide + examples
+
+**🎯 Progress:** 0/12 tasks (0%)  
+**Metrics Target:**
+- Conversación fluida: Sin bloqueos, respuestas naturales
+- IceBreaker: 4/4 stages completables
+- Cognitive modes: 5/5 detectables y ejecutables
+- Performance: <500ms response p95
+- Tests: 15+ integration tests passing
+
+---
+
+### Phase 8: REST API Layer (Target: v1.2.0)
+
+**Branch:** `feature/v1.2-rest-api`  
+**Estado:** 🔮 PLANNED - PRIORITY 2  
+**ETA:** 2-3 weeks  
+**Dependencies:** [Phase 7 CLI Complete ✅]  
+**Related Docs:** [03_API_ENDPOINTS.md](FUSION_BAYESIANA/03_API_ENDPOINTS.md)
+
+#### Rationale
+
+**Ahora sí REST:** CLI funcionando 100% → Lógica probada → REST es "wrapping".
+
+- ✅ CLI validado (Phase 7)
+- ✅ Lógica de negocio completa
+- 🎯 REST = Exponer endpoints HTTP sobre lógica existente
+
+#### Scope
+
+REST API endpoints for biographical data, conversation management, authentication, rate limiting, and OpenAPI documentation.
 
 #### Success Criteria
 
@@ -1049,35 +1111,36 @@ REST API endpoints for biographical data management, including authentication, r
 
 #### Tasks (Preview - 14 total)
 
-- [ ] 7.1 - POST /api/v1/biographical/entry endpoint
-- [ ] 7.2 - GET /api/v1/biographical/:id endpoint
-- [ ] 7.3 - PUT /api/v1/biographical/:id endpoint
-- [ ] 7.4 - DELETE /api/v1/biographical/:id endpoint
-- [ ] 7.5 - Integration tests REST API
-- [ ] 7.6 - OpenAPI 3.0 specification
-- [ ] 7.7 - JWT authentication
-- [ ] 7.8 - Rate limiting middleware (100 req/min)
-- [ ] 7.9 - CORS configuration
-- [ ] 7.10 - Request validation middleware
-- [ ] 7.11 - Error handling standardized
-- [ ] 7.12 - Health check endpoint /api/v1/health
-- [ ] 7.13 - Metrics endpoint /api/v1/metrics
-- [ ] 7.14 - Docker deployment configuration
+- [ ] 8.1 - POST /api/v1/biographical/entry endpoint
+- [ ] 8.2 - GET /api/v1/biographical/:id endpoint
+- [ ] 8.3 - POST /api/v1/conversation/message endpoint
+- [ ] 8.4 - GET /api/v1/conversation/history endpoint
+- [ ] 8.5 - Integration tests REST API (biographical + conversation)
+- [ ] 8.6 - OpenAPI 3.0 specification complete
+- [ ] 8.7 - JWT authentication middleware
+- [ ] 8.8 - Rate limiting (100 req/min per user)
+- [ ] 8.9 - CORS configuration
+- [ ] 8.10 - Request validation middleware
+- [ ] 8.11 - Error handling standardized (HTTP status codes)
+- [ ] 8.12 - Health check endpoint /api/v1/health
+- [ ] 8.13 - Metrics endpoint /api/v1/metrics
+- [ ] 8.14 - Docker deployment configuration
 
 **🎯 Progress:** 0/14 tasks (0%)  
 **Metrics Target:**
 - Tests: 50/50 (100%)
 - Performance: <200ms p95
 - Coverage: >80%
+- OpenAPI: Complete + validated
 
 ---
 
-### Phase 8: SENSORY ENGINE + Zoom Integration (Target: v1.2.0)
+### Phase 9: SENSORY ENGINE + Zoom Integration (Target: v1.3.0)
 
-**Branch:** `feature/v1.2-sensory-zoom`  
-**Estado:** 🔮 PLANNED  
+**Branch:** `feature/v1.3-sensory-zoom`  
+**Estado:** 🔮 PLANNED - PRIORITY 3  
 **ETA:** 3-4 weeks  
-**Dependencies:** [Phase 7 REST API ✅]  
+**Dependencies:** [Phase 7 CLI ✅, Phase 8 REST API ✅]  
 **Related Docs:** [ZOOM_INGESTION_SENSORY_ENGINE.md](ROADMAP_V2/ZOOM_INGESTION_SENSORY_ENGINE.md)
 
 #### Scope
@@ -1093,14 +1156,14 @@ Implement SENSORY ENGINE with Zoom meeting ingestion, including audio/video proc
 
 #### Tasks (Preview - 8 total)
 
-- [ ] 8.1 - Implement src/sensory_engine/mod.rs
-- [ ] 8.2 - Zoom SDK integration (OAuth2 + webhooks)
-- [ ] 8.3 - Audio transcription (Whisper API)
-- [ ] 8.4 - Video frame extraction (keyframe detection)
-- [ ] 8.5 - Emotional analysis (tone + facial recognition)
-- [ ] 8.6 - SENSORY → TelescopeDB ingestion pipeline
-- [ ] 8.7 - Integration tests (E2E meeting → storage)
-- [ ] 8.8 - Performance validation (<2s transcription latency)
+- [ ] 9.1 - Implement src/sensory_engine/mod.rs
+- [ ] 9.2 - Zoom SDK integration (OAuth2 + webhooks)
+- [ ] 9.3 - Audio transcription (Whisper API)
+- [ ] 9.4 - Video frame extraction (keyframe detection)
+- [ ] 9.5 - Emotional analysis (tone + facial recognition)
+- [ ] 9.6 - SENSORY → TelescopeDB ingestion pipeline
+- [ ] 9.7 - Integration tests (E2E meeting → storage)
+- [ ] 9.8 - Performance validation (<2s transcription latency)
 
 **🎯 Progress:** 0/8 tasks (0%)  
 **Metrics Target:**
@@ -1110,12 +1173,12 @@ Implement SENSORY ENGINE with Zoom meeting ingestion, including audio/video proc
 
 ---
 
-### Phase 9: PXLang Implementation (Target: v1.5.0)
+### Phase 10: PXLang Implementation (Target: v1.5.0)
 
 **Branch:** `feature/v1.5-pxlang-impl`  
-**Estado:** 🔮 PLANNED  
+**Estado:** 🔮 PLANNED - PRIORITY 4  
 **ETA:** 4-6 weeks  
-**Dependencies:** [PXLang Docs ✅, Phase 8 SENSORY ✅]  
+**Dependencies:** [PXLang Docs ✅, Phase 9 SENSORY ✅]  
 **Related Docs:** [PXLANG_V1_ARCHITECTURE.md](ROADMAP_V2/PXLANG_V1_ARCHITECTURE.md)
 
 #### Context
@@ -1139,26 +1202,26 @@ Implement PXLang symbolic engine with Unicode storage, multilingual support, and
 
 #### Tasks (Preview - 20+ total)
 
-- [ ] 9.1 - Implement src/pxlang/mod.rs (Symbol Table core)
-- [ ] 9.2 - Implement PX-Core-256 symbol set
-- [ ] 9.3 - HashMap-based O(1) symbol lookup
-- [ ] 9.4 - Unicode storage strategy (UTF-8 + symbol extraction)
-- [ ] 9.5 - Multilingual dictionaries (256 symbols × 4 keywords = 1,024 mappings)
-- [ ] 9.6 - .pxbio file format serialization
-- [ ] 9.7 - QuantumDao project tracking integration
-- [ ] 9.8 - Natural query fast path (<20ms Symbol Table)
-- [ ] 9.9 - LLM fallback for complex queries (157ms acceptable)
-- [ ] 9.10 - ShuiDao ↔ PXLang integration (symbol-aware routing)
-- [ ] 9.11 - Checklist template generation (cooking, coding, research, home)
-- [ ] 9.12 - Branch auto-generation from templates
-- [ ] 9.13 - Integration tests (E2E project tracking)
-- [ ] 9.14 - Performance benchmarks (Symbol Table vs LLM: 50x faster)
-- [ ] 9.15 - Multilingual query tests (ES, EN, JP, AR, ZH)
-- [ ] 9.16 - Storage efficiency tests (10KB symbols, 30MB text, 187KB dicts)
-- [ ] 9.17 - TelescopeDB ↔ PXLang storage integration
-- [ ] 9.18 - API endpoints for PXLang queries
-- [ ] 9.19 - Documentation: Symbol Table reference
-- [ ] 9.20 - Documentation: Multilingual dictionaries guide
+- [ ] 10.1 - Implement src/pxlang/mod.rs (Symbol Table core)
+- [ ] 10.2 - Implement PX-Core-256 symbol set
+- [ ] 10.3 - HashMap-based O(1) symbol lookup
+- [ ] 10.4 - Unicode storage strategy (UTF-8 + symbol extraction)
+- [ ] 10.5 - Multilingual dictionaries (256 symbols × 4 keywords = 1,024 mappings)
+- [ ] 10.6 - .pxbio file format serialization
+- [ ] 10.7 - QuantumDao project tracking integration
+- [ ] 10.8 - Natural query fast path (<20ms Symbol Table)
+- [ ] 10.9 - LLM fallback for complex queries (157ms acceptable)
+- [ ] 10.10 - ShuiDao ↔ PXLang integration (symbol-aware routing)
+- [ ] 10.11 - Checklist template generation (cooking, coding, research, home)
+- [ ] 10.12 - Branch auto-generation from templates
+- [ ] 10.13 - Integration tests (E2E project tracking)
+- [ ] 10.14 - Performance benchmarks (Symbol Table vs LLM: 50x faster)
+- [ ] 10.15 - Multilingual query tests (ES, EN, JP, AR, ZH)
+- [ ] 10.16 - Storage efficiency tests (10KB symbols, 30MB text, 187KB dicts)
+- [ ] 10.17 - TelescopeDB ↔ PXLang storage integration
+- [ ] 10.18 - API endpoints for PXLang queries
+- [ ] 10.19 - Documentation: Symbol Table reference
+- [ ] 10.20 - Documentation: Multilingual dictionaries guide
 
 **🎯 Progress:** 0/20+ tasks (0%)  
 **Metrics Target:**
