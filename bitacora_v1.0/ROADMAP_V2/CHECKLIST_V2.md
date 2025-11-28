@@ -1031,8 +1031,9 @@ Siguiendo [METODOLOGIA_V1_6_GIT_CHECKLIST.md](METODOLOGIA_V1_6_GIT_CHECKLIST.md)
 ### Phase 7: CLI 100% Functional (Target: v1.1.0)
 
 **Branch:** `feature/v1.1-cli-complete`  
-**Estado:** 🔮 PLANNED - PRIORITY 1 🔥  
-**ETA:** 2-3 weeks  
+**Estado:** 🚧 IN PROGRESS - PRIORITY 1 🔥  
+**Started:** 2025-11-28  
+**ETA:** 2025-12-18 (2-3 weeks)  
 **Dependencies:** [Phase 6 Complete ✅]  
 **Related Docs:** [examples/test_conversation_e2e.rs](../examples/test_conversation_e2e.rs)
 
