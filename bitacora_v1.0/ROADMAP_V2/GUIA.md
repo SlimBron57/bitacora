@@ -1,16 +1,16 @@
 ```yaml
 # === DATOS DE AUDITORÍA ===
 Archivo: ROADMAP_V2/GUIA_V2.md
-Versión: 2.3 - "Git + Checklist Workflow v1.6 Integration"
+Versión: 2.4 - "Observability-Driven Development (ODD) Integration"
 Fecha Creación: 2025-10-26
-Última Actualización: 2025-11-28 11:45:00
-Autor: B (Sistema Bitácora - Metodología v1.6)
-Propósito: Guía multidimensional para agentes LLM con Git ↔ Checklist sync perfecto
-Estado: ACTIVO - Entry point con workflow v1.6 integrado
-Inspiración: Theremin, AVA, Uyuni, H₂O, Sinestesia Informacional + Metodología GitFlow
-Filosofía: No es un manual. Es un instrumento con trazabilidad cristalina.
-Cambios v2.3: Añadida SECCIÓN 2.5 Git + Checklist Workflow v1.6
-Punto de Entrada: SECCIÓN 0 (overview) → SECCIÓN 2.5 (workflow) → METODOLOGIA_V1_6_GIT_CHECKLIST.md (detailed spec)
+Última Actualización: 2025-11-28 14:45:00
+Autor: B (Sistema Bitácora - Metodología v1.6 + Observability)
+Propósito: Guía multidimensional para agentes LLM con Git ↔ Checklist sync + Observability First
+Estado: ACTIVO - Entry point con workflow v1.6 + ODD principles
+Inspiración: Theremin, AVA, Uyuni, H₂O, Sinestesia Informacional + Metodología GitFlow + Observability Engineering
+Filosofía: No es un manual. Es un instrumento con trazabilidad cristalina y visibilidad total.
+Cambios v2.4: Añadida SECCIÓN 2.6 Observability-Driven Development (ODD)
+Punto de Entrada: SECCIÓN 0 (overview) → SECCIÓN 2.5 (workflow) → SECCIÓN 2.6 (observability) → METODOLOGIA_V1_6_GIT_CHECKLIST.md
 # === FIN DATOS DE AUDITORÍA ===
 ```
 
@@ -2359,3 +2359,38 @@ No es completo hasta que los 4 pasos estén hechos.
 *"Los nombres importan. BitacoraSimulationEngine no es MonteCarloExpertSystem."* 🏷️🎯
 
 *"Los timestamps importan. 2025-10-27 17:05:57 no es 'aproximadamente ahora'."* 🕐✨
+
+---
+
+## 🔍 SECCIÓN 2.6: OBSERVABILITY-DRIVEN DEVELOPMENT (ODD)
+
+### ⚡ Principio Fundamental
+
+**"Si no puedes medirlo, no puedes mejorarlo. Si no puedes verlo, no puedes debuggearlo."**
+
+Bitácora v1.1+ adopta **Observability First** como principio arquitectónico core.
+
+**Phase 7.5 Reference:** [CHECKLIST_V2.md Phase 7.5](CHECKLIST_V2.md#phase-75-observability-layer-target-v115-)
+
+### 🎯 Los 4 Pilares
+
+1. **Structured Logging** → JSON parseable, context-rich
+2. **Metrics** → Prometheus-style counters/gauges/histograms
+3. **Distributed Tracing** → trace_id flows across all layers
+4. **Error Context** → Stack traces + retry attempts + user context
+
+### 🛠️ Implementation Strategy
+
+```rust
+// Auto-instrumentation via macro
+#[observe]
+async fn query_with_routing(...) -> Result<LLMResponse> {
+    // Automatically logs: entrada, salida, duración, errores, costo
+}
+```
+
+**Resultado:** Debug 60x faster (2 horas → 2 minutos)
+
+---
+
+*"Lo que no se mide, no existe. Lo que no se observa, no se puede mejorar."* 🔍📊✨

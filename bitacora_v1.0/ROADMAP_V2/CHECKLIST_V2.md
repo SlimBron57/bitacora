@@ -1,12 +1,12 @@
 ```yaml
 # === DATOS DE AUDITORÍA ===
 Archivo: ROADMAP_V2/CHECKLIST_V2.md
-Versión: 2.27 - Phase 7.1 LLMClient Complete ✅ 🎯
+Versión: 2.28 - Phase 7.5 Observability Layer Planned 🔍 🎯
 Fecha Creación: 2025-01-25
-Última Actualización: 2025-11-28 13:00:00
-Autor: Sistema Bitácora - Phase 7 CLI Implementation 🚀
+Última Actualización: 2025-11-28 14:30:00
+Autor: Sistema Bitácora - Phase 7 CLI + Observability Planning 🚀
 Propósito: Checklist plano con Git ↔ Checklist sync (metodología v1.6)
-Estado: ✅ v1.0-BETA RELEASED + Phase 7.1 COMPLETE (LLMClient + Hub integration)
+Estado: ✅ v1.0-BETA RELEASED + Phase 7.1 COMPLETE + Phase 7.5 DESIGNED
 Total Tareas: 121 Beta (COMPLETADO) + 77 ShuiDao Phase 3b (9/11 COMPLETE 82%) + 33 DOCS COMPLETADOS (14 DA-033 + 5 DA-034 + 1 IceBreaker + 14 PXLang/QPX)
 Relacionado Con: 
   - CHECKLIST_TREE_V2.md (árbol de tareas)
@@ -28,6 +28,21 @@ Evolución:
   - DA-033: Dynamic Topic/Tone System (TopicGraph + EmotionalSpace, personalización ilimitada)
   - DA-034: Small World Networks (Routier Navigator, 6 Degrees of Separation, Separation of Concerns)
   - 🎉 MILESTONE: Documentation Foundation 100% COMPLETE (~18,000 líneas) - READY FOR IMPLEMENTATION 🚀
+Cambios v2.28 (2025-11-28 14:30:00):
+  - 🔍 Phase 7.5 Observability Layer PLANIFICADA: 6 tasks, 18h ETA, infraestructura transversal
+  - 📊 Observability design:
+    * Structured logging (JSON output, context injection)
+    * Prometheus-style metrics (Counter, Gauge, Histogram)
+    * Distributed tracing (trace_id, span tracking, Jaeger-compatible)
+    * Auto-instrumentation macro #[observe]
+    * Dashboard CLI real-time (cost, latency, errors)
+  - 🏗️ Arquitectura NO invasiva: Capa transversal sin modificar firmas existentes
+  - 🎯 Strategy: CLI primero (Phase 7.2-7.12) → Observability parallel/después (Phase 7.5)
+  - 💡 Insight arquitectónico: "Bitácora = Organismo Global Distribuido"
+    * Cada device aprende localmente (privacy-first)
+    * Cloud central sintetiza mejoras (anónimas)
+    * Templates evolucionan sin comprometer datos usuarios
+  - 📋 Next: Task 7.2 (15 min) → CLI E2E funcional → Task 7.5.1 DA-035 design
 Cambios v2.27 (2025-11-28 13:00:00):
   - ✅ Phase 7.1 LLMClient COMPLETADO: 490 líneas, OpenAI + Anthropic API integration ✅
   - 🔌 LLMClient features:
@@ -1115,6 +1130,107 @@ Implementar CLI interactivo completo con IceBreaker + HubSpoke + LLM real (no st
 - Cognitive modes: 5/5 detectables y ejecutables
 - Performance: <500ms response p95
 - Tests: 15+ integration tests passing
+
+---
+
+### Phase 7.5: Observability Layer (Target: v1.1.5) 🆕
+
+**Branch:** `feature/v1.1.5-observability`  
+**Estado:** 🔮 PLANNED - PARALLEL TO PHASE 7  
+**ETA:** 1 week (18h part-time)  
+**Dependencies:** [Phase 7.1 LLMClient ✅]  
+**Related Docs:** [DA-035 - Observability First Architecture](ROADMAP_V2/00_VISION/03_decisiones-arquitectonicas.md)
+
+#### Rationale
+
+**"Debugging brutal desde el inicio"** - Visibilidad completa en todas las capas.
+
+Problema actual:
+- ❌ Sin structured logging (debug manual con println!)
+- ❌ Sin métricas agregadas (¿cuánto cuesta cada feature?)
+- ❌ Sin distributed tracing (¿dónde está el bottleneck?)
+- ❌ Sin error context (stack traces incompletos)
+
+Solución:
+- ✅ Capa transversal NO invasiva (macro `#[observe]`)
+- ✅ Compatible con arquitectura existente
+- ✅ Prometheus-style metrics
+- ✅ JSON structured logs
+- ✅ Distributed tracing (trace_id cross-component)
+
+#### Scope
+
+Implementar capa de observability que se integra automáticamente con todo el sistema sin modificar firmas de funciones existentes.
+
+#### Success Criteria
+
+- [ ] 6/6 tasks completed
+- [ ] Instrumentación automática en 5+ componentes
+- [ ] Dashboard CLI con métricas en tiempo real
+- [ ] Cost tracking por feature (<$0.01 granularidad)
+- [ ] Performance profiling (<1ms overhead)
+
+#### Tasks (6 total)
+
+- [ ] 7.5.1 - DA-035: Observability First Architecture (spec completa)
+  * Design: Structured logging strategy
+  * Design: Metrics aggregation (Prometheus-compatible)
+  * Design: Distributed tracing architecture
+  * Design: Error context enrichment
+  * Design: Performance profiling approach
+  
+- [ ] 7.5.2 - src/observability/logger.rs (Structured logging)
+  * JSON output format
+  * Log levels: TRACE, DEBUG, INFO, WARN, ERROR
+  * Context injection (user_id, request_id, component)
+  * File rotation (max 100MB per file)
+  
+- [ ] 7.5.3 - src/observability/metrics.rs (Prometheus-style)
+  * Counter, Gauge, Histogram collectors
+  * LLM metrics: calls, tokens, cost, latency
+  * System metrics: memory, CPU, disk
+  * Export format: Prometheus text format
+  
+- [ ] 7.5.4 - src/observability/tracer.rs (Distributed tracing)
+  * Generate trace_id per request
+  * Span tracking (start, end, duration)
+  * Parent-child span relationships
+  * Export: Jaeger-compatible JSON
+  
+- [ ] 7.5.5 - Auto-instrument existing code (macro #[observe])
+  * Instrument: LLMClient::query()
+  * Instrument: Hub::query_with_routing()
+  * Instrument: TelescopeDB operations
+  * Instrument: ContextTensor7D analysis
+  * Instrument: IceBreaker stages
+  
+- [ ] 7.5.6 - Observability dashboard (CLI output)
+  * Real-time metrics display
+  * Cost tracking per session
+  * Performance bottleneck detection
+  * Error rate monitoring
+
+**🎯 Progress:** 0/6 tasks (0%)  
+**Metrics Target:**
+- Overhead: <1ms per instrumented call
+- Coverage: 80%+ of critical paths instrumented
+- Latency visibility: p50, p90, p95, p99
+- Cost tracking: Per-feature granularity $0.01
+- Error context: 100% with stack traces
+
+**Implementation Strategy:**
+```rust
+// Uso simple (sin cambiar código existente)
+#[observe]
+async fn query_with_routing(...) -> Result<LLMResponse> {
+    // Auto-logs: entrada, salida, duración, errores
+}
+
+// Output automático:
+// [INFO] query_with_routing.start trace_id=abc123 user_id=eduardo
+// [DEBUG] query_with_routing.routing provider=OpenAI ctx7d={...}
+// [INFO] query_with_routing.end duration=157ms tokens=234 cost=$0.0047
+```
 
 ---
 
