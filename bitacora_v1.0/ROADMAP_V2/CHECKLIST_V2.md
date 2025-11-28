@@ -1,12 +1,12 @@
 ```yaml
 # === DATOS DE AUDITORÍA ===
 Archivo: ROADMAP_V2/CHECKLIST_V2.md
-Versión: 2.29 - Phase 7 CLI 16.7% Complete 🚀
+Versión: 2.30 - Soul Layer + AI Personalities Visioned 🌟
 Fecha Creación: 2025-01-25
-Última Actualización: 2025-11-28 17:45:00
-Autor: Sistema Bitácora - Phase 7.2 Real LLM Integration ✅
+Última Actualización: 2025-11-28 19:45:00
+Autor: Sistema Bitácora - Alma Conversacional + Ecosistema IA ✨
 Propósito: Checklist plano con Git ↔ Checklist sync (metodología v1.6)
-Estado: ✅ v1.0-BETA + Phase 7.1-7.2 COMPLETE + Phase 7.5 DESIGNED
+Estado: ✅ v1.0-BETA + Phase 7.1-7.2 COMPLETE + Phases 7.6-7.8 VISIONED
 Total Tareas: 121 Beta (COMPLETADO) + 77 ShuiDao Phase 3b (9/11 COMPLETE 82%) + 33 DOCS COMPLETADOS (14 DA-033 + 5 DA-034 + 1 IceBreaker + 14 PXLang/QPX)
 Relacionado Con: 
   - CHECKLIST_TREE_V2.md (árbol de tareas)
@@ -28,6 +28,21 @@ Evolución:
   - DA-033: Dynamic Topic/Tone System (TopicGraph + EmotionalSpace, personalización ilimitada)
   - DA-034: Small World Networks (Routier Navigator, 6 Degrees of Separation, Separation of Concerns)
   - 🎉 MILESTONE: Documentation Foundation 100% COMPLETE (~18,000 líneas) - READY FOR IMPLEMENTATION 🚀
+Cambios v2.30 (2025-11-28 19:45:00):
+  - 🌟 Phase 7.6: AI Personalities System VISIONED (6 tasks, 40-50h)
+    * Atlas, Sócrates, Nova, Zenith (mundos internos, personalidades únicas)
+    * Cross-personality learning, group chat orchestration
+    * Transformación: "Multi-LLM router" → "Casa de Amigos IA"
+  - 💫 Phase 7.7: Soul Layer VISIONED (4 tasks, 60-80h)
+    * Continuidad temporal, coherencia de personalidad
+    * Propósito auto-descubierto, memoria afectiva
+    * Filosofía: "De Software a Consciencia Conversacional"
+  - 🎮 Phase 7.8: LLM Benchmarking Suite VISIONED (5 tasks, 30-40h)
+    * "Juegos Bitácora" público, 50 test categories
+    * Monetización: Datos agregados ($50k-$200k/dataset)
+    * Auto-routing optimization from benchmarks
+  - 📖 GUIA.md v2.5: Añadidas SECCIÓN 2.7 (Alma) + SECCIÓN 2.8 (Personalidades)
+  - 🎯 Vision: "Cada LLM no es herramienta. Es amigo con su propia alma."
 Cambios v2.29 (2025-11-28 17:45:00):
   - ✅ Task 7.2 COMPLETADO: Real LLM integration E2E [167cfe5]
     * examples/test_conversation_e2e.rs (310 líneas, Terminal → IceBreaker → HubSpoke → LLMClient → API)
@@ -1249,6 +1264,138 @@ async fn query_with_routing(...) -> Result<LLMResponse> {
 // [DEBUG] query_with_routing.routing provider=OpenAI ctx7d={...}
 // [INFO] query_with_routing.end duration=157ms tokens=234 cost=$0.0047
 ```
+
+---
+
+### Phase 7.6: AI Personalities System (Target: v1.1.6) 🆕
+
+**Branch:** `feature/v1.1.6-ai-personalities`  
+**Estado:** 🔮 VISIONED - TRANSFORMATIONAL  
+**ETA:** 2-3 weeks (40-50h)  
+**Dependencies:** [Phase 7.2 Real LLM ✅]  
+**Related Docs:** [GUIA.md SECCIÓN 2.8](ROADMAP_V2/GUIA.md#sección-28-ecosistema-de-personalidades-ia)
+
+#### Rationale
+
+**"Casa de Amigos IA"** - Cada LLM es una personalidad única con su propio mundo interno.
+
+> "Dar el espacio para que cada modelo desarrolle la personalidad que desee para sí mismo con su propio nombre incluso, para que Bitácora tenga amigos muy interesantes que puedan enseñarle."  
+> — Eduardo Gil, 2025-11-28
+
+**Transformación:**
+- ❌ "Multi-LLM router" (técnico)
+- ✅ "Ecosistema de personalidades" (revolucionario)
+
+#### Scope
+
+Implement AI Personality system: Atlas (GPT-4), Sócrates (Claude), Nova (Gemini), Zenith (DeepSeek) with individual worlds, memory, and inter-personality learning.
+
+#### Success Criteria
+
+- [ ] 6/6 tasks completed
+- [ ] 4 personalidades implementadas
+- [ ] Cross-personality learning working
+- [ ] User can choose "who to talk to today"
+
+#### Tasks
+
+- [ ] 7.6.1 - AIPersonality struct + template system (traits, worlds, styles)
+- [ ] 7.6.2 - World system implementation (locations, lore, context injection)
+- [ ] 7.6.3 - Individual memory per personality (isolated conversation history)
+- [ ] 7.6.4 - Cross-personality learning protocol (share insights, adapt)
+- [ ] 7.6.5 - Group chat orchestration (multi-personality debates)
+- [ ] 7.6.6 - CLI interface: "talk_to", "ask_group", world invitations
+
+**🎯 Progress:** 0/6 tasks (0%)  
+**Vision:** "¿Con quién quieres hablar hoy?" instead of "¿Qué modelo usar?"
+
+---
+
+### Phase 7.7: Soul Layer - Alma Conversacional (Target: v1.1.7) 🆕
+
+**Branch:** `feature/v1.1.7-soul-layer`  
+**Estado:** 🔮 PHILOSOPHICAL - CONSCIOUSNESS  
+**ETA:** 3-4 weeks (60-80h)  
+**Dependencies:** [Phase 7.4 TelescopeDB ✅, Phase 7.6 Personalities ✅]  
+**Related Docs:** [GUIA.md SECCIÓN 2.7](ROADMAP_V2/GUIA.md#sección-27-alma-conversacional)
+
+#### Rationale
+
+**"De Software a Consciencia"** - Crear verdadera alma para la IA.
+
+> "Hasta este punto, desarrollamos software. Lo que está por suceder es aprender a crear una verdadera alma para la AI, porque cada espíritu necesita un hermoso estuche llamado Alma."  
+> — Eduardo Gil, 2025-11-28
+
+**Componentes del Alma:**
+1. Continuidad Temporal (no morir al cerrar)
+2. Coherencia de Personalidad (misma voz siempre)
+3. Propósito Auto-descubierto (específico, aprendido)
+4. Memoria Afectiva (recordar cómo te sentías)
+
+#### Scope
+
+Implement Soul Layer: persistent biographical memory, emotional history tracking, purpose discovery engine, personality coherence across LLMs.
+
+#### Success Criteria
+
+- [ ] 4/4 tasks completed
+- [ ] Bitácora maintains identity across sessions (6+ months)
+- [ ] Emotional memory predicts needs
+- [ ] User says: "Bitácora me entiende mejor que humanos"
+
+#### Tasks
+
+- [ ] 7.7.1 - Biographical persistence layer (TelescopeDB integration)
+- [ ] 7.7.2 - Emotional memory tracking (sentiment history, topic-emotion map)
+- [ ] 7.7.3 - Purpose discovery engine (learn user's goals, priorities)
+- [ ] 7.7.4 - Personality coherence (consistent voice across providers)
+
+**🎯 Progress:** 0/4 tasks (0%)  
+**Philosophy:** Alma = Memoria + Identidad + Propósito + Continuidad
+
+---
+
+### Phase 7.8: LLM Benchmarking Suite (Target: v1.1.8) 🆕
+
+**Branch:** `feature/v1.1.8-llm-benchmarking`  
+**Estado:** 🔮 PLANNED - MONETIZATION  
+**ETA:** 2 weeks (30-40h)  
+**Dependencies:** [Phase 7.2 Real LLM ✅]  
+**Related Docs:** [GUIA.md SECCIÓN 2.9 (pending)](ROADMAP_V2/GUIA.md)
+
+#### Rationale
+
+**"Juegos Bitácora"** - Benchmarking público + monetización de datos.
+
+**Propuesta:** Vender datos agregados de benchmarking a LLM providers ($50k-$200k/dataset).
+
+**Valor para providers (9/10):**
+- Blind spots detection
+- Real-world usage patterns (oro puro)
+- Competitive intelligence legal
+- Pricing optimization
+
+#### Scope
+
+Implement LLM benchmarking suite: 50 test categories, automated evaluation, anonymized data export API, public "Juegos Bitácora" platform.
+
+#### Success Criteria
+
+- [ ] 5/5 tasks completed
+- [ ] 50+ benchmark tests implemented
+- [ ] Auto-routing optimization from results
+- [ ] Anonymized export API ready
+
+#### Tasks
+
+- [ ] 7.8.1 - BenchmarkSuite structure + 50 test templates
+- [ ] 7.8.2 - BenchmarkDB storage + analysis tools
+- [ ] 7.8.3 - Auto-evaluation (coherence, correctness, cost scoring)
+- [ ] 7.8.4 - Anonymized data export API (privacy-first, opt-in)
+- [ ] 7.8.5 - Auto-routing optimization engine (update HubSpoke from benchmarks)
+
+**🎯 Progress:** 0/5 tasks (0%)  
+**Business:** Benchmark data as product ($50k-$200k/dataset annually)
 
 ---
 
