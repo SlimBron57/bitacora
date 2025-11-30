@@ -16,3 +16,21 @@ bitacora_v1.0/*
 
 # Excluir guía de patentes (privada)
 bitacora_v1.0/PUBLIC/PROVISIONAL_PATENT_GUIDE.md
+
+# ============================================================================
+# 🎻 BSTRADIVARIUS - Meta-Loop Documentation System
+# ============================================================================
+
+# Permitir archivos de BStradivarius y documentación técnica
+!bitacora_v1.0/ROADMAP_V2/
+!bitacora_v1.0/ROADMAP_V2/*
+!bitacora_v1.0/BITACORA_KNOWLEDGE_GRAPH/
+!bitacora_v1.0/BITACORA_KNOWLEDGE_GRAPH/*
+!bitacora_v1.0/BSTRADIVARIUS_*.md
+!bitacora_v1.0/bstradivarius_export.json
+!bitacora_v1.0/Cargo.toml
+!bitacora_v1.0/src/
+!bitacora_v1.0/src/**
+!bitacora_v1.0/examples/
+!bitacora_v1.0/examples/**
+

@@ -395,6 +395,24 @@ fn cmd_sync() -> Result<()> {
         "Finished",
         &format!("synced {} files, {} concepts updated", changed_files, updated_concepts)
     );
+    
+    // 🎻 Auto-regenerate documentation index after sync
+    if changed_files > 0 {
+        println!();
+        println!("   📝 Auto-regenerating documentation index...");
+        
+        // Use BITACORA_KNOWLEDGE_GRAPH/INDEX.md as default location
+        let index_path = "BITACORA_KNOWLEDGE_GRAPH/INDEX.md";
+        match cmd_generate(index_path) {
+            Ok(_) => {
+                println!("   ✨ Index updated: {}", index_path);
+            }
+            Err(e) => {
+                eprintln!("   ⚠️  Index generation failed: {}", e);
+            }
+        }
+    }
+    
     println!();
     
     Ok(())

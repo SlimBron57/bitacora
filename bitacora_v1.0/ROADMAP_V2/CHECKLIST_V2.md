@@ -1,9 +1,9 @@
 ```yaml
 # === DATOS DE AUDITORÍA ===
 Archivo: ROADMAP_V2/CHECKLIST_V2.md
-Versión: 2.27 - v1.0-BETA + BSTRADIVARIUS VOXELDB OCTREE OPTIMIZADO 🎻💎
+Versión: 2.28 - v1.0-BETA + BSTRADIVARIUS AUTO-REGENERACIÓN + DOCUMENTACIÓN 🎻📚
 Fecha Creación: 2025-01-25
-Última Actualización: 2025-11-30 14:15:00
+Última Actualización: 2025-11-30 14:35:00
 Autor: Sistema Bitácora - Methodology v1.6 Integration 🚀
 Propósito: Checklist plano con Git ↔ Checklist sync (metodología v1.6)
 Estado: ✅ v1.0-BETA RELEASED + BRANCH CLOSURE feature/v1.5-pixel-native
@@ -28,6 +28,16 @@ Evolución:
   - DA-033: Dynamic Topic/Tone System (TopicGraph + EmotionalSpace, personalización ilimitada)
   - DA-034: Small World Networks (Routier Navigator, 6 Degrees of Separation, Separation of Concerns)
   - 🎉 MILESTONE: Documentation Foundation 100% COMPLETE (~18,000 líneas) - READY FOR IMPLEMENTATION 🚀
+Cambios v2.27 (2025-11-30 14:30:00):
+  - 🎻 Auto-regeneración: INDEX.md se genera automáticamente después de sync
+  - 📚 BITACORA_KNOWLEDGE_GRAPH/README.md: Documentación clara de artefactos generados
+  - ✅ Validación METOD_DOCS: INDEX.md no requiere Paso 1-7 (artefacto generado, no docs manual)
+  - 📝 GUIA.md: Añadida sección sobre INDEX.md auto-generado
+  - 🔄 Flujo: sync → index → auto-generate → INDEX.md versionado
+  - 💎 Decisión: Versionar INDEX.md (historia del knowledge graph) vs .gitignore
+  - 🎯 Ubicación: BITACORA_KNOWLEDGE_GRAPH/ (fuera de ROADMAP_V2/, no aplica METOD_DOCS)
+  - ✅ Git: README.md creado para documentar propósito del directorio
+
 Cambios v2.26 (2025-11-30 14:15:00):
   - 🎻 BStradivarius + VoxelDB Octree OPTIMIZADO: Arquitectura nombres limpios + tags
   - ✅ VoxelDB: Quitar validación nombre duplicado, name_index entry().or_insert(), storage_path() getter

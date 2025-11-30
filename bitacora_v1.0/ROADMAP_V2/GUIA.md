@@ -143,6 +143,13 @@ coords = (x: file_hash, y: line_norm, z: concept_hash)
 3. **Validar documentación**: `generate` para ver qué se extrajo
 4. **Métricas de coverage**: `metrics` para stats de indexación
 
+**INDEX.md Auto-Generado:**
+- Ubicación: `BITACORA_KNOWLEDGE_GRAPH/INDEX.md`
+- Se regenera automáticamente después de `sync`
+- Versionado en Git (para ver evolución del knowledge graph)
+- NO editar manualmente - es un artefacto generado
+- Ver `BITACORA_KNOWLEDGE_GRAPH/README.md` para detalles
+
 **Integración con Workflow:**
 
 - ✅ Después de cambios en ROADMAP_V2: `bstradivarius sync`
