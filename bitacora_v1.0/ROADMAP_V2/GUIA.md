@@ -93,6 +93,48 @@ Se completó un refactoring importante de terminología:
 
 ---
 
+### 🎻 BStradivarius + VoxelDB Octree (30 Nov 2025)
+
+**Lo que acaba de pasar:**
+
+Se implementó integración real de VoxelDB Octree en BStradivarius:
+
+**Cambio Arquitectónico - Nombres Limpios + Tags:**
+```rust
+// ANTES (Status Quo):
+template.name = "archivo:123:concepto"  // Verbose, validación duplicada ❌
+
+// DESPUÉS (Optimizado):
+template.name = "concepto"              // Limpio, legible ✅
+template.tags = [                       // Metadata queryable
+    "file:archivo.md",
+    "line:123",
+    "type:heading"
+]
+```
+
+**Mejoras Implementadas:**
+1. **Nombres limpios**: Conceptos se indexan con su nombre real ("rust", "yaml")
+2. **Tags para metadata**: File, line, type en tags (queryable + estructurado)
+3. **Validación relajada**: VoxelDB permite duplicados (ID hash es único)
+4. **Persistencia real**: 6,080 conceptos → 25MB JSON en disco
+5. **Carga automática**: `load_all_from_disk()` en startup
+
+**Performance:**
+- ⚡ 174 archivos indexados en 0.91s
+- 💾 10,879 conceptos → 6,080 templates únicos
+- 🔍 Query "rust" → 16 resultados con context
+
+**Archivos modificados:**
+- `src/voxeldb/mod.rs` - Quitar validación nombre duplicado
+- `src/bstradivarius/indexer.rs` - Usar tags + carga desde disco
+
+**Impacto:** BStradivarius ahora usa VoxelDB octree real (no placeholder). Sistema auto-documenta con persistencia espacial 3D.
+
+**Documento de referencia:** `BSTRADIVARIUS_COMPLETE.md`
+
+---
+
 ### El Mapa Visual: Dónde Estás
 
 ```
