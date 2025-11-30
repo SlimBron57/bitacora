@@ -93,45 +93,69 @@ Se completó un refactoring importante de terminología:
 
 ---
 
-### 🎻 BStradivarius + VoxelDB Octree (30 Nov 2025)
+### 🎻 Cómo Trabajar con BStradivarius
 
-**Lo que acaba de pasar:**
+**BStradivarius** es el sistema de auto-documentación continua de Bitácora. Usa VoxelDB Octree para indexar conceptos espacialmente.
 
-Se implementó integración real de VoxelDB Octree en BStradivarius:
+**Comandos Principales:**
 
-**Cambio Arquitectónico - Nombres Limpios + Tags:**
-```rust
-// ANTES (Status Quo):
-template.name = "archivo:123:concepto"  // Verbose, validación duplicada ❌
+```bash
+# Re-indexar toda la documentación (manual)
+./target/release/bstradivarius sync
 
-// DESPUÉS (Optimizado):
-template.name = "concepto"              // Limpio, legible ✅
-template.tags = [                       // Metadata queryable
-    "file:archivo.md",
-    "line:123",
-    "type:heading"
-]
+# Buscar conceptos específicos
+./target/release/bstradivarius query "concepto"
+
+# Exportar knowledge graph completo
+./target/release/bstradivarius export
+
+# Generar índice de documentación
+./target/release/bstradivarius generate KNOWLEDGE_INDEX.md
+
+# Ver métricas del sistema
+./target/release/bstradivarius metrics
+
+# Monitoreo en tiempo real (watch mode)
+./target/release/bstradivarius watch
 ```
 
-**Mejoras Implementadas:**
-1. **Nombres limpios**: Conceptos se indexan con su nombre real ("rust", "yaml")
-2. **Tags para metadata**: File, line, type en tags (queryable + estructurado)
-3. **Validación relajada**: VoxelDB permite duplicados (ID hash es único)
-4. **Persistencia real**: 6,080 conceptos → 25MB JSON en disco
-5. **Carga automática**: `load_all_from_disk()` en startup
+**Arquitectura de Indexación:**
 
-**Performance:**
-- ⚡ 174 archivos indexados en 0.91s
-- 💾 10,879 conceptos → 6,080 templates únicos
-- 🔍 Query "rust" → 16 resultados con context
+```rust
+// Conceptos se indexan con nombres limpios
+template.name = "rust"  // Legible, no verbose
 
-**Archivos modificados:**
-- `src/voxeldb/mod.rs` - Quitar validación nombre duplicado
-- `src/bstradivarius/indexer.rs` - Usar tags + carga desde disco
+// Metadata en tags (queryable)
+template.tags = [
+    "file:archivo.md",
+    "line:123", 
+    "type:heading"
+]
 
-**Impacto:** BStradivarius ahora usa VoxelDB octree real (no placeholder). Sistema auto-documenta con persistencia espacial 3D.
+// Persistencia espacial 3D en VoxelDB
+coords = (x: file_hash, y: line_norm, z: concept_hash)
+```
 
-**Documento de referencia:** `BSTRADIVARIUS_COMPLETE.md`
+**Cuándo Usar BStradivarius:**
+
+1. **Después de crear/modificar docs**: `sync` para actualizar índice
+2. **Buscar conceptos relacionados**: `query` para encontrar cross-refs
+3. **Validar documentación**: `generate` para ver qué se extrajo
+4. **Métricas de coverage**: `metrics` para stats de indexación
+
+**Integración con Workflow:**
+
+- ✅ Después de cambios en ROADMAP_V2: `bstradivarius sync`
+- ✅ Antes de commits: verificar que conceptos se indexaron
+- ✅ Durante desarrollo: `watch` para auto-actualización
+- ✅ Para reports: `export` genera JSON queryable
+
+**Documentos de referencia:**
+- `BSTRADIVARIUS_COMPLETE.md` - Guía técnica completa
+- `METOD_DOCS.md` v1.1 - Integración con metodología
+- `CHECKLIST_V2.md` - Avances y estado actual
+
+**Nota:** Los **avances** de BStradivarius se registran en `CHECKLIST_V2.md`, no aquí. Esta sección contiene solo **instrucciones de uso**.
 
 ---
 
