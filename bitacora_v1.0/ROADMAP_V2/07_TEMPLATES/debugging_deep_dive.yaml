@@ -1,0 +1,216 @@
+name: "debugging_deep_dive"
+category: "technical"
+version: "1.0.0"
+description: "Template para debugging sistemático y resolución de problemas complejos (con componentes musicales opcionales)"
+
+# === NOTA IMPORTANTE ===
+# Este template es el ORIGINAL de FUSION_BAYESIANA/05_MTT_DSL_TEMPLATES.md
+# Incluye componentes musicales (HarmonyEngine) que son OPCIONALES
+# Para templates ROADMAP_V2 (experimentales), ver:
+#   - component_spec.yaml
+#   - architecture_spec.yaml
+#   - integration_spec.yaml
+#   - testing_guide.yaml
+# ========================
+
+# Triggers que activan este template
+trigger_patterns:
+  - "error_analysis"
+  - "bug_investigation"
+  - "debugging"
+  - "problema"
+  - "fallo"
+  - "no funciona"
+
+# Personalidad del template
+personality:
+  tone: "analytical"
+  depth: "expert"
+  style: "methodical"
+  approach: "systematic"
+
+# Configuración Musical 🎵 (OPCIONAL - Requiere HarmonyEngine)
+musical_config:
+  enabled: false  # Default: OFF
+  soundtrack:
+    primary_track: "focus_deep_analysis.wav"
+    genre: "ambient_electronic"
+    bpm: 72
+    frequency: 40  # Ondas Gamma para concentración extrema
+    mood: "analytical_focus"
+    alternatives:
+      - "mathematical_harmonics_debug.wav"
+      - "logic_enhancement_binaural.wav"
+      - "cognitive_boost_minimal.wav"
+    playback_config:
+      auto_start: false
+      loop: true
+      fade_in: 3
+      volume: 0.5
+
+# Estructura del template
+structure:
+  # Fase 1: Preparación
+  preparation:
+    name: "🎯 Preparación Mental y Técnica"
+    actions:
+      - "Activar mindset analítico"
+      - "Preparar entorno de debugging"
+      - "Recopilar información inicial"
+    music_cue: "preparation_focus.wav"  # OPCIONAL
+  
+  # Fase 2: Recolección de información
+  information_gathering:
+    name: "📋 Recolección Sistemática de Información"
+    actions:
+      - "Documentar comportamiento esperado"
+      - "Documentar comportamiento actual"
+      - "Recopilar logs de error"
+      - "Identificar pasos de reproducción"
+    music_cue: "information_gathering.wav"  # OPCIONAL
+  
+  # Fase 3: Formulación de hipótesis
+  hypothesis_formation:
+    name: "💡 Formulación de Hipótesis"
+    actions:
+      - "Analizar patrones de error"
+      - "Identificar causas potenciales"
+      - "Priorizar hipótesis"
+      - "Crear estrategia de testing"
+    music_cue: "creative_analysis.wav"  # OPCIONAL
+  
+  # Fase 4: Testing sistemático
+  systematic_testing:
+    name: "🧪 Testing Sistemático"
+    actions:
+      - "Testear hipótesis de mayor prioridad"
+      - "Aislar variables"
+      - "Documentar resultados de tests"
+      - "Refinar comprensión"
+    music_cue: "methodical_testing.wav"  # OPCIONAL
+  
+  # Fase 5: Implementación de solución
+  solution_implementation:
+    name: "⚡ Implementación de Solución"
+    actions:
+      - "Implementar fix"
+      - "Verificar efectividad del fix"
+      - "Testear edge cases"
+      - "Documentar solución"
+    music_cue: "implementation_flow.wav"  # OPCIONAL
+
+# Respuestas y outputs
+responses:
+  success_patterns:
+    debugging_complete:
+      message: "🎉 ¡Problema resuelto exitosamente! El bug ha sido identificado y solucionado."
+      music_celebration: "problem_solved_victory.wav"  # OPCIONAL
+    
+    hypothesis_validated:
+      message: "✅ Hipótesis confirmada. Procediendo con la solución."
+    
+    pattern_identified:
+      message: "🔍 Patrón identificado en el error. Ajustando estrategia de debugging."
+  
+  guidance_patterns:
+    stuck_on_hypothesis:
+      message: "🤔 Considera otras perspectivas. ¿Hay factores externos no considerados?"
+      music_shift: "perspective_change.wav"  # OPCIONAL
+    
+    information_insufficient:
+      message: "📊 Necesitamos más información. Volvamos a la fase de recolección."
+    
+    test_inconclusive:
+      message: "🔄 Test inconcluso. Refinemos la hipótesis con nueva información."
+
+# Gestión de estados
+state_management:
+  entry_state: "analytical_preparation"
+  
+  states:
+    analytical_preparation:
+      description: "Preparando mente y herramientas para debugging sistemático"
+      music_state: "preparation_ambient"  # OPCIONAL
+    
+    deep_analysis:
+      description: "En análisis profundo del problema"
+      music_state: "focus_gamma_waves"  # OPCIONAL
+    
+    hypothesis_testing:
+      description: "Testando hipótesis de manera sistemática"
+      music_state: "methodical_rhythm"  # OPCIONAL
+    
+    solution_implementation:
+      description: "Implementando y verificando solución"
+      music_state: "implementation_flow"  # OPCIONAL
+
+# Métricas y evaluación
+metrics:
+  effectiveness_indicators:
+    - time_to_problem_identification
+    - hypothesis_accuracy_rate
+    - solution_implementation_success
+    - debugging_methodology_adherence
+  
+  music_engagement:  # OPCIONAL
+    - user_music_preference_feedback
+    - concentration_level_during_music
+    - task_completion_rate_with_music
+
+# Integración con Context Intelligence
+context_integration:
+  analyzer_extensions:
+    - error_pattern_recognition
+    - debugging_state_detection
+    - music_mood_synchronization  # OPCIONAL
+  
+  learning_feedback:
+    - debugging_success_patterns
+    - preferred_music_during_analysis  # OPCIONAL
+    - effective_pipeline_modifications
+
+# Validaciones (sin música)
+validations:
+  - check: "has_all_phases"
+    message: "Debe completar las 5 fases de debugging"
+  
+  - check: "documented_hypothesis"
+    message: "Debe documentar hipótesis formadas"
+  
+  - check: "solution_verified"
+    message: "Debe verificar que la solución funciona"
+
+# Métricas de calidad
+quality_metrics:
+  min_phases_completed: 5
+  hypothesis_documentation_required: true
+  solution_verification_required: true
+
+# Instrucciones para LLMs
+llm_instructions: |
+  Este template es para DEBUGGING PROFUNDO con enfoque sistemático.
+  
+  SIN componentes musicales:
+  1. Sigue las 5 fases en orden
+  2. Documenta cada paso
+  3. Valida hipótesis antes de implementar
+  4. Verifica solución con tests
+  
+  CON componentes musicales (si HarmonyEngine está activo):
+  1. Mismo proceso de 5 fases
+  2. ADEMÁS: Reproduce soundtrack apropiado por fase
+  3. Ajusta música según estado mental requerido
+  4. Usa música para mantener concentración
+  
+  El template funciona PERFECTAMENTE sin música.
+  La música es un ENHANCEMENT opcional.
+
+# Ejemplo de uso
+example_output_path: "debugging_session_report.md"
+
+# Estado del template
+status: "reference"  # Template de referencia de FUSION_BAYESIANA
+origin: "FUSION_BAYESIANA/05_MTT_DSL_TEMPLATES.md"
+last_updated: "2025-10-26"
+usage_count: 1  # Implementado en templates/mtt/technical/
+effectiveness_score: null

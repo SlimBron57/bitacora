@@ -1,0 +1,191 @@
+//! Serialización CBOR para Context Token 7D
+//! BITA-1 Compatible: Serialización canónica determinística
+
+use super::ContextToken7D;
+use anyhow::{Result, Context as AnyhowContext};
+use serde_cbor;
+
+/// Serializador CBOR para Context Token 7D
+pub struct CborSerializer {
+    canonical: bool,  // Si es true, usa serialización determinística
+}
+
+impl CborSerializer {
+    pub fn new(canonical: bool) -> Self {
+        Self { canonical }
+    }
+    
+    /// Serializa un Context Token a CBOR bytes
+    pub fn serialize(&self, token: &ContextToken7D) -> Result<Vec<u8>> {
+        if self.canonical {
+            // Serialización canónica (determinística)
+            self.serialize_canonical(token)
+        } else {
+            // Serialización normal
+            serde_cbor::to_vec(token)
+                .context("Error al serializar ContextToken7D a CBOR")
+        }
+    }
+    
+    /// Deserializa bytes CBOR a Context Token
+    pub fn deserialize(&self, bytes: &[u8]) -> Result<ContextToken7D> {
+        serde_cbor::from_slice(bytes)
+            .context("Error al deserializar CBOR a ContextToken7D")
+    }
+    
+    /// Serialización canónica (determinística)
+    /// Importante para content-addressable: mismo input → mismo hash
+    fn serialize_canonical(&self, token: &ContextToken7D) -> Result<Vec<u8>> {
+        // serde_cbor con opciones de serialización canónica
+        let mut buffer = Vec::new();
+        
+        // Usar serialización packed (más compacta)
+        let mut serializer = serde_cbor::Serializer::new(&mut buffer);
+        serializer.self_describe()?;  // Tag CBOR autodescriptivo
+        
+        serde::Serialize::serialize(token, &mut serializer)
+            .context("Error en serialización canónica CBOR")?;
+        
+        Ok(buffer)
+    }
+    
+    /// Valida que un token deserializado sea idéntico al original
+    pub fn validate_roundtrip(&self, token: &ContextToken7D) -> Result<bool> {
+        let serialized = self.serialize(token)?;
+        let deserialized = self.deserialize(&serialized)?;
+        let reserialized = self.serialize(&deserialized)?;
+        
+        Ok(serialized == reserialized)
+    }
+}
+
+impl Default for CborSerializer {
+    fn default() -> Self {
+        Self::new(true)  // Por defecto, canónico
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::context_token::tensor::*;
+    use chrono::Utc;
+    use std::collections::HashMap;
+    
+    fn create_test_token() -> ContextToken7D {
+        ContextToken7D {
+            id: "test_token".to_string(),
+            created_at: Utc::now(),
+            sequence: 42,
+            tensor: create_test_tensor(),
+            metadata: crate::context_token::ContextMetadata {
+                user_id: "test_user".to_string(),
+                session_id: "test_session".to_string(),
+                tags: vec!["test".to_string()],
+                custom: HashMap::new(),
+            },
+            breakthrough_score: Some(133.8),
+        }
+    }
+    
+    fn create_test_tensor() -> ContextTensor7D {
+        ContextTensor7D {
+            temporal: TemporalDimension {
+                timestamp: Utc::now(),
+                sequence: 1,
+                time_of_day: "morning".to_string(),
+                day_of_week: "Monday".to_string(),
+                session_duration_minutes: 30,
+                lifecycle_hours: 168,
+            },
+            semantic: SemanticDimension {
+                text: "test".to_string(),
+                language: "English".to_string(),
+                keywords: vec!["test".to_string()],
+                embeddings: vec![],
+                semantic_density: 0.8,
+            },
+            contextual: ContextualDimension {
+                session_id: "test".to_string(),
+                user_id: "user1".to_string(),
+                context_markers: vec![],
+                situational_frame: "work".to_string(),
+                coherence_with_previous: 0.7,
+            },
+            relational: RelationalDimension {
+                related_tokens: vec![],
+                entity_graph: HashMap::new(),
+                connection_strength: 0.8,
+                pattern_matches: vec![],
+            },
+            emotional: EmotionalDimension {
+                valence: 0.5,
+                arousal: 0.3,
+                dominance: 0.6,
+                certainty: 0.8,
+                emotional_trajectory: vec![],
+            },
+            intentional: IntentionalDimension {
+                intent_category: "question".to_string(),
+                goal: "learn".to_string(),
+                action_required: true,
+                urgency: 0.5,
+                clarity: 0.9,
+            },
+            biographical: BiographicalDimension {
+                user_expertise_level: 0.6,
+                historical_patterns: vec![],
+                preferences: HashMap::new(),
+                biographical_coherence: 0.7,
+                personal_significance: 0.8,
+            },
+        }
+    }
+    
+    #[test]
+    fn test_serialize_deserialize() {
+        let serializer = CborSerializer::default();
+        let token = create_test_token();
+        
+        let serialized = serializer.serialize(&token).unwrap();
+        assert!(serialized.len() > 0);
+        
+        let deserialized = serializer.deserialize(&serialized).unwrap();
+        assert_eq!(deserialized.id, token.id);
+        assert_eq!(deserialized.sequence, token.sequence);
+    }
+    
+    #[test]
+    fn test_canonical_serialization() {
+        let serializer = CborSerializer::new(true);
+        let token = create_test_token();
+        
+        // Serializar dos veces debe dar el mismo resultado
+        let bytes1 = serializer.serialize(&token).unwrap();
+        let bytes2 = serializer.serialize(&token).unwrap();
+        
+        assert_eq!(bytes1, bytes2);
+    }
+    
+    #[test]
+    fn test_roundtrip_validation() {
+        let serializer = CborSerializer::default();
+        let token = create_test_token();
+        
+        let is_valid = serializer.validate_roundtrip(&token).unwrap();
+        assert!(is_valid);
+    }
+    
+    #[test]
+    fn test_cbor_size() {
+        let serializer = CborSerializer::default();
+        let token = create_test_token();
+        
+        let serialized = serializer.serialize(&token).unwrap();
+        
+        println!("CBOR size: {} bytes", serialized.len());
+        
+        // CBOR debe ser razonablemente compacto
+        assert!(serialized.len() < 2048);  // <2KB para un token básico
+    }
+}

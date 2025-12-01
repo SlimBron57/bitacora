@@ -1,0 +1,223 @@
+//! Tensor 7D - Representación dimensional del contexto
+
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
+
+/// Tensor 7D completo
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ContextTensor7D {
+    pub temporal: TemporalDimension,
+    pub semantic: SemanticDimension,
+    pub contextual: ContextualDimension,
+    pub relational: RelationalDimension,
+    pub emotional: EmotionalDimension,
+    pub intentional: IntentionalDimension,
+    pub biographical: BiographicalDimension,
+}
+
+/// Dimensión 1: TEMPORAL
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct TemporalDimension {
+    pub timestamp: chrono::DateTime<chrono::Utc>,
+    pub sequence: u64,
+    pub time_of_day: String,  // "morning", "afternoon", "evening", "night"
+    pub day_of_week: String,
+    pub session_duration_minutes: u64,
+    pub lifecycle_hours: u64,  // 168 horas = 7 días
+}
+
+impl TemporalDimension {
+    pub fn coherence_score(&self) -> f64 {
+        // Score basado en coherencia temporal
+        // Sesiones largas sin breaks = score más bajo
+        let duration_penalty = if self.session_duration_minutes > 480 {  // >8h
+            0.7
+        } else if self.session_duration_minutes > 240 {  // >4h
+            0.9
+        } else {
+            1.0
+        };
+        
+        // Hora apropiada (no muy tarde)
+        let time_bonus = match self.time_of_day.as_str() {
+            "morning" | "afternoon" => 1.2,
+            "evening" => 1.0,
+            "night" => 0.8,  // Posible cansancio
+            _ => 1.0,
+        };
+        
+        duration_penalty * time_bonus
+    }
+}
+
+/// Dimensión 2: SEMÁNTICA
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct SemanticDimension {
+    pub text: String,
+    pub language: String,
+    pub keywords: Vec<String>,
+    pub embeddings: Vec<f32>,  // Vector embedding (opcional)
+    pub semantic_density: f64,  // 0.0 - 1.0
+}
+
+impl SemanticDimension {
+    pub fn relevance_score(&self) -> f64 {
+        // Score basado en densidad semántica y keywords
+        let keyword_factor = (self.keywords.len() as f64 / 10.0).min(1.0);
+        let density_factor = self.semantic_density;
+        
+        (keyword_factor + density_factor) / 2.0 * 1.5  // Max 1.5
+    }
+}
+
+/// Dimensión 3: CONTEXTUAL
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ContextualDimension {
+    pub session_id: String,
+    pub user_id: String,
+    pub context_markers: Vec<String>,  // ["debugging", "learning", etc.]
+    pub situational_frame: String,
+    pub coherence_with_previous: f64,  // 0.0 - 1.0
+}
+
+impl ContextualDimension {
+    pub fn situational_fit_score(&self) -> f64 {
+        // Score basado en coherencia con contexto previo
+        let coherence_factor = self.coherence_with_previous;
+        let markers_factor = (self.context_markers.len() as f64 / 5.0).min(1.0);
+        
+        (coherence_factor + markers_factor) / 2.0 * 1.3  // Max 1.3
+    }
+}
+
+/// Dimensión 4: RELACIONAL
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct RelationalDimension {
+    pub related_tokens: Vec<String>,  // IDs de tokens relacionados
+    pub entity_graph: HashMap<String, Vec<String>>,  // Grafo de entidades
+    pub connection_strength: f64,  // 0.0 - 1.0
+    pub pattern_matches: Vec<String>,
+}
+
+impl RelationalDimension {
+    pub fn connectivity_score(&self) -> f64 {
+        // Score basado en conexiones y patrones
+        let relations_factor = (self.related_tokens.len() as f64 / 8.0).min(1.0);
+        let patterns_factor = (self.pattern_matches.len() as f64 / 4.0).min(1.0);
+        let strength_factor = self.connection_strength;
+        
+        (relations_factor + patterns_factor + strength_factor) / 3.0 * 1.8  // Max 1.8
+    }
+}
+
+/// Dimensión 5: EMOCIONAL
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct EmotionalDimension {
+    pub valence: f64,      // -1.0 (negativo) a +1.0 (positivo)
+    pub arousal: f64,      // 0.0 (calmo) a 1.0 (excitado)
+    pub dominance: f64,    // 0.0 (sumiso) a 1.0 (dominante)
+    pub certainty: f64,    // 0.0 (incierto) a 1.0 (certero)
+    pub emotional_trajectory: Vec<(String, f64)>,  // Historia emocional
+}
+
+impl EmotionalDimension {
+    pub fn resonance_score(&self) -> f64 {
+        // Score basado en resonancia emocional
+        let valence_abs = self.valence.abs();  // Emociones intensas (+ o -) = mayor resonancia
+        let arousal_factor = self.arousal;
+        let certainty_factor = self.certainty;
+        
+        (valence_abs + arousal_factor + certainty_factor) / 3.0 * 1.4  // Max 1.4
+    }
+}
+
+/// Dimensión 6: INTENCIONAL
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct IntentionalDimension {
+    pub intent_category: String,  // "question", "command", "statement"
+    pub goal: String,             // "debug", "learn", "create"
+    pub action_required: bool,
+    pub urgency: f64,             // 0.0 - 1.0
+    pub clarity: f64,             // 0.0 (ambiguo) - 1.0 (claro)
+}
+
+impl IntentionalDimension {
+    pub fn clarity_score(&self) -> f64 {
+        // Score basado en claridad de intención
+        let clarity_factor = self.clarity;
+        let urgency_factor = self.urgency;
+        
+        (clarity_factor * 0.7 + urgency_factor * 0.3) * 1.6  // Max 1.6
+    }
+}
+
+/// Dimensión 7: BIOGRÁFICA (Convergencia con TelescopeDB)
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct BiographicalDimension {
+    pub user_expertise_level: f64,  // 0.0 (novato) - 1.0 (experto)
+    pub historical_patterns: Vec<String>,
+    pub preferences: HashMap<String, String>,
+    pub biographical_coherence: f64,  // Alineación con historial
+    pub personal_significance: f64,   // Importancia para el usuario
+}
+
+impl BiographicalDimension {
+    pub fn alignment_score(&self) -> f64 {
+        // Score basado en alineación biográfica
+        let coherence_factor = self.biographical_coherence;
+        let significance_factor = self.personal_significance;
+        let expertise_bonus = self.user_expertise_level * 0.2;
+        
+        (coherence_factor + significance_factor) / 2.0 * 1.2 + expertise_bonus  // Max 1.4
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    
+    #[test]
+    fn test_temporal_coherence_score() {
+        let dim = TemporalDimension {
+            timestamp: chrono::Utc::now(),
+            sequence: 0,
+            time_of_day: "morning".to_string(),
+            day_of_week: "Monday".to_string(),
+            session_duration_minutes: 120,  // 2 horas
+            lifecycle_hours: 168,
+        };
+        
+        let score = dim.coherence_score();
+        assert!(score >= 1.0);  // Morning bonus
+    }
+    
+    #[test]
+    fn test_emotional_resonance() {
+        let dim = EmotionalDimension {
+            valence: 0.8,   // Muy positivo
+            arousal: 0.6,
+            dominance: 0.5,
+            certainty: 0.9,
+            emotional_trajectory: vec![],
+        };
+        
+        let score = dim.resonance_score();
+        assert!(score > 0.5);
+    }
+    
+    #[test]
+    fn test_relational_connectivity() {
+        let mut entity_graph = HashMap::new();
+        entity_graph.insert("concept1".to_string(), vec!["concept2".to_string()]);
+        
+        let dim = RelationalDimension {
+            related_tokens: vec!["token1".to_string(), "token2".to_string()],
+            entity_graph,
+            connection_strength: 0.8,
+            pattern_matches: vec!["pattern1".to_string()],
+        };
+        
+        let score = dim.connectivity_score();
+        assert!(score > 0.0);
+    }
+}

@@ -1,0 +1,302 @@
+name: "architecture_spec"
+category: "technical"
+version: "1.0.0"
+description: "Template para documentar especificaciones arquitectónicas del sistema Bitácora"
+
+# Triggers que activan este template
+trigger_patterns:
+  - "**/01_ARQUITECTURA/*.md"
+  - "architecture design"
+  - "system design"
+  - "arquitectura del sistema"
+
+# Personalidad del template
+personality:
+  tone: "technical_explanatory"
+  depth: "deep_theoretical_and_practical"
+  style: "educational_but_precise"
+  approach: "top-down"  # Desde conceptos hasta implementación
+
+# Estructura obligatoria
+structure:
+  # Metadatos de auditoría
+  audit_header:
+    required: true
+    format: "yaml"
+    fields:
+      - archivo
+      - version
+      - fecha_creacion
+      - autor
+      - proposito
+      - estado
+      - relacionado_con
+      - fundamentos  # Base teórica (papers, RFCs, etc.)
+
+  # Secciones principales
+  sections:
+    - name: "purpose"
+      title: "🎯 PROPÓSITO"
+      required: true
+      prompt: |
+        Explicar en 3-4 párrafos:
+        - ¿Qué aspecto arquitectónico describe este documento?
+        - ¿Por qué necesitamos esta arquitectura específica?
+        - ¿Qué problemas resuelve vs. alternativas?
+        - ¿Cómo se relaciona con BITA-1/BITA-2?
+      
+    - name: "theoretical_foundation"
+      title: "📖 FUNDAMENTOS TEÓRICOS"
+      required: true
+      prompt: |
+        Base conceptual de la arquitectura:
+        - Papers académicos relevantes
+        - RFCs o especificaciones formales
+        - Conceptos de ciencias de la computación
+        - Analogías del mundo real
+        
+        Ejemplo:
+        - Content-addressable storage → Git internals
+        - Spherical coordinates → Sistema solar, mapas astronómicos
+      
+    - name: "architecture_overview"
+      title: "🏗️ VISIÓN GENERAL DE ARQUITECTURA"
+      required: true
+      prompt: |
+        Diagrama ASCII del sistema:
+        ```
+        ┌─────────────────┐
+        │   Component A   │
+        └────────┬────────┘
+                 │
+                 ▼
+        ┌─────────────────┐
+        │   Component B   │
+        └─────────────────┘
+        ```
+        
+        Descripción de cada bloque y sus relaciones.
+      
+    - name: "detailed_design"
+      title: "🔬 DISEÑO DETALLADO"
+      required: true
+      prompt: |
+        Deep dive técnico:
+        
+        ### Componentes Principales
+        - Descripción de cada componente
+        - Responsabilidades específicas
+        - Interfaces públicas
+        
+        ### Flujo de Datos
+        - Input → Processing → Output
+        - Transformaciones en cada etapa
+        
+        ### Decisiones de Diseño
+        - Trade-offs considerados
+        - Alternativas descartadas
+        - Razones de las elecciones
+      
+    - name: "implementation_strategy"
+      title: "⚙️ ESTRATEGIA DE IMPLEMENTACIÓN"
+      required: true
+      prompt: |
+        Cómo llevar el diseño a código Rust:
+        
+        ```rust
+        // Estructuras principales
+        pub struct ArchitectureComponent {
+            // Campos clave
+        }
+        
+        // APIs críticas
+        impl ArchitectureComponent {
+            pub fn core_operation(&self) -> Result<Output>;
+        }
+        ```
+        
+        - Crates de Rust necesarios
+        - Patterns de diseño aplicables
+        - Consideraciones de concurrencia
+      
+    - name: "data_formats"
+      title: "🗂️ FORMATOS DE DATOS"
+      required: true
+      prompt: |
+        Si la arquitectura define formatos:
+        
+        - Serialización (CBOR, JSON, binario)
+        - Esquemas de datos (structs, enums)
+        - Versionado de formatos
+        - Compatibilidad hacia atrás
+      
+    - name: "performance_characteristics"
+      title: "⚡ CARACTERÍSTICAS DE PERFORMANCE"
+      required: true
+      prompt: |
+        Benchmarks esperados y reales:
+        
+        | Operación | Complejidad | Target | Actual | Notas |
+        |-----------|-------------|--------|--------|-------|
+        | insert    | O(log n)    | <10ms  | 5ms    | ✅    |
+        | query     | O(n)        | <100ms | TBD    | ⏸️    |
+        
+        - Análisis de complejidad algorítmica
+        - Bottlenecks conocidos
+        - Estrategias de optimización
+      
+    - name: "scalability"
+      title: "📈 ESCALABILIDAD"
+      required: false
+      prompt: |
+        - Límites teóricos del sistema
+        - Comportamiento con datasets grandes
+        - Estrategias de sharding/partitioning
+        - Consideraciones de memoria/disco
+      
+    - name: "security_considerations"
+      title: "🔐 CONSIDERACIONES DE SEGURIDAD"
+      required: false
+      prompt: |
+        Si aplica:
+        - Encriptación de datos
+        - Validación de integridad
+        - Control de acceso
+        - Protección contra ataques conocidos
+      
+    - name: "comparison_with_alternatives"
+      title: "⚖️ COMPARACIÓN CON ALTERNATIVAS"
+      required: true
+      prompt: |
+        | Aspecto | Nuestra Arquitectura | Alternativa 1 | Alternativa 2 |
+        |---------|---------------------|---------------|---------------|
+        | Performance | ... | ... | ... |
+        | Complejidad | ... | ... | ... |
+        | Caso de uso | ... | ... | ... |
+        
+        Por qué elegimos esta arquitectura sobre las demás.
+      
+    - name: "integration_points"
+      title: "🔗 PUNTOS DE INTEGRACIÓN"
+      required: true
+      prompt: |
+        Cómo esta arquitectura se integra con:
+        - Otros componentes de Bitácora
+        - Sistemas externos (si aplica)
+        - APIs y protocolos
+      
+    - name: "testing_validation"
+      title: "🧪 TESTING Y VALIDACIÓN"
+      required: true
+      prompt: |
+        - Tests arquitectónicos (property-based)
+        - Validación de invariantes
+        - Benchmarks de referencia
+        - Golden tests para formatos de datos
+      
+    - name: "references"
+      title: "📚 REFERENCIAS"
+      required: true
+      prompt: |
+        - Documentos ROADMAP_V2 relacionados
+        - Decisiones arquitectónicas (DA-XXX)
+        - Especificaciones (BITA-X)
+        - Papers académicos
+        - RFCs o estándares
+        - Código de referencia (B20250915-data-compressor)
+      
+    - name: "future_enhancements"
+      title: "🚀 MEJORAS FUTURAS"
+      required: true
+      prompt: |
+        - v1.0: Implementación actual/planeada
+        - v2.0: Optimizaciones propuestas
+        - Research: Ideas experimentales
+
+  # Footer estándar
+  footer:
+    required: true
+    format: "markdown"
+    content: |
+      ---
+      **Estado:** [📋 Especificación | 🚧 En diseño | ✅ Implementado]  
+      **Complejidad:** [🟢 BAJA | 🟡 MEDIA | 🔴 ALTA]  
+      **Prioridad:** [🔴 CRÍTICA | 🟡 ALTA | 🟢 MEDIA]
+      
+      ---
+      *Generado: {fecha}*  
+      *Sistema Bitácora v1.0 - MTT-DSL Template: architecture_spec*
+
+# Validaciones automáticas
+validations:
+  - check: "has_diagrams"
+    message: "Documento arquitectónico debe incluir diagramas ASCII"
+  
+  - check: "has_performance_analysis"
+    message: "Debe incluir análisis de performance y complejidad"
+  
+  - check: "compares_alternatives"
+    message: "Debe comparar con alternativas y justificar elección"
+  
+  - check: "has_theoretical_foundation"
+    message: "Debe explicar base teórica/conceptual"
+
+# Métricas de calidad
+quality_metrics:
+  min_diagrams: 2
+  min_code_examples: 2
+  min_references: 3
+  min_sections_completed: 11
+  max_document_size_kb: 25
+
+# Instrucciones para LLMs
+llm_instructions: |
+  Cuando generes un documento arquitectónico:
+  
+  1. IDENTIFICA el aspecto arquitectónico del nombre:
+     - "SISTEMA_DUAL_DATABASES.md" → Diseño de bases de datos dual-helix
+     - "PIXEL_STORAGE_DEEP_DIVE.md" → Arquitectura de encoding visual
+     - "CBOR_IMPLEMENTATION.md" → Formato de serialización
+  
+  2. INVESTIGA fundamentos teóricos:
+     - Busca papers/RFCs relacionados
+     - Encuentra analogías del mundo real
+     - Identifica conceptos de CS subyacentes
+  
+  3. DISEÑA top-down:
+     - Empieza con vista panorámica (diagrama general)
+     - Descompón en componentes
+     - Detalla cada componente
+     - Muestra cómo se conectan
+  
+  4. IMPLEMENTA bottom-up:
+     - Muestra estructuras de datos Rust
+     - Define APIs públicas
+     - Explica algoritmos internos
+     - Proporciona ejemplos de código
+  
+  5. VALIDA performance:
+     - Análisis de complejidad O(n)
+     - Benchmarks esperados
+     - Bottlenecks conocidos
+     - Estrategias de optimización
+  
+  6. COMPARA con alternativas:
+     - ¿Por qué esta arquitectura?
+     - ¿Qué descartamos?
+     - ¿Qué trade-offs aceptamos?
+  
+  7. CONECTA con el ecosistema:
+     - Referencias a DA-XXX
+     - Links a BITA-1/BITA-2
+     - Integración con otros componentes
+     - Código de referencia en B20250915-data-compressor
+
+# Ejemplo de uso
+example_output_path: "ROADMAP_V2/01_ARQUITECTURA/VOXEL_CUBIC_STORAGE.md"
+
+# Estado del template
+status: "active"
+last_updated: "2025-10-26"
+usage_count: 0
+effectiveness_score: null

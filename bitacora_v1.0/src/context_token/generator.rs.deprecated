@@ -1,0 +1,317 @@
+//! Generador de Context Tokens 7D
+
+use super::tensor::*;
+use anyhow::Result;
+use chrono::Utc;
+use std::collections::HashMap;
+
+/// Input normalizado del SENSORY ENGINE
+#[derive(Debug, Clone)]
+pub struct NormalizedInput {
+    pub text: String,
+    pub audio: Option<Vec<f32>>,
+    pub visual: Option<Vec<u8>>,
+    pub language: String,
+    pub sentiment: f64,  // -1.0 a +1.0
+    pub confidence: f64,
+    pub metadata: HashMap<String, String>,
+}
+
+/// Generador de Context Token 7D
+pub struct ContextToken7DGenerator {
+    sequence_counter: u64,
+    session_start: chrono::DateTime<chrono::Utc>,
+}
+
+impl ContextToken7DGenerator {
+    pub fn new() -> Self {
+        Self {
+            sequence_counter: 0,
+            session_start: Utc::now(),
+        }
+    }
+    
+    /// Genera un tensor 7D completo a partir del input normalizado
+    pub fn generate_tensor(&mut self, input: &NormalizedInput) -> Result<ContextTensor7D> {
+        self.sequence_counter += 1;
+        
+        Ok(ContextTensor7D {
+            temporal: self.extract_temporal(input)?,
+            semantic: self.extract_semantic(input)?,
+            contextual: self.extract_contextual(input)?,
+            relational: self.extract_relational(input)?,
+            emotional: self.extract_emotional(input)?,
+            intentional: self.extract_intentional(input)?,
+            biographical: self.extract_biographical(input)?,
+        })
+    }
+    
+    // ========== EXTRACTORES POR DIMENSIÓN ==========
+    
+    fn extract_temporal(&self, _input: &NormalizedInput) -> Result<TemporalDimension> {
+        let now = Utc::now();
+        let session_duration = (now - self.session_start).num_minutes() as u64;
+        
+        let hour = now.hour();
+        let time_of_day = match hour {
+            6..=11 => "morning",
+            12..=17 => "afternoon",
+            18..=21 => "evening",
+            _ => "night",
+        }.to_string();
+        
+        let day_of_week = now.format("%A").to_string();
+        
+        Ok(TemporalDimension {
+            timestamp: now,
+            sequence: self.sequence_counter,
+            time_of_day,
+            day_of_week,
+            session_duration_minutes: session_duration,
+            lifecycle_hours: 168,  // 7 días por defecto
+        })
+    }
+    
+    fn extract_semantic(&self, input: &NormalizedInput) -> Result<SemanticDimension> {
+        // Extraer keywords básico
+        let keywords: Vec<String> = input.text
+            .split_whitespace()
+            .filter(|w| w.len() > 3)
+            .take(10)
+            .map(|s| s.to_lowercase())
+            .collect();
+        
+        // Densidad semántica = ratio de palabras únicas vs total
+        let words: Vec<&str> = input.text.split_whitespace().collect();
+        let unique_words: std::collections::HashSet<_> = words.iter().collect();
+        let semantic_density = if !words.is_empty() {
+            unique_words.len() as f64 / words.len() as f64
+        } else {
+            0.0
+        };
+        
+        Ok(SemanticDimension {
+            text: input.text.clone(),
+            language: input.language.clone(),
+            keywords,
+            embeddings: vec![],  // Por ahora vacío (requiere modelo embeddings)
+            semantic_density,
+        })
+    }
+    
+    fn extract_contextual(&self, input: &NormalizedInput) -> Result<ContextualDimension> {
+        // Extraer markers contextuales del metadata
+        let context_markers: Vec<String> = input.metadata
+            .iter()
+            .filter(|(k, _)| k.starts_with("context_"))
+            .map(|(_, v)| v.clone())
+            .collect();
+        
+        let session_id = input.metadata
+            .get("session_id")
+            .cloned()
+            .unwrap_or_else(|| format!("session_{}", self.sequence_counter));
+        
+        let user_id = input.metadata
+            .get("user_id")
+            .cloned()
+            .unwrap_or_else(|| "anonymous".to_string());
+        
+        // Coherencia con previo (por ahora stub, requiere historial)
+        let coherence = 0.7;
+        
+        Ok(ContextualDimension {
+            session_id,
+            user_id,
+            context_markers,
+            situational_frame: "work".to_string(),  // Stub
+            coherence_with_previous: coherence,
+        })
+    }
+    
+    fn extract_relational(&self, input: &NormalizedInput) -> Result<RelationalDimension> {
+        // Buscar entidades (nombres propios, conceptos clave)
+        let mut entity_graph = HashMap::new();
+        
+        // Stub básico: palabras capitalizadas = entidades
+        let entities: Vec<String> = input.text
+            .split_whitespace()
+            .filter(|w| w.chars().next().map_or(false, |c| c.is_uppercase()))
+            .map(|s| s.to_string())
+            .collect();
+        
+        for entity in &entities {
+            entity_graph.insert(entity.clone(), vec![]);
+        }
+        
+        // Strength basado en confidence del input
+        let connection_strength = input.confidence;
+        
+        Ok(RelationalDimension {
+            related_tokens: vec![],  // Requiere historial de tokens
+            entity_graph,
+            connection_strength,
+            pattern_matches: vec![],  // Requiere pattern matching engine
+        })
+    }
+    
+    fn extract_emotional(&self, input: &NormalizedInput) -> Result<EmotionalDimension> {
+        // Valence = sentiment del input
+        let valence = input.sentiment;
+        
+        // Arousal estimado por longitud y signos de exclamación
+        let exclamations = input.text.matches('!').count();
+        let questions = input.text.matches('?').count();
+        let arousal = ((exclamations + questions) as f64 / 10.0).min(1.0);
+        
+        // Dominance basado en imperativos (stub)
+        let dominance = if input.text.to_lowercase().contains("must") 
+            || input.text.to_lowercase().contains("should") {
+            0.7
+        } else {
+            0.5
+        };
+        
+        // Certainty = confidence
+        let certainty = input.confidence;
+        
+        Ok(EmotionalDimension {
+            valence,
+            arousal,
+            dominance,
+            certainty,
+            emotional_trajectory: vec![],  // Requiere historial
+        })
+    }
+    
+    fn extract_intentional(&self, input: &NormalizedInput) -> Result<IntentionalDimension> {
+        // Detectar intent básico
+        let has_question = input.text.contains('?');
+        let has_imperative = input.text.to_lowercase().starts_with("create")
+            || input.text.to_lowercase().starts_with("make")
+            || input.text.to_lowercase().starts_with("do");
+        
+        let intent_category = if has_question {
+            "question"
+        } else if has_imperative {
+            "command"
+        } else {
+            "statement"
+        }.to_string();
+        
+        // Goal estimado
+        let goal = if input.text.to_lowercase().contains("debug") {
+            "debug"
+        } else if input.text.to_lowercase().contains("learn") {
+            "learn"
+        } else {
+            "general"
+        }.to_string();
+        
+        // Urgency basado en palabras clave
+        let urgency = if input.text.to_lowercase().contains("urgent")
+            || input.text.to_lowercase().contains("asap") {
+            0.9
+        } else {
+            0.5
+        };
+        
+        // Clarity = confidence
+        let clarity = input.confidence;
+        
+        Ok(IntentionalDimension {
+            intent_category,
+            goal,
+            action_required: has_imperative || has_question,
+            urgency,
+            clarity,
+        })
+    }
+    
+    fn extract_biographical(&self, input: &NormalizedInput) -> Result<BiographicalDimension> {
+        // Expertise estimado (requiere TelescopeDB integration)
+        let expertise_level = input.metadata
+            .get("expertise_level")
+            .and_then(|s| s.parse::<f64>().ok())
+            .unwrap_or(0.5);
+        
+        // Coherencia biográfica (stub, requiere historial de usuario)
+        let biographical_coherence = 0.7;
+        
+        // Significance estimado por longitud
+        let significance = (input.text.len() as f64 / 500.0).min(1.0);
+        
+        Ok(BiographicalDimension {
+            user_expertise_level: expertise_level,
+            historical_patterns: vec![],  // Requiere TelescopeDB
+            preferences: HashMap::new(),  // Requiere perfil de usuario
+            biographical_coherence,
+            personal_significance: significance,
+        })
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    
+    fn create_test_input() -> NormalizedInput {
+        let mut metadata = HashMap::new();
+        metadata.insert("session_id".to_string(), "test_session".to_string());
+        
+        NormalizedInput {
+            text: "This is a test question about debugging?".to_string(),
+            audio: None,
+            visual: None,
+            language: "English".to_string(),
+            sentiment: 0.2,
+            confidence: 0.85,
+            metadata,
+        }
+    }
+    
+    #[test]
+    fn test_generate_tensor() {
+        let mut generator = ContextToken7DGenerator::new();
+        let input = create_test_input();
+        
+        let tensor = generator.generate_tensor(&input).unwrap();
+        
+        assert_eq!(tensor.temporal.sequence, 1);
+        assert_eq!(tensor.semantic.language, "English");
+        assert!(tensor.intentional.action_required);  // Es una pregunta
+    }
+    
+    #[test]
+    fn test_semantic_extraction() {
+        let mut generator = ContextToken7DGenerator::new();
+        let input = create_test_input();
+        
+        let semantic = generator.extract_semantic(&input).unwrap();
+        
+        assert!(semantic.keywords.len() > 0);
+        assert!(semantic.semantic_density > 0.0);
+    }
+    
+    #[test]
+    fn test_emotional_extraction() {
+        let mut metadata = HashMap::new();
+        metadata.insert("session_id".to_string(), "test".to_string());
+        
+        let input = NormalizedInput {
+            text: "This is urgent!! Please help!!!".to_string(),
+            audio: None,
+            visual: None,
+            language: "English".to_string(),
+            sentiment: -0.5,
+            confidence: 0.9,
+            metadata,
+        };
+        
+        let mut generator = ContextToken7DGenerator::new();
+        let emotional = generator.extract_emotional(&input).unwrap();
+        
+        assert_eq!(emotional.valence, -0.5);
+        assert!(emotional.arousal > 0.0);  // Tiene exclamaciones
+    }
+}

@@ -1,0 +1,356 @@
+name: "integration_spec"
+category: "technical"
+version: "1.0.0"
+description: "Template para documentar especificaciones de integración entre componentes de Bitácora"
+
+# Triggers que activan este template
+trigger_patterns:
+  - "**/03_INTEGRACION/*.md"
+  - "integration design"
+  - "component integration"
+  - "integración de componentes"
+
+# Personalidad del template
+personality:
+  tone: "systematic_clear"
+  depth: "integration-focused"
+  style: "flow-oriented"
+  approach: "pipeline-thinking"  # Pensar en flujo de datos
+
+# Estructura obligatoria
+structure:
+  audit_header:
+    required: true
+    format: "yaml"
+    fields:
+      - archivo
+      - version
+      - fecha_creacion
+      - autor
+      - proposito
+      - estado
+      - relacionado_con
+      - componentes_integrados  # Lista de componentes que conecta
+
+  sections:
+    - name: "purpose"
+      title: "🎯 PROPÓSITO DE LA INTEGRACIÓN"
+      required: true
+      prompt: |
+        Explicar:
+        - ¿Qué componentes se integran?
+        - ¿Por qué necesitan comunicarse?
+        - ¿Qué valor añade la integración?
+        - ¿Qué pasaría sin esta integración?
+      
+    - name: "integration_overview"
+      title: "🔄 VISIÓN GENERAL DEL FLUJO"
+      required: true
+      prompt: |
+        Diagrama de flujo de datos:
+        ```
+        ┌─────────────┐
+        │ Component A │
+        └──────┬──────┘
+               │ Data: Input
+               ▼
+        ┌─────────────┐
+        │ Integration │ ← Transformation/Validation
+        │   Layer     │
+        └──────┬──────┘
+               │ Data: Output
+               ▼
+        ┌─────────────┐
+        │ Component B │
+        └─────────────┘
+        ```
+        
+        Descripción de cada etapa del flujo.
+      
+    - name: "data_contracts"
+      title: "📋 CONTRATOS DE DATOS"
+      required: true
+      prompt: |
+        Definir interfaces entre componentes:
+        
+        ### Input Contract (Component A → Integration)
+        ```rust
+        pub struct InputData {
+            // Campos requeridos
+            pub required_field: Type,
+            
+            // Campos opcionales
+            pub optional_field: Option<Type>,
+        }
+        
+        // Validaciones
+        impl InputData {
+            pub fn validate(&self) -> Result<(), ValidationError>;
+        }
+        ```
+        
+        ### Output Contract (Integration → Component B)
+        ```rust
+        pub struct OutputData {
+            // Campos transformados
+        }
+        ```
+      
+    - name: "transformation_logic"
+      title: "⚙️ LÓGICA DE TRANSFORMACIÓN"
+      required: true
+      prompt: |
+        Cómo se transforman los datos:
+        
+        ```rust
+        pub struct IntegrationLayer {
+            component_a: ComponentA,
+            component_b: ComponentB,
+        }
+        
+        impl IntegrationLayer {
+            pub fn transform(&self, input: InputData) -> Result<OutputData> {
+                // 1. Validar input
+                input.validate()?;
+                
+                // 2. Transformar
+                let intermediate = self.process(input)?;
+                
+                // 3. Validar output
+                let output = self.finalize(intermediate)?;
+                output.validate()?;
+                
+                Ok(output)
+            }
+        }
+        ```
+        
+        Explicar cada paso de transformación.
+      
+    - name: "error_handling"
+      title: "⚠️ MANEJO DE ERRORES"
+      required: true
+      prompt: |
+        Errores específicos de la integración:
+        
+        ```rust
+        #[derive(Debug, thiserror::Error)]
+        pub enum IntegrationError {
+            #[error("Input validation failed: {0}")]
+            InputValidationFailed(String),
+            
+            #[error("Component A failed: {0}")]
+            ComponentAFailed(#[from] ComponentAError),
+            
+            #[error("Component B failed: {0}")]
+            ComponentBFailed(#[from] ComponentBError),
+            
+            #[error("Transformation failed: {0}")]
+            TransformationFailed(String),
+        }
+        ```
+        
+        - Estrategias de retry
+        - Fallbacks
+        - Logging y observabilidad
+      
+    - name: "state_management"
+      title: "🔄 GESTIÓN DE ESTADO"
+      required: true
+      prompt: |
+        Si la integración es stateful:
+        
+        - Estados posibles
+        - Transiciones válidas
+        - Persistencia de estado
+        - Recuperación ante fallos
+        
+        ```rust
+        pub enum IntegrationState {
+            Idle,
+            Processing,
+            WaitingForResponse,
+            Completed,
+            Failed,
+        }
+        ```
+      
+    - name: "async_sync_patterns"
+      title: "⏱️ PATRONES ASYNC/SYNC"
+      required: true
+      prompt: |
+        - ¿Es síncrona o asíncrona la integración?
+        - ¿Usa callbacks, futures, channels?
+        - ¿Cómo se manejan timeouts?
+        
+        ```rust
+        // Ejemplo async
+        pub async fn integrate_async(
+            &self, 
+            input: InputData
+        ) -> Result<OutputData> {
+            tokio::time::timeout(
+                Duration::from_secs(5),
+                self.transform(input)
+            ).await?
+        }
+        ```
+      
+    - name: "performance_optimization"
+      title: "⚡ OPTIMIZACIÓN DE PERFORMANCE"
+      required: true
+      prompt: |
+        - Batching de requests
+        - Caching de resultados
+        - Connection pooling
+        - Lazy loading
+        
+        | Optimización | Impacto | Implementado |
+        |--------------|---------|--------------|
+        | Batching     | -50% latency | ✅ |
+        | Caching      | -80% DB calls | ⏸️ |
+      
+    - name: "testing_integration"
+      title: "🧪 TESTING DE INTEGRACIÓN"
+      required: true
+      prompt: |
+        Tests end-to-end:
+        
+        ```rust
+        #[tokio::test]
+        async fn test_component_a_to_b_integration() {
+            // Setup
+            let integration = IntegrationLayer::new();
+            let input = create_test_input();
+            
+            // Execute
+            let output = integration.transform(input).await.unwrap();
+            
+            // Verify
+            assert_eq!(output.expected_field, expected_value);
+        }
+        ```
+        
+        - Happy path tests
+        - Error path tests
+        - Edge cases
+        - Load testing
+      
+    - name: "monitoring_observability"
+      title: "📊 MONITOREO Y OBSERVABILIDAD"
+      required: true
+      prompt: |
+        Métricas clave:
+        - Latencia de transformación
+        - Tasa de errores
+        - Throughput (requests/sec)
+        - Tamaño de payloads
+        
+        Logging:
+        ```rust
+        tracing::info!(
+            input_size = input.size(),
+            output_size = output.size(),
+            duration_ms = elapsed.as_millis(),
+            "Integration completed successfully"
+        );
+        ```
+      
+    - name: "rollback_strategy"
+      title: "🔙 ESTRATEGIA DE ROLLBACK"
+      required: false
+      prompt: |
+        Si la integración modifica estado:
+        - Cómo revertir cambios
+        - Compensating transactions
+        - Idempotencia
+      
+    - name: "references"
+      title: "📚 REFERENCIAS"
+      required: true
+      prompt: |
+        - Specs de Component A (02_COMPONENTES/)
+        - Specs de Component B (02_COMPONENTES/)
+        - Arquitectura relacionada (01_ARQUITECTURA/)
+        - Decisiones arquitectónicas (DA-XXX)
+      
+    - name: "future_improvements"
+      title: "🚀 MEJORAS FUTURAS"
+      required: true
+      prompt: |
+        - v1.0: Implementación básica
+        - v2.0: Optimizaciones (batching, caching)
+        - v3.0: Distribución (multi-nodo)
+
+  footer:
+    required: true
+    format: "markdown"
+    content: |
+      ---
+      **Estado:** [📋 Diseño | 🚧 En desarrollo | ✅ Implementado]  
+      **Complejidad:** [🟢 BAJA | 🟡 MEDIA | 🔴 ALTA]  
+      **Prioridad:** [🔴 CRÍTICA | 🟡 ALTA | 🟢 MEDIA]
+      
+      ---
+      *Generado: {fecha}*  
+      *Sistema Bitácora v1.0 - MTT-DSL Template: integration_spec*
+
+# Validaciones
+validations:
+  - check: "has_data_contracts"
+    message: "Debe definir contratos de input/output"
+  
+  - check: "has_error_handling"
+    message: "Debe especificar manejo de errores"
+  
+  - check: "has_integration_tests"
+    message: "Debe incluir ejemplos de tests de integración"
+
+# Métricas de calidad
+quality_metrics:
+  min_code_examples: 4
+  min_error_types: 3
+  min_test_cases: 2
+  max_document_size_kb: 20
+
+# Instrucciones para LLMs
+llm_instructions: |
+  Para documentos de integración:
+  
+  1. IDENTIFICA componentes del nombre del archivo:
+     - "SENSORY_TO_TELESCOPEDB.md" → SensoryEngine + TelescopeDB
+     - "CTX7D_TO_VOXELDB.md" → ContextToken7D + VoxelDB
+  
+  2. LEE specs de ambos componentes:
+     - API pública de Component A
+     - API pública de Component B
+     - Formatos de datos de cada uno
+  
+  3. DISEÑA el contrato de integración:
+     - ¿Qué datos fluyen de A a B?
+     - ¿Qué transformaciones son necesarias?
+     - ¿Qué validaciones debemos hacer?
+  
+  4. MANEJA errores exhaustivamente:
+     - Errores de Component A
+     - Errores de transformación
+     - Errores de Component B
+     - Estrategias de retry/fallback
+  
+  5. OPTIMIZA el flujo:
+     - ¿Podemos hacer batching?
+     - ¿Vale la pena cachear?
+     - ¿Necesitamos async?
+  
+  6. PRUEBA end-to-end:
+     - Happy path
+     - Error paths
+     - Edge cases
+     - Performance bajo carga
+
+example_output_path: "ROADMAP_V2/03_INTEGRACION/HUBSPOKE_ROUTING.md"
+
+status: "active"
+last_updated: "2025-10-26"
+usage_count: 0
+effectiveness_score: null

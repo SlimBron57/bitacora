@@ -1,0 +1,253 @@
+# Email Template v1.0
+# Template específico para Email (hereda de base_chat.yaml)
+
+version: "1.0"
+source: "Email"
+author: "Eduardo Gil + B"
+date: "2025-11-29"
+description: "Digester para Email con comprensión de threads, formal tone y attachments"
+
+# Heredar reglas base de chat
+extends: "base_chat.yaml"
+
+# EMAIL-SPECIFIC EXTRACTION
+extraction:
+  # Email identity (formal, email addresses)
+  identity:
+    patterns:
+      - field: "from"
+        regex: "([\\w\\.\\-]+)@([\\w\\.\\-]+)"
+        confidence: 1.0
+        description: "Email address (único, verificable)"
+      
+      - field: "display_name"
+        regex: "^[A-Z][a-z]+ [A-Z][a-z]+$"
+        confidence: 0.90
+        description: "Nombre mostrado (formal)"
+      
+      - field: "signature"
+        regex: "^[A-Z][a-z]+ [A-Z][a-z]+\\n.*\\n.*@.*$"
+        confidence: 0.95
+        description: "Firma de email (incluye título, company)"
+  
+  # Email-specific interests (subject lines = temas clave)
+  interests:
+    subject_patterns:
+      technical:
+        rust: ["Rust", "Cargo", "async", "tokio"]
+        python: ["Python", "Django", "Flask"]
+        architecture: ["Architecture", "Design", "System Design"]
+      
+      professional:
+        project_management: ["Sprint", "Roadmap", "Milestone", "Deadline"]
+        business: ["Meeting", "Proposal", "Contract", "Budget"]
+      
+      learning:
+        courses: ["Course", "Tutorial", "Workshop", "Webinar"]
+    
+    attachment_names:
+      technical_docs:
+        patterns: [".*\\.pdf", ".*\\.docx", ".*_spec\\..*"]
+        confidence: 0.85
+      
+      code:
+        patterns: [".*\\.rs", ".*\\.py", ".*\\.js"]
+        confidence: 0.90
+    
+    context_boost:
+      - condition: "topic in subject + body"
+        boost: 0.30
+        description: "Mención en subject Y body = tema central"
+      
+      - condition: "attachment related to topic"
+        boost: 0.25
+        description: "Attachment refuerza interés"
+      
+      - condition: "thread length > 5 emails"
+        boost: 0.35
+        description: "Thread largo = tema importante"
+  
+  # Email relationship dynamics (professional network)
+  relationships:
+    network_types:
+      coworker:
+        indicators:
+          - same_domain: true
+          - daily_emails: "> 2"
+        significance: 0.90
+      
+      client:
+        indicators:
+          - formal_tone: true
+          - cc_others: true
+        significance: 0.85
+      
+      mentor:
+        indicators:
+          - long_emails: "> 500 words"
+          - advice_keywords: ["suggest", "recommend", "consider"]
+        significance: 0.95
+    
+    collaboration_indicators:
+      strong_collaboration:
+        - thread_length: "> 10"
+        - cc_frequency: "> 50%"
+        - attachments_shared: "> 5"
+      
+      medium_collaboration:
+        - thread_length: "> 5"
+        - cc_frequency: "> 30%"
+  
+  # Emotional extraction (formal, professional tone)
+  emotional:
+    sentiment_keywords:
+      positive: ["excellent", "great", "pleased", "glad", "appreciate"]
+      negative: ["unfortunately", "issue", "problem", "concern", "disappointed"]
+      neutral: ["regarding", "following up", "update", "FYI"]
+      urgent: ["URGENT", "ASAP", "deadline", "critical"]
+    
+    tone_indicators:
+      formal: ["Dear", "Sincerely", "Best regards", "Kind regards"]
+      casual: ["Hi", "Hey", "Thanks", "Cheers"]
+      urgent: ["!!!", "CAPS", "URGENT"]
+
+# EMAIL THREADS UNDERSTANDING
+threads:
+  depth_significance:
+    deep_thread: "> 10 emails"  # Significance: 0.95
+    medium_thread: "5-10 emails"  # Significance: 0.80
+    short_thread: "2-4 emails"   # Significance: 0.60
+  
+  reply_time_indicates:
+    immediate: "< 1 hour"  # High priority (0.90)
+    fast: "< 4 hours"      # Normal priority (0.70)
+    slow: "> 24 hours"     # Low priority (0.40)
+
+# EMAIL ATTACHMENTS UNDERSTANDING
+attachments:
+  types:
+    document:
+      extensions: [".pdf", ".docx", ".pptx", ".xlsx"]
+      significance: 0.90
+      description: "Documentos profesionales = información importante"
+    
+    code:
+      extensions: [".rs", ".py", ".js", ".java", ".cpp"]
+      significance: 0.95
+      description: "Código compartido = colaboración técnica"
+    
+    design:
+      extensions: [".fig", ".sketch", ".psd", ".ai"]
+      significance: 0.85
+      description: "Diseños = proyecto creativo"
+    
+    data:
+      extensions: [".csv", ".json", ".xml"]
+      significance: 0.80
+      description: "Datos = análisis técnico"
+  
+  size_significance:
+    large: "> 10MB"  # Significance: 0.85 (archivo importante)
+    medium: "1-10MB"  # Significance: 0.70
+    small: "< 1MB"   # Significance: 0.50
+
+# EMAIL CC/BCC NETWORK MAPPING
+recipients:
+  cc_indicates:
+    power_map: true
+    significance: 0.85
+    description: "CC muestra jerarquía y colaboración"
+  
+  bcc_indicates:
+    blind_copy: true
+    significance: 0.60
+    description: "BCC menos visible pero significativo"
+  
+  to_multiple_indicates:
+    group_communication: true
+    significance: 0.75
+
+# EMAIL TIMING PATTERNS
+temporal:
+  work_hours:
+    standard: "09:00-18:00"
+    extended: "08:00-20:00"
+  
+  after_hours_significance:
+    late_night: "22:00-06:00"  # Significance: 0.95 (deadline stress)
+    weekend: "Saturday-Sunday"  # Significance: 0.90 (dedicated)
+  
+  response_patterns:
+    immediate_responder: "< 1 hour average"  # Always available
+    fast_responder: "< 4 hours average"      # Efficient
+    slow_responder: "> 24 hours average"     # Busy or low priority
+
+# HYPERLINKS (Email-specific)
+hyperlinks:
+  enabled: true
+  expand_short_urls: true
+  
+  # Email links son menos frecuentes pero más relevantes
+  significance_boost: 1.3
+  
+  intent_inference:
+    reference:
+      patterns: ["see attached", "refer to", "please review"]
+      confidence: 0.90
+      description: "Reference en email = documento importante"
+    
+    action_required:
+      patterns: ["please click", "confirm by", "access here"]
+      confidence: 0.85
+      description: "Action link = task esperado"
+    
+    signature_link:
+      patterns: ["LinkedIn", "GitHub", "website"]
+      confidence: 0.70
+      description: "Link en signature = identidad profesional"
+
+# EMAIL FORMAT PARSING
+format:
+  mbox_support: true
+  eml_support: true
+  pst_support: false  # Outlook PST requires libpst
+  
+  headers_to_extract:
+    - "From"
+    - "To"
+    - "Cc"
+    - "Bcc"
+    - "Subject"
+    - "Date"
+    - "Message-ID"
+    - "In-Reply-To"
+    - "References"
+  
+  # Email system messages
+  system_messages:
+    - "Out of Office"
+    - "Automatic reply"
+    - "Delivery Status Notification"
+    - "Undeliverable"
+
+# PERFORMANCE (Email threads pueden ser grandes)
+performance:
+  batch_size: 50  # Emails son más pesados (attachments)
+  parallel_extraction: true
+  cache_enabled: true
+  max_attachment_size: 50  # MB (skip larger)
+  skip_images_in_body: true  # Solo attachments
+
+# QUALITY THRESHOLDS
+quality:
+  min_message_length: 10  # Emails más largos que chats
+  min_confidence: 0.70    # Email data muy estructurado
+  skip_system_messages: true
+  require_valid_email: true
+  
+  # Spam detection
+  spam_indicators:
+    - "click here to unsubscribe"
+    - "lottery winner"
+    - excessive CAPS
+  min_spam_score: 0.3  # Reject if spam_score > 0.3

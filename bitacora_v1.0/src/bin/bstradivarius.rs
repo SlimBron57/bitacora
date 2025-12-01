@@ -26,6 +26,7 @@ use std::time::Instant;
 use anyhow::Result;
 use chrono;
 use serde_json;
+use colored::*;
 
 fn main() -> Result<()> {
     // Parse command
@@ -47,6 +48,30 @@ fn main() -> Result<()> {
             let file_path = args.get(2).map(|s| s.as_str()).unwrap_or("");
             cmd_generate(file_path)
         },
+        "compress" => {
+            let path = args.get(2).map(|s| s.as_str()).unwrap_or("");
+            cmd_compress(path)
+        },
+        "decompress" => {
+            let template_id = args.get(2).map(|s| s.as_str()).unwrap_or("");
+            cmd_decompress(template_id)
+        },
+        "document-with-template" => {
+            if args.len() < 4 {
+                CliFormatter::print_error("Usage: bstradivarius document-with-template <file> <template>");
+                return Ok(());
+            }
+            cmd_document_with_template(&args[2], &args[3])
+        },
+        "flow-document" => {
+            if args.len() < 3 {
+                CliFormatter::print_error("Usage: bstradivarius flow-document <file1> [file2] [file3]...");
+                return Ok(());
+            }
+            let files: Vec<String> = args[2..].to_vec();
+            cmd_flow_document(&files)
+        },
+        "fbcu-stats" => cmd_fbcu_stats(),
         "sync" => cmd_sync(),
         "export" => cmd_export(),
         "metrics" => cmd_metrics(),
@@ -472,6 +497,249 @@ fn cmd_clear() -> Result<()> {
     } else {
         println!("Cancelled");
     }
+    
+    Ok(())
+}
+
+/// Compress markdown file to QPX
+fn cmd_compress(file_path: &str) -> Result<()> {
+    use bitacora_core::bstradivarius::fbcu_integration::FBCUIntegration;
+    use bitacora_core::voxeldb::TemplateCategory;
+    
+    if file_path.is_empty() {
+        CliFormatter::print_error("File path required. Usage: bstradivarius compress <file.md>");
+        return Ok(());
+    }
+    
+    let root = env::current_dir()?;
+    let config = WatcherConfig::default();
+    let mut integration = FBCUIntegration::new(config.voxel_db_path)?;
+    
+    CliFormatter::print_stage("Reading", file_path);
+    let content = std::fs::read_to_string(file_path)?;
+    
+    // Extract concept name from filename
+    let path = PathBuf::from(file_path);
+    let concept_name = path.file_stem()
+        .and_then(|s| s.to_str())
+        .unwrap_or("unknown");
+    
+    // Extract full filename and extension
+    let original_filename = path.file_name()
+        .and_then(|s| s.to_str())
+        .map(|s| s.to_string());
+    let file_extension = path.extension()
+        .and_then(|s| s.to_str())
+        .map(|s| format!(".{}", s));
+    
+    CliFormatter::print_stage("Compressing", &format!("{} ({} bytes)", concept_name, content.len()));
+    
+    let template_id = integration.store_concept_compressed_with_metadata(
+        concept_name,
+        TemplateCategory::Technical, // Default category
+        &content,
+        vec![],
+        original_filename,
+        file_extension,
+    )?;
+    
+    let stats = integration.get_stats();
+    let ratio = stats.compression_ratio();
+    
+    CliFormatter::print_stage("Finished", &format!(
+        "compressed to template_id: {} (ratio: {:.2}%)",
+        &template_id[..16],
+        ratio * 100.0
+    ));
+    
+    println!("\n  Original:   {} bytes", content.len());
+    println!("  Compressed: {} bytes", stats.total_compressed_bytes);
+    println!("  Saved:      {} bytes ({:.1}% reduction)\n", 
+        content.len() - stats.total_compressed_bytes,
+        (1.0 - ratio) * 100.0
+    );
+    
+    Ok(())
+}
+
+/// Decompress QPX template to markdown
+fn cmd_decompress(template_id: &str) -> Result<()> {
+    use bitacora_core::bstradivarius::fbcu_integration::FBCUIntegration;
+    use std::fs;
+    
+    if template_id.is_empty() {
+        CliFormatter::print_error("Template ID required. Usage: bstradivarius decompress <template_id>");
+        return Ok(());
+    }
+    
+    let config = WatcherConfig::default();
+    let mut integration = FBCUIntegration::new(config.voxel_db_path)?;
+    
+    // Regenerate content
+    let markdown = integration.regenerate_markdown(template_id)?;
+    
+    // Get original filename
+    let original_filename = integration.get_original_filename(template_id)?;
+    
+    if let Some(filename) = original_filename {
+        // Write to file with original name
+        fs::write(&filename, &markdown)?;
+        CliFormatter::print_stage("Decompressed", &format!("{} ({} bytes)", filename, markdown.len()));
+    } else {
+        // Fallback: output to stdout if no filename stored
+        print!("{}", markdown);
+    }
+    
+    Ok(())
+}
+
+/// Generate template-guided documentation
+fn cmd_document_with_template(file_path: &str, template_name: &str) -> Result<()> {
+    use bitacora_core::bstradivarius::template_engine::{TemplateEngine, DocumentationContext};
+    use std::fs;
+    use std::path::PathBuf;
+    
+    if file_path.is_empty() || template_name.is_empty() {
+        CliFormatter::print_error("Usage: bstradivarius document-with-template <file> <template>");
+        return Ok(());
+    }
+    
+    // Load templates
+    let root = env::current_dir()?;
+    let templates_dir = root.join("templates");
+    
+    if !templates_dir.exists() {
+        CliFormatter::print_error("Templates directory not found. Expected: templates/");
+        return Ok(());
+    }
+    
+    CliFormatter::print_stage("Loading", &format!("template '{}'", template_name));
+    let engine = TemplateEngine::new(templates_dir)?;
+    
+    // Verify file exists
+    let path = PathBuf::from(file_path);
+    if !path.exists() {
+        CliFormatter::print_error(&format!("File not found: {}", file_path));
+        return Ok(());
+    }
+    
+    // Read file content
+    let content = fs::read_to_string(&path)?;
+    let context = DocumentationContext::new(path.clone(), content);
+    
+    CliFormatter::print_stage("Generating", &format!("documentation guide for {}", file_path));
+    
+    // Generate guided documentation
+    let guide = engine.generate_documentation_guide(template_name, &context)?;
+    
+    // Output
+    println!("\n{}", guide);
+    
+    println!("\n{}", format!(
+        "✓ Generated documentation guide with template '{}' ({} bytes)",
+        template_name,
+        guide.len()
+    ).bright_green());
+    
+    Ok(())
+}
+
+/// Generate multi-document narrative with FlowQuery
+fn cmd_flow_document(files: &[String]) -> Result<()> {
+    use bitacora_core::bstradivarius::narrative_builder::NarrativeBuilder;
+    use bitacora_core::bstradivarius::document_graph::DocumentCategory;
+    use std::path::PathBuf;
+    
+    CliFormatter::print_stage("Analyzing", &format!("{} files", files.len()));
+    
+    let root = env::current_dir()?;
+    let templates_dir = root.join("templates");
+    
+    let mut builder = NarrativeBuilder::new(root.clone(), Some(templates_dir))?;
+    
+    // Indexar archivos
+    let mut file_paths = Vec::new();
+    for file_str in files {
+        let path = PathBuf::from(file_str);
+        if !path.exists() {
+            CliFormatter::print_warning(&format!("File not found: {}", file_str));
+            continue;
+        }
+        
+        // Indexar en FlowQuery
+        builder.flow_query_mut().index_file(path.clone(), DocumentCategory::Code)?;
+        file_paths.push(path);
+    }
+    
+    if file_paths.is_empty() {
+        CliFormatter::print_error("No valid files to analyze");
+        return Ok(());
+    }
+    
+    CliFormatter::print_stage("Building", "narrative with Git context");
+    
+    // Generar narrativa
+    let narrative = builder.build_narrative(&file_paths)?;
+    
+    // Output
+    println!("\n{}", narrative);
+    
+    println!("\n{}", format!(
+        "✓ Generated narrative for {} files ({} bytes)",
+        file_paths.len(),
+        narrative.len()
+    ).bright_green());
+    
+    Ok(())
+}
+
+/// Show FBCU compression statistics
+fn cmd_fbcu_stats() -> Result<()> {
+    use bitacora_core::bstradivarius::fbcu_integration::FBCUIntegration;
+    
+    let config = WatcherConfig::default();
+    let integration = FBCUIntegration::new(config.voxel_db_path)?;
+    
+    let stats = integration.get_stats();
+    
+    println!("\n{}", "🎻 FBCU Integration Statistics".bright_cyan().bold());
+    println!("{}", "═".repeat(60).bright_black());
+    
+    println!("\n  {} {}", "Templates stored:".bright_white(), 
+        format!("{}", stats.templates_stored).bright_green());
+    println!("  {} {}", "Templates retrieved:".bright_white(),
+        format!("{}", stats.templates_retrieved).bright_green());
+    
+    println!("\n  {} {}", "Original bytes:".bright_white(),
+        format!("{}", stats.total_original_bytes).bright_yellow());
+    println!("  {} {}", "Compressed bytes:".bright_white(),
+        format!("{}", stats.total_compressed_bytes).bright_yellow());
+    println!("  {} {}", "Compression ratio:".bright_white(),
+        format!("{:.2}%", stats.compression_ratio() * 100.0).bright_cyan());
+    
+    let saved = stats.total_original_bytes.saturating_sub(stats.total_compressed_bytes);
+    println!("  {} {}", "Space saved:".bright_white(),
+        format!("{} bytes ({:.1}% reduction)", saved, (1.0 - stats.compression_ratio()) * 100.0).bright_green().bold());
+    
+    println!("\n  {} {}", "Cache hits:".bright_white(),
+        format!("{}", stats.cache_hits).bright_green());
+    println!("  {} {}", "Cache misses:".bright_white(),
+        format!("{}", stats.cache_misses).bright_yellow());
+    println!("  {} {}", "Cache hit rate:".bright_white(),
+        format!("{:.1}%", stats.cache_hit_rate() * 100.0).bright_cyan());
+    
+    println!("\n  {} {}", "QPX files written:".bright_white(),
+        format!("{}", stats.qpx_files_written).bright_magenta());
+    println!("  {} {}", "QPX files read:".bright_white(),
+        format!("{}", stats.qpx_files_read).bright_magenta());
+    
+    let cached = integration.cached_templates();
+    println!("\n  {} {}", "Cached templates:".bright_white(),
+        format!("{}", cached.len()).bright_cyan());
+    println!("  {} {}", "Cache size:".bright_white(),
+        format!("{} bytes", integration.cache_size_bytes()).bright_yellow());
+    
+    println!("\n{}\n", "═".repeat(60).bright_black());
     
     Ok(())
 }

@@ -1,0 +1,239 @@
+name: "component_spec"
+category: "technical"
+version: "1.0.0"
+description: "Template para documentar especificaciones de componentes críticos de Bitácora"
+
+# Triggers que activan este template
+trigger_patterns:
+  - "**/02_COMPONENTES/CRITICOS/*.md"
+  - "**/02_COMPONENTES/IMPORTANTES/*.md"
+  - "component specification"
+  - "module design"
+  - "implementar componente"
+
+# Personalidad del template
+personality:
+  tone: "technical"
+  depth: "implementation-ready"
+  style: "code-focused"
+  approach: "bottom-up"  # Desde detalles hasta visión general
+
+# Estructura obligatoria
+structure:
+  # Metadatos de auditoría
+  audit_header:
+    required: true
+    format: "yaml"
+    fields:
+      - archivo
+      - version
+      - fecha_creacion
+      - autor
+      - proposito
+      - estado
+      - relacionado_con
+      - implementa  # Qué DA-XXX implementa
+
+  # Secciones principales
+  sections:
+    - name: "purpose"
+      title: "🎯 PROPÓSITO"
+      required: true
+      prompt: |
+        Explicar en 2-3 párrafos:
+        - ¿Qué problema resuelve este componente?
+        - ¿Por qué es crítico/importante?
+        - ¿Cómo se relaciona con la arquitectura general?
+      
+    - name: "architectural_context"
+      title: "🏗️ CONTEXTO ARQUITECTÓNICO"
+      required: true
+      prompt: |
+        Diagrama de ubicación del componente en el sistema:
+        - ¿Dónde vive en el flujo de datos?
+        - ¿Con qué otros componentes interactúa?
+        - ¿Qué depende de él?
+      
+    - name: "core_responsibilities"
+      title: "📋 RESPONSABILIDADES CORE"
+      required: true
+      prompt: |
+        Lista numerada de responsabilidades principales (3-7 items):
+        - Cada responsabilidad debe ser verificable
+        - Separar "must have" vs "nice to have"
+      
+    - name: "data_structures"
+      title: "🗂️ ESTRUCTURAS DE DATOS"
+      required: true
+      prompt: |
+        Definir structs/types principales en Rust:
+        ```rust
+        pub struct ComponentName {
+            // Campos con comentarios explicativos
+        }
+        
+        pub enum ComponentState {
+            // Estados posibles
+        }
+        ```
+      
+    - name: "public_api"
+      title: "🔌 API PÚBLICA"
+      required: true
+      prompt: |
+        Métodos públicos que otros componentes pueden llamar:
+        ```rust
+        impl ComponentName {
+            pub fn new(...) -> Result<Self>;
+            pub fn core_method(&self, ...) -> Result<Output>;
+        }
+        ```
+      
+    - name: "internal_implementation"
+      title: "⚙️ IMPLEMENTACIÓN INTERNA"
+      required: false
+      prompt: |
+        Detalles de algoritmos internos:
+        - Métodos privados clave
+        - Optimizaciones importantes
+        - Trade-offs de diseño
+      
+    - name: "dependencies"
+      title: "🔗 DEPENDENCIAS"
+      required: true
+      prompt: |
+        - Componentes de Bitácora que usa
+        - Crates externos requeridos
+        - Versiones mínimas
+      
+    - name: "performance_targets"
+      title: "⚡ OBJETIVOS DE PERFORMANCE"
+      required: true
+      prompt: |
+        Benchmarks esperados:
+        | Operación | Target | Actual | Status |
+        |-----------|--------|--------|--------|
+        | insert()  | <10ms  | TBD    | ⏸️     |
+      
+    - name: "testing_strategy"
+      title: "🧪 ESTRATEGIA DE TESTING"
+      required: true
+      prompt: |
+        - Unit tests críticos
+        - Integration tests
+        - Property-based tests
+        - Golden tests
+      
+    - name: "error_handling"
+      title: "⚠️ MANEJO DE ERRORES"
+      required: true
+      prompt: |
+        Tipos de error específicos:
+        ```rust
+        #[derive(Debug, thiserror::Error)]
+        pub enum ComponentError {
+            #[error("...")]
+            ErrorCase1,
+        }
+        ```
+      
+    - name: "references"
+      title: "📚 REFERENCIAS"
+      required: true
+      prompt: |
+        - Documentos ROADMAP_V2 relacionados
+        - Decisiones arquitectónicas (DA-XXX)
+        - Especificaciones (BITA-X)
+        - Código de referencia
+      
+    - name: "next_steps"
+      title: "🚀 PRÓXIMOS PASOS"
+      required: true
+      prompt: |
+        - Implementación inmediata (esta semana)
+        - Mejoras v2.0 (futuro)
+        - Prioridad y complejidad
+
+  # Footer estándar
+  footer:
+    required: true
+    format: "markdown"
+    content: |
+      ---
+      **Estado:** [📋 Especificación | 🚧 En desarrollo | ✅ Implementado]  
+      **Complejidad:** [🟢 BAJA | 🟡 MEDIA | 🔴 ALTA]  
+      **Prioridad:** [🔴 CRÍTICA | 🟡 ALTA | 🟢 MEDIA]
+      
+      ---
+      *Generado: {fecha}*  
+      *Sistema Bitácora v1.0 - MTT-DSL Template: component_spec*
+
+# Validaciones automáticas
+validations:
+  - check: "has_rust_code_blocks"
+    message: "Componente técnico debe incluir código Rust"
+  
+  - check: "has_performance_targets"
+    message: "Debe especificar objetivos de performance"
+  
+  - check: "references_architectural_decisions"
+    message: "Debe referenciar al menos una DA-XXX"
+
+# Métricas de calidad
+quality_metrics:
+  min_rust_examples: 3
+  min_references: 2
+  min_sections_completed: 10
+  max_document_size_kb: 30
+
+# Instrucciones para LLMs
+llm_instructions: |
+  Cuando generes un documento usando este template:
+  
+  1. LEE PRIMERO:
+     - 00_VISION/DECISIONES_ARQUITECTONICAS.md (DA-XXX relevantes)
+     - 01_ARQUITECTURA/*.md (diseño del sistema)
+     - B20250915-data-compressor/src/ (código de referencia)
+  
+  2. EXTRAE contexto del nombre del archivo:
+     - "TELESCOPEDB.md" → Component: TelescopeDB, Category: Databases
+     - "FBCU_CORE.md" → Component: FBCU, Category: Compression
+  
+  3. BUSCA código existente:
+     - grep_search para encontrar structs/impls relacionados
+     - Usar como base, NO copiar literalmente
+  
+  4. GENERA secciones en orden:
+     - Audit header primero (metadatos)
+     - Purpose (problema → solución)
+     - Architectural context (diagrama ASCII)
+     - Core responsibilities (lista verificable)
+     - Data structures (Rust structs)
+     - Public API (métodos públicos)
+     - Dependencies (componentes + crates)
+     - Performance targets (tabla benchmarks)
+     - Testing strategy (tipos de tests)
+     - Error handling (enums de error)
+     - References (docs relacionados)
+     - Next steps (implementación)
+     - Footer (estado/complejidad/prioridad)
+  
+  5. VALIDA:
+     - ✅ Al menos 3 bloques de código Rust
+     - ✅ Referencias a DA-XXX
+     - ✅ Objetivos de performance cuantificables
+     - ✅ Tamaño <30 KB
+  
+  6. AJUSTA si necesario:
+     - Si componente es simple, omite "internal_implementation"
+     - Si es crítico, añade más detalle en "testing_strategy"
+     - Si tiene muchas dependencias, crea tabla en "dependencies"
+
+# Ejemplo de uso
+example_output_path: "ROADMAP_V2/02_COMPONENTES/CRITICOS/VOXELDB.md"
+
+# Estado del template
+status: "active"
+last_updated: "2025-10-26"
+usage_count: 0
+effectiveness_score: null  # Se calcula después de usar

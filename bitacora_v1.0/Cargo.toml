@@ -1,0 +1,118 @@
+[package]
+name = "bitacora"
+version = "1.0.0-beta"
+edition = "2021"
+authors = ["Bitácora Team"]
+description = "Sistema integral de gestión biográfica con compresión fractal y análisis contextual 7D"
+license = "MIT"
+
+[[example]]
+name = "test_expertise_generation"
+path = "examples/test_expertise_generation.rs"
+
+[[example]]
+name = "test_telescopedb_integration"
+path = "examples/test_telescopedb_integration.rs"
+
+[[example]]
+name = "test_voxeldb_integration"
+path = "examples/test_voxeldb_integration.rs"
+
+[[example]]
+name = "test_sensory_engine"
+path = "examples/test_sensory_engine.rs"
+
+[[example]]
+name = "test_hubspoke"
+path = "examples/test_hubspoke.rs"
+
+[[example]]
+name = "test_fbcu"
+path = "examples/test_fbcu.rs"
+
+[[example]]
+name = "test_ctx7d_enhancement"
+path = "examples/test_ctx7d_enhancement.rs"
+
+[[example]]
+name = "test_flowpacks"
+path = "examples/test_flowpacks.rs"
+
+[dependencies]
+# Async runtime
+tokio = { version = "1.35", features = ["full"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+serde_cbor = "0.11"
+serde_yaml = "0.9"  # For data_import digester templates
+
+# Time
+chrono = { version = "0.4", features = ["serde"] }
+
+# Error handling
+anyhow = "1.0"
+thiserror = "1.0"
+
+# HTTP client (for LLM API calls)
+reqwest = { version = "0.11", features = ["json"] }
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = "0.3"
+log = "0.4"           # Logging facade para módulos legacy
+env_logger = "0.11"   # Logger implementation
+
+# Terminal colors (para context_token pretty-printing)
+colored = "2.1"
+
+# UUID generation (para TelescopeDB IDs)
+uuid = { version = "1.10", features = ["v4", "serde"] }
+
+# Cryptographic hashing (para FBCU content-addressing)
+sha2 = "0.10"
+md5 = "0.7"           # MD5 hashing (usado en algunos tests)
+hex = "0.4"           # Hex encoding/decoding
+
+# Binary encoding (for QPX native format)
+byteorder = "1.5"
+
+# LRU cache
+lru = "0.12"
+
+# Async trait support (para DigestionPipeline trait)
+async-trait = "0.1"
+
+# Compression (for FlowPacks FBCU placeholder)
+flate2 = "1.0"
+regex = "1.12.2"
+
+# File watcher (for bitacora-watcher meta-loop)
+notify = "7.0"
+toml = "0.8"
+
+# Git integration (for BStradivarius traceability)
+git2 = "0.19"
+
+# Machine Learning - Embeddings (FlowPacks similarity)
+# NOTE: Phase 3b - Requires PyTorch/libtorch installation
+# Uncomment when ready to use real MiniLM-L6-v2 model:
+# rust-bert = "0.21"
+# tokenizers = "0.13"
+
+# Spatial index - HNSW (FlowPacks k-NN search)
+# NOTE: Phase 3b - Currently using linear search placeholder
+# Uncomment for O(log n) performance:
+# hnsw = "0.11"
+
+[dev-dependencies]
+tempfile = "3.8"
+
+[lib]
+name = "bitacora_core"
+path = "src/lib.rs"
+
+[[bin]]
+name = "bstradivarius"
+path = "src/bin/bstradivarius.rs"

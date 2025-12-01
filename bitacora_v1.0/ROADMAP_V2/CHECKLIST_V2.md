@@ -1,13 +1,13 @@
 ```yaml
 # === DATOS DE AUDITORÍA ===
 Archivo: ROADMAP_V2/CHECKLIST_V2.md
-Versión: 2.29 - v1.0-BETA + BSTRADIVARIUS PRUEBAS DE FUEGO + DIAGRAMAS 🎻🔥
+Versión: 2.30 - v1.0-BETA + BSTRADIVARIUS ECOSYSTEM REFACTORING 🎻🌊
 Fecha Creación: 2025-01-25
-Última Actualización: 2025-11-30 15:00:00
+Última Actualización: 2025-11-30 16:00:00
 Autor: Sistema Bitácora - Methodology v1.6 Integration 🚀
 Propósito: Checklist plano con Git ↔ Checklist sync (metodología v1.6)
-Estado: ✅ v1.0-BETA RELEASED + BRANCH CLOSURE feature/v1.5-pixel-native
-Total Tareas: 121 Beta (COMPLETADO) + 77 ShuiDao Phase 3b (9/11 COMPLETE 82%) + 33 DOCS COMPLETADOS (14 DA-033 + 5 DA-034 + 1 IceBreaker + 14 PXLang/QPX)
+Estado: ✅ v1.0-BETA RELEASED + 🔴 BSTRADIVARIUS REFACTORING CRITICAL
+Total Tareas: 121 Beta (COMPLETADO) + 77 ShuiDao Phase 3b (9/11 COMPLETE 82%) + 33 DOCS COMPLETADOS + 28 BStradivarius Refactoring (NEW 80-100h)
 Relacionado Con: 
   - CHECKLIST_TREE_V2.md (árbol de tareas)
   - CHECK_BUGS.md (bugs históricos)
@@ -21,13 +21,26 @@ Relacionado Con:
   - 00_VISION/DA-034_SMALL_WORLD_NETWORKS.md v1.0 (navegación Small World Networks)
   - 02_COMPONENTES/07_routier-navigator.md v2.0.0 (extensión network algorithms)
   - shuidao_flowpacks_reflection.md (filosofía 水道)
+  - 00_VISION/DA-035_BSTRADIVARIUS_ECOSYSTEM_LIBRARIAN.md v1.0 (refactoring ecosistema)
+  - BSTRADIVARIUS_ARCHITECTURE_ANALYSIS.md (análisis inconsistencia detectada)
 Evolución:
   - Phase 3a: FlowPacks fundacional (detección patrones) ✅ COMPLETADO
   - Phase 3b: ShuiDao (detección intención) 📋 POST-BETA (67 tareas, 112-128h)
   - DA-032: ShuiDao - Intention-Oriented Cognitive Architecture
   - DA-033: Dynamic Topic/Tone System (TopicGraph + EmotionalSpace, personalización ilimitada)
   - DA-034: Small World Networks (Routier Navigator, 6 Degrees of Separation, Separation of Concerns)
+  - DA-035: BStradivarius Ecosystem Refactoring (FBCU+QPX+ShuiDao+LLM integration, bibliotecario LLM)
   - 🎉 MILESTONE: Documentation Foundation 100% COMPLETE (~18,000 líneas) - READY FOR IMPLEMENTATION 🚀
+Cambios v2.30 (2025-11-30 16:00:00):
+  - 🔴 REFACTORIZACIÓN CRÍTICA: BStradivarius debe usar arquitectura ecosistema (DA-035)
+  - 🎻 Análisis exhaustivo: BSTRADIVARIUS_ARCHITECTURE_ANALYSIS.md identificó inconsistencia
+  - 🌊 Decisión: Re-implementar HOY para dogfooding completo (QPX+FBCU+ShuiDao+LLM)
+  - 📋 Plan 3 fases: Fase 1 FBCU (20-25h), Fase 2 QPX (30-35h), Fase 3 ShuiDao+LLM (30-40h)
+  - 🎯 Objetivo: BStradivarius como bibliotecario LLM del ecosistema (CLI + API)
+  - ⚠️ Legacy tasks marcadas [OBSOLETO-LEGACY] pero NO eliminadas (mantener historia)
+  - 🆕 28 nuevas tareas (80-100h total estimado)
+  - 📚 Docs: DA-035 creado (~15K líneas), plan detallado en progreso
+  - 🔗 Coherencia arquitectónica: "Criatura acuática en ecosistema acuático, no terrestre"
 Cambios v2.28 (2025-11-30 15:00:00):
   - 🔥 PRUEBAS DE FUEGO: Suite completa de validación BStradivarius
   - 📊 BSTRADIVARIUS_FLOW_DIAGRAM.md: 4 flujos detallados (sync, watch, query, generate)
@@ -243,7 +256,7 @@ Cambios v2.14 (2025-11-23 23:31:03):
 ### 📐 01_ARQUITECTURA/ - Documentación Arquitectónica (5 docs)
 - [x] 1.1 - SISTEMA_DUAL_DATABASES.md (TelescopeDB + VoxelDB, 18 KB)
 - [x] 1.2 - PIXEL_STORAGE_DEEP_DIVE.md (encoding desde quantum compressor)
-- [x] 1.3 - CBOR_IMPLEMENTATION.md (serialización canónica BITA-1)
+- [x] 1.3 - ~~CBOR_IMPLEMENTATION.md~~ → **QPX v1.5** (14_qpx-quantumdao-revolucion.md) [MIGRADO 2025-11-26]
 - [x] 1.4 - CONTENT_ADDRESSABLE_IDS.md (SHA-256 strategy)
 - [x] 1.5 - FLUJO_DATOS_END_TO_END.md (pipeline completo)
 
@@ -594,7 +607,7 @@ Cambios v2.14 (2025-11-23 23:31:03):
 - [ ] 13.5 - **Storage Optimization** (4-6h) - QPX + .pxbio format
   - [ ] 13.5.1 - **QPX string encoding** (UTF-8 variable-length)
   - [ ] 13.5.2 - `.pxbio` file format (header + symbol table + scenes)
-  - [ ] 13.5.3 - Benchmark CBOR vs MessagePack
+  - [x] 13.5.3 - ~~Benchmark CBOR vs MessagePack~~ → QPX v1.5 nativo [OBSOLETO - QPX es formato único]
   - [ ] 13.5.4 - LRU cache (scenes, patterns, symbols)
   - [ ] 13.5.5 - Performance validation (<20ms parse, <50ms search)
 
@@ -1539,10 +1552,309 @@ Ver `FUSION_BAYESIANA/03_API_ENDPOINTS.md` para lista completa
 
 ---
 
-*Última actualización: 2025-11-28 11:45:00*  
-*"De Beta a Metodología v1.6, de chaos a claridad cristalina. Branch closure complete." 🔄🎯*
+## 🎻 BSTRADIVARIUS ECOSYSTEM REFACTORING (POST-BETA v1.0)
+**DA:** DA-035 - BStradivarius Ecosystem Librarian  
+**Filosofía:** "Criatura acuática en ecosistema acuático, no terrestre"  
+**Propósito:** Re-implementar BStradivarius para usar arquitectura Bitácora (QPX+FBCU+ShuiDao+LLM)  
+**Justificación:** Sistema que se auto-documenta DEBE usar su propia arquitectura innovadora  
+**Rol:** Bibliotecario LLM del ecosistema (CLI manual + API programática)  
+**Tiempo:** 80-100h (3 fases incrementales)  
+**Documento:** 00_VISION/DA-035_BSTRADIVARIUS_ECOSYSTEM_LIBRARIAN.md (~15K líneas)
+
+### ⚠️ LEGACY TASKS (v1.0 - Traditional Architecture)
+
+> **NOTA**: Estas tareas están marcadas como [OBSOLETO-LEGACY] pero NO se eliminan.  
+> Mantener para historia del proyecto y entender decisiones arquitectónicas.  
+> Nueva arquitectura (v2.0) las reemplaza completamente.
+
+- [x] **[OBSOLETO-LEGACY]** BStradivarius v1.0: Implementación tradicional ✅
+  - HashMap + JSON + Regex patterns
+  - String matching queries
+  - Solo metadatos (no contenido completo)
+  - 25MB storage, <1s queries
+  - Funciona para desarrollo pero NO usa innovaciones Bitácora
+
+- [x] **[OBSOLETO-LEGACY]** VoxelDB Octree optimizado v1.0 ✅
+  - Persistencia espacial 3D
+  - 6,080 templates indexados
+  - Nombres limpios + tags
+  - PERO: usado como HashMap tradicional, no semantic search
+
+- [x] **[OBSOLETO-LEGACY]** Watch mode + auto-regeneración INDEX.md ✅
+  - 174 archivos en 0.91s
+  - Watch mode funcional
+  - PERO: sin FBCU compression, sin QPX queries
+
+- [x] **[OBSOLETO-LEGACY]** Pruebas de fuego v1.0 ✅
+  - Tests queries: 92 "arquitectura", 93 "VoxelDB"
+  - Export 6,249 conceptos
+  - PERO: solo listas, no respuestas LLM contextuales
+
+---
+
+### 🔴 FASE 1: FBCU Compression Integration (20-25h)
+**Goal**: Almacenar contenido completo comprimido, habilitar regeneración  
+**Dependencias**: FBCU engine (✅ implementado src/fbcu/mod.rs)  
+**Branch**: `feature/bstradivarius-v2-phase1-fbcu`
+
+- [ ] 13.1a - **Integrar FBCUEngine en Indexer** (3h)
+  - [ ] 13.1a.1 - Añadir field `fbcu_engine: FBCUEngine`
+  - [ ] 13.1a.2 - Constructor con config
+  - [ ] 13.1a.3 - Tests: engine initializes correctly
+
+- [ ] 13.1b - **Implementar store_concept_with_content()** (4h)
+  - [ ] 13.1b.1 - Extraer contenido completo markdown
+  - [ ] 13.1b.2 - Comprimir con FBCU (auto-select wavelet/fractal)
+  - [ ] 13.1b.3 - Guardar en template.compressed_content
+  - [ ] 13.1b.4 - Tests: compression ratio >80%
+
+- [ ] 13.1c - **Implementar regenerate_markdown()** (3h)
+  - [ ] 13.1c.1 - Query template by name
+  - [ ] 13.1c.2 - Decompress FBCU content
+  - [ ] 13.1c.3 - Reconstruct original markdown
+  - [ ] 13.1c.4 - Tests: 100% accuracy vs original
+
+- [ ] 13.1d - **Actualizar cmd_sync() para compression** (2h)
+  - [ ] 13.1d.1 - Leer contenido completo al indexar
+  - [ ] 13.1d.2 - Llamar store_concept_with_content()
+  - [ ] 13.1d.3 - Backward compatibility con v1.0
+  - [ ] 13.1d.4 - Tests: sync con compression funciona
+
+- [ ] 13.1e - **CLI command: regenerate** (3h)
+  - [ ] 13.1e.1 - `bstradivarius regenerate <concept>`
+  - [ ] 13.1e.2 - Output path configurable
+  - [ ] 13.1e.3 - Batch regenerate multiple concepts
+  - [ ] 13.1e.4 - Tests: CLI command works
+
+- [ ] 13.1f - **Validación y benchmarks** (3h)
+  - [ ] 13.1f.1 - Compression ratio: >80% target
+  - [ ] 13.1f.2 - Storage: ~30MB (vs 25MB v1.0)
+  - [ ] 13.1f.3 - Regeneration accuracy: 100%
+  - [ ] 13.1f.4 - Performance: <2s full sync
+
+- [ ] 13.1g - **Documentación Fase 1** (2h)
+  - [ ] 13.1g.1 - Update GUIA.md (comando regenerate)
+  - [ ] 13.1g.2 - Update BSTRADIVARIUS_COMPLETE.md
+  - [ ] 13.1g.3 - Examples en docs
+
+---
+
+### 🟠 FASE 2: QPX Semantic Queries (30-35h)
+**Goal**: Reemplazar string matching con semantic search  
+**Dependencias**: PXLang specs (✅ especificado), VoxelDB octree (✅ implementado), Fase 1 (opcional)  
+**Branch**: `feature/bstradivarius-v2-phase2-qpx`
+
+- [ ] 13.2a - **Integrar PXLangEngine** (4h)
+  - [ ] 13.2a.1 - Añadir fields pxlang_engine, qpx_parser
+  - [ ] 13.2a.2 - Constructor con config
+  - [ ] 13.2a.3 - Tests: engines initialize
+
+- [ ] 13.2b - **Implementar query_semantic()** (6h)
+  - [ ] 13.2b.1 - Parse natural language con PXLang
+  - [ ] 13.2b.2 - Generate QPX query from parsed intent
+  - [ ] 13.2b.3 - Execute spatial search en VoxelDB
+  - [ ] 13.2b.4 - Score by semantic relevance
+  - [ ] 13.2b.5 - Tests: semantic accuracy >85%
+
+- [ ] 13.2c - **Implementar score_semantic_relevance()** (4h)
+  - [ ] 13.2c.1 - Embeddings similarity (if available)
+  - [ ] 13.2c.2 - Topic overlap scoring
+  - [ ] 13.2c.3 - Spatial distance in octree
+  - [ ] 13.2c.4 - Weighted fusion
+  - [ ] 13.2c.5 - Tests: scoring coherent
+
+- [ ] 13.2d - **Implementar extract_related_topics()** (3h)
+  - [ ] 13.2d.1 - Analyze template tags
+  - [ ] 13.2d.2 - Find cross-references
+  - [ ] 13.2d.3 - Graph traversal en VoxelDB
+  - [ ] 13.2d.4 - Tests: related topics relevant
+
+- [ ] 13.2e - **Actualizar VoxelDB para spatial queries** (6h)
+  - [ ] 13.2e.1 - Implementar query_spatial() method
+  - [ ] 13.2e.2 - Octree traversal optimizado
+  - [ ] 13.2e.3 - Radius-based neighborhood search
+  - [ ] 13.2e.4 - Tests: spatial queries <50ms
+
+- [ ] 13.2f - **CLI command: query-semantic** (3h)
+  - [ ] 13.2f.1 - `bstradivarius query-semantic <query>`
+  - [ ] 13.2f.2 - Pretty output con scores
+  - [ ] 13.2f.3 - Related topics display
+  - [ ] 13.2f.4 - Tests: CLI works
+
+- [ ] 13.2g - **Backward compatibility** (2h)
+  - [ ] 13.2g.1 - Mantener `query` command (legacy)
+  - [ ] 13.2g.2 - Auto-detect semantic vs pattern
+  - [ ] 13.2g.3 - Migration path clara
+  - [ ] 13.2g.4 - Tests: both modes work
+
+- [ ] 13.2h - **Benchmarks y optimización** (3h)
+  - [ ] 13.2h.1 - Query time: <100ms target
+  - [ ] 13.2h.2 - Semantic accuracy: >90% target
+  - [ ] 13.2h.3 - Compare vs v1.0 string matching
+  - [ ] 13.2h.4 - Profile y optimize bottlenecks
+
+- [ ] 13.2i - **Documentación Fase 2** (2h)
+  - [ ] 13.2i.1 - Update GUIA.md (query-semantic)
+  - [ ] 13.2i.2 - Examples semantic queries
+  - [ ] 13.2i.3 - Comparison table vs legacy
+
+---
+
+### 🟡 FASE 3: ShuiDao + LLM Integration (30-40h)
+**Goal**: Responder preguntas con contexto (bibliotecario LLM)  
+**Dependencias**: ShuiDao (✅ implementado), HubSpoke (✅ implementado), Fase 1 (CRÍTICO), Fase 2 (recomendado)  
+**Branch**: `feature/bstradivarius-v2-phase3-llm`
+
+- [ ] 13.3a - **Integrar IntentionDetector** (3h)
+  - [ ] 13.3a.1 - Añadir field intention_detector
+  - [ ] 13.3a.2 - Config con thresholds
+  - [ ] 13.3a.3 - Tests: intention detection >90%
+
+- [ ] 13.3b - **Integrar CognitiveRouter** (3h)
+  - [ ] 13.3b.1 - Añadir field cognitive_router
+  - [ ] 13.3b.2 - Route to mode engines
+  - [ ] 13.3b.3 - Tests: routing correcto
+
+- [ ] 13.3c - **Integrar HubSpokeNavigator** (4h)
+  - [ ] 13.3c.1 - Añadir field hubspoke_navigator
+  - [ ] 13.3c.2 - LLM API keys config
+  - [ ] 13.3c.3 - Context augmentation setup
+  - [ ] 13.3c.4 - Tests: LLM routing works
+
+- [ ] 13.3d - **Implementar ask() - Learning Mode** (6h)
+  - [ ] 13.3d.1 - Detect Learning intention
+  - [ ] 13.3d.2 - Query semantic templates
+  - [ ] 13.3d.3 - Decompress content con FBCU
+  - [ ] 13.3d.4 - Generate LLM explanation
+  - [ ] 13.3d.5 - Tests: learning responses relevant
+
+- [ ] 13.3e - **Implementar ask() - Operational Mode** (6h)
+  - [ ] 13.3e.1 - Detect Operational intention
+  - [ ] 13.3e.2 - Find implementation docs
+  - [ ] 13.3e.3 - Create project structure
+  - [ ] 13.3e.4 - Generate tasks breakdown
+  - [ ] 13.3e.5 - Tests: operational projects coherent
+
+- [ ] 13.3f - **Implementar ask() - Light Mode** (2h)
+  - [ ] 13.3f.1 - Quick answers (backward compat)
+  - [ ] 13.3f.2 - No LLM call (use semantic query)
+  - [ ] 13.3f.3 - Tests: fast responses
+
+- [ ] 13.3g - **Implementar decompress_templates()** (2h)
+  - [ ] 13.3g.1 - Batch decompression FBCU
+  - [ ] 13.3g.2 - Cache management
+  - [ ] 13.3g.3 - Error handling
+  - [ ] 13.3g.4 - Tests: decompression works
+
+- [ ] 13.3h - **Implementar suggest_learning_path()** (3h)
+  - [ ] 13.3h.1 - Analyze template dependencies
+  - [ ] 13.3h.2 - Order by complexity
+  - [ ] 13.3h.3 - Generate progression
+  - [ ] 13.3h.4 - Tests: paths logical
+
+- [ ] 13.3i - **Implementar create_implementation_project()** (4h)
+  - [ ] 13.3i.1 - Parse docs to extract steps
+  - [ ] 13.3i.2 - Generate task breakdown
+  - [ ] 13.3i.3 - Estimate durations
+  - [ ] 13.3i.4 - Tests: projects actionable
+
+- [ ] 13.3j - **CLI command: ask** (4h)
+  - [ ] 13.3j.1 - `bstradivarius ask <question>`
+  - [ ] 13.3j.2 - Interactive mode (follow-ups)
+  - [ ] 13.3j.3 - Save conversation history
+  - [ ] 13.3j.4 - Tests: CLI interactive works
+
+- [ ] 13.3k - **API para LLMs externos** (3h)
+  - [ ] 13.3k.1 - REST API endpoints
+  - [ ] 13.3k.2 - JSON request/response
+  - [ ] 13.3k.3 - Authentication (dev only)
+  - [ ] 13.3k.4 - Tests: API works
+
+- [ ] 13.3l - **Documentación exhaustiva Fase 3** (3h)
+  - [ ] 13.3l.1 - Update GUIA.md (ask command)
+  - [ ] 13.3l.2 - Examples: Learning, Operational, Light
+  - [ ] 13.3l.3 - API documentation
+  - [ ] 13.3l.4 - Integration guide para otros proyectos
+
+---
+
+### 📚 DOCUMENTACIÓN ADICIONAL
+
+- [ ] 13.4a - **Especificación Técnica Componente** (4h)
+  - [ ] 13.4a.1 - Crear 02_COMPONENTES/17_bstradivarius-llm-librarian.md
+  - [ ] 13.4a.2 - API pública completa
+  - [ ] 13.4a.3 - Integración FBCU/QPX/ShuiDao/HubSpoke
+  - [ ] 13.4a.4 - Casos de uso CLI + API
+  - [ ] 13.4a.5 - Performance targets
+
+- [ ] 13.4b - **Plan Implementación Detallado** (3h)
+  - [ ] 13.4b.1 - Crear 04_IMPLEMENTACION/BSTRADIVARIUS_REFACTORING_PLAN.md
+  - [ ] 13.4b.2 - Breakdown tareas por fase
+  - [ ] 13.4b.3 - Dependencias y orden
+  - [ ] 13.4b.4 - Tests y validación
+
+- [ ] 13.4c - **Template MTT-DSL** (2h)
+  - [ ] 13.4c.1 - Crear templates/mtt/bstradivarius_refactoring.yaml
+  - [ ] 13.4c.2 - Pasos guiados implementación
+  - [ ] 13.4c.3 - Validaciones por fase
+  - [ ] 13.4c.4 - Contexto y referencias
+
+- [ ] 13.4d - **Actualizar GUIA.md** (2h)
+  - [ ] 13.4d.1 - Sección BStradivarius actualizada
+  - [ ] 13.4d.2 - Nuevos comandos documentados
+  - [ ] 13.4d.3 - Rol bibliotecario LLM explicado
+  - [ ] 13.4d.4 - Workflow integrado
+
+---
+
+### ✅ ACCEPTANCE CRITERIA
+
+**Funcional**:
+- ✅ Regenerar docs completos desde VoxelDB comprimido
+- ✅ Queries semánticos (no solo string matching)
+- ✅ LLM responde preguntas con contexto relevante
+- ✅ CLI commands: regenerate, query-semantic, ask
+- ✅ API para LLMs externos funcional
+- ✅ Backward compatible con comandos v1.0
+
+**Performance**:
+- ✅ Compression ratio >80% (FBCU)
+- ✅ Query time <100ms (semantic)
+- ✅ LLM response <3s (ask command)
+- ✅ Intention accuracy >90% (ShuiDao)
+- ✅ API latency <200ms
+
+**Arquitectónica**:
+- ✅ Usa FBCU para compression
+- ✅ Usa QPX para semantic queries
+- ✅ Usa ShuiDao para intention detection
+- ✅ Usa HubSpoke para LLM routing
+- ✅ Coherente con ecosistema Bitácora
+- ✅ Sistema se auto-documenta con su propia arquitectura
+
+**Tests**:
+- ✅ Unit tests >85% coverage por fase
+- ✅ Integration tests E2E por comando
+- ✅ Benchmarks performance targets
+- ✅ Backward compatibility tests
+
+---
+
+### 📊 PROGRESO BSTRADIVARIUS REFACTORING
+
+**Total**: 28 tareas (80-100h estimado)  
+**Fase 1 (FBCU)**: 0/7 tareas - 20-25h  
+**Fase 2 (QPX)**: 0/9 tareas - 30-35h  
+**Fase 3 (ShuiDao+LLM)**: 0/12 tareas - 30-40h
+
+**Estado**: 🔴 PENDIENTE INICIO - Documentación DA-035 completa ✅
+
+---
+
+*Última actualización: 2025-11-30 16:00:00*  
+*"De criatura terrestre a organismo acuático. BStradivarius evoluciona para respirar en el mismo ecosistema." 🎻🌊*
 
 ---
 
 *Generado por Sistema Bitácora v1.0-beta + Metodología v1.6*  
-*Última actualización: 2025-11-28 11:45:00 (Phase 6.5 Branch Closure ✅ + Roadmap v1.1-v1.5 📋)*
+*Última actualización: 2025-11-30 16:00:00 (BStradivarius Ecosystem Refactoring 🎻🌊 + DA-035)*

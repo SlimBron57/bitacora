@@ -47,6 +47,10 @@ use std::path::{Path, PathBuf};
 use serde::{Deserialize, Serialize};
 use chrono::{DateTime, Utc};
 
+// QPX Native Format
+use crate::qpx::{QPXEncoder, QPXDecoder, QPXQuantumCore, TemplateMetadata as QPXTemplateMetadata, Pixel};
+use crate::fbcu::{FBCUCore, CompressionType, FBCUMetadata};
+
 // Re-exports públicos
 pub use crate::voxeldb::octree::{Octree, OctreeNode};
 
@@ -213,6 +217,14 @@ pub struct TemplateEntry {
     
     /// Metadatos adicionales
     pub metadata: TemplateMetadata,
+    
+    /// Nombre de archivo original (con extensión)
+    #[serde(default)]
+    pub original_filename: Option<String>,
+    
+    /// Extensión del archivo original (.md, .rs, .toml, etc.)
+    #[serde(default)]
+    pub file_extension: Option<String>,
 }
 
 impl TemplateEntry {
@@ -239,6 +251,8 @@ impl TemplateEntry {
                 version: "1.0".to_string(),
                 author: "bitacora".to_string(),
             },
+            original_filename: None,
+            file_extension: None,
         }
     }
     
@@ -624,6 +638,161 @@ impl VoxelDB {
             .map_err(|e| VoxelDBError::SerializationError(e.to_string()))?;
         Ok(template)
     }
+
+    // ========================================================================
+    // QPX NATIVE FORMAT METHODS (v1.5+)
+    // ========================================================================
+
+    /// Generate QPX storage path with year/month partitioning
+    /// 
+    /// Example: data/voxel/templates/2025/11/202511_abc123def456.qpxf
+    pub fn get_template_qpx_path(&self, template_id: &str, timestamp: DateTime<Utc>) -> PathBuf {
+        let year = timestamp.format("%Y").to_string();
+        let month = timestamp.format("%m").to_string();
+        let month_prefix = timestamp.format("%Y%m").to_string();
+        
+        self.storage_path
+            .join("templates")
+            .join(&year)
+            .join(&month)
+            .join(format!("{}_{}.qpxf", month_prefix, template_id))
+    }
+
+    /// Write template as QPX binary format
+    /// 
+    /// Converts TemplateEntry → QPXQuantumCore → .qpxf binary file
+    /// 
+    /// # Arguments
+    /// * `template` - Template to encode
+    /// * `fbcu_core` - Compressed FBCU data
+    /// * `pixels` - 384D embedding (128 pixels × 3 RGB)
+    /// 
+    /// # Returns
+    /// * Path where .qpxt file was written
+    pub fn write_template_qpx(
+        &self,
+        template: &TemplateEntry,
+        fbcu_core: FBCUCore,
+        pixels: Vec<Pixel>,
+    ) -> Result<PathBuf> {
+        // Create QPX metadata
+        let qpx_metadata = QPXTemplateMetadata {
+            concept_name: template.name.clone(),
+            category: format!("{:?}", template.category),
+            tags: template.tags.clone(),
+            original_path: String::new(), // Not stored in QPX (only in VoxelDB index)
+            original_filename: template.original_filename.clone(),
+            file_extension: template.file_extension.clone(),
+        };
+
+        // Determine alpha based on effectiveness
+        let alpha = if template.effectiveness.effectiveness_score > 0.8 {
+            255 // Core template (highly effective)
+        } else if template.effectiveness.effectiveness_score > 0.5 {
+            128 // Helper template (moderately effective)
+        } else {
+            50  // Deprecated template (low effectiveness)
+        };
+
+        // Create quantum core
+        let quantum_core = QPXQuantumCore {
+            fbcu_core,
+            pixels,
+            alpha,
+            metadata: qpx_metadata,
+            timestamp: template.metadata.created_at,
+            checksum: self.compute_template_checksum(template),
+        };
+
+        // Encode to QPX binary
+        let qpx_bytes = QPXEncoder::encode_quantum_core(&quantum_core)
+            .map_err(|e| VoxelDBError::SerializationError(format!("QPX encoding failed: {}", e)))?;
+
+        // Generate path with year/month partitioning
+        let qpx_path = self.get_template_qpx_path(&template.id, template.metadata.created_at);
+
+        // Create directory structure
+        if let Some(parent) = qpx_path.parent() {
+            std::fs::create_dir_all(parent)?;
+        }
+
+        // Write to disk
+        std::fs::write(&qpx_path, qpx_bytes)?;
+
+        Ok(qpx_path)
+    }
+
+    /// Read template from QPX binary format
+    /// 
+    /// # Arguments
+    /// * `qpx_path` - Path to .qpxt file
+    /// 
+    /// # Returns
+    /// * Decoded QPXQuantumCore with all template data
+    pub fn read_template_qpx(&self, qpx_path: &Path) -> Result<QPXQuantumCore> {
+        let qpx_bytes = std::fs::read(qpx_path)?;
+        
+        QPXDecoder::decode_quantum_core(&qpx_bytes)
+            .map_err(|e| VoxelDBError::SerializationError(format!("QPX decoding failed: {}", e)))
+    }
+
+    /// Find QPX file for a template ID
+    /// 
+    /// Searches in year/month directories for the template's .qpxt file
+    pub fn find_template_qpx(&self, template_id: &str) -> Result<PathBuf> {
+        let templates_dir = self.storage_path.join("templates");
+        
+        if !templates_dir.exists() {
+            return Err(VoxelDBError::TemplateNotFound(
+                format!("QPX templates directory not found: {:?}", templates_dir)
+            ));
+        }
+
+        // Search in year directories
+        for year_entry in std::fs::read_dir(&templates_dir)? {
+            let year_entry = year_entry?;
+            if !year_entry.file_type()?.is_dir() {
+                continue;
+            }
+
+            // Search in month directories
+            for month_entry in std::fs::read_dir(year_entry.path())? {
+                let month_entry = month_entry?;
+                if !month_entry.file_type()?.is_dir() {
+                    continue;
+                }
+
+                // Search for .qpxf files matching template_id
+                for file_entry in std::fs::read_dir(month_entry.path())? {
+                    let file_entry = file_entry?;
+                    let path = file_entry.path();
+                    
+                    if let Some(filename) = path.file_name().and_then(|n| n.to_str()) {
+                        if filename.contains(template_id) && filename.ends_with(".qpxf") {
+                            return Ok(path);
+                        }
+                    }
+                }
+            }
+        }
+
+        Err(VoxelDBError::TemplateNotFound(
+            format!("QPX file not found for template: {}", template_id)
+        ))
+    }
+
+    /// Compute SHA256 checksum for template content
+    fn compute_template_checksum(&self, template: &TemplateEntry) -> [u8; 32] {
+        use sha2::{Sha256, Digest};
+        
+        let mut hasher = Sha256::new();
+        hasher.update(template.content.as_bytes());
+        
+        let result = hasher.finalize();
+        let mut checksum = [0u8; 32];
+        checksum.copy_from_slice(&result);
+        checksum
+    }
     
     /// Cargar todos los templates desde disco
     pub fn load_all_from_disk(&mut self) -> Result<usize> {
@@ -726,5 +895,152 @@ mod tests {
         assert_eq!(template.coords.x, 0.0); // Technical = 0.0
         assert_eq!(template.coords.y, 0.5); // Default complejidad
         assert_eq!(template.coords.z, 0.5); // Default efectividad
+    }
+
+    #[test]
+    fn test_qpx_path_generation() {
+        use tempfile::tempdir;
+        
+        let temp_dir = tempdir().unwrap();
+        let voxel = VoxelDB::new(temp_dir.path().to_path_buf()).unwrap();
+        
+        let timestamp = DateTime::parse_from_rfc3339("2025-11-30T15:30:00Z")
+            .unwrap()
+            .with_timezone(&Utc);
+        
+        let path = voxel.get_template_qpx_path("abc123def456", timestamp);
+        
+        assert!(path.to_string_lossy().contains("templates"));
+        assert!(path.to_string_lossy().contains("2025"));
+        assert!(path.to_string_lossy().contains("11"));
+        assert!(path.to_string_lossy().contains("202511_abc123def456.qpxf"));
+    }
+
+    #[test]
+    fn test_qpx_write_read_roundtrip() {
+        use tempfile::tempdir;
+        
+        let temp_dir = tempdir().unwrap();
+        let voxel = VoxelDB::new(temp_dir.path().to_path_buf()).unwrap();
+        
+        // Create test template
+        let template = TemplateEntry::new(
+            "test_qpx_template".to_string(),
+            TemplateCategory::Technical,
+            "Test content for QPX".to_string(),
+        );
+
+        // Create FBCU core (compressed data)
+        let fbcu_core = FBCUCore {
+            id: "qpx_test_123".into(),
+            compression_type: CompressionType::Hybrid,
+            compressed_data: vec![1, 2, 3, 4, 5],
+            original_size: 1000,
+            compression_ratio: 0.005,
+            metadata: FBCUMetadata {
+                compressed_at: Utc::now().to_rfc3339(),
+                compression_time_ms: 10,
+                original_hash: "test_hash".into(),
+                wavelet_level: Some(3),
+                fractal_level: None,
+            },
+        };
+
+        // Create pixels (128 pixels for 384D embedding)
+        // Alpha should match template effectiveness: 0.5 (default) -> alpha=128
+        let pixels = vec![Pixel::new(100, 150, 200, 128); 128];
+
+        // Write QPX
+        let qpx_path = voxel.write_template_qpx(&template, fbcu_core, pixels).unwrap();
+        
+        // Verify file exists
+        assert!(qpx_path.exists());
+        assert!(qpx_path.to_string_lossy().ends_with(".qpxf"));
+
+        // Read QPX back
+        let decoded = voxel.read_template_qpx(&qpx_path).unwrap();
+        
+        // Verify data
+        assert_eq!(decoded.metadata.concept_name, "test_qpx_template");
+        assert_eq!(decoded.metadata.category, "Technical");
+        assert_eq!(decoded.pixels.len(), 128);
+        assert_eq!(decoded.alpha, 128); // Default effectiveness (0.5) = helper template
+        assert_eq!(decoded.fbcu_core.compressed_data, vec![1, 2, 3, 4, 5]);
+    }
+
+    #[test]
+    fn test_qpx_alpha_determination() {
+        use tempfile::tempdir;
+        
+        let temp_dir = tempdir().unwrap();
+        let voxel = VoxelDB::new(temp_dir.path().to_path_buf()).unwrap();
+        
+        // High effectiveness template
+        let mut template_high = TemplateEntry::new(
+            "high_effectiveness".to_string(),
+            TemplateCategory::Technical,
+            "content".to_string(),
+        );
+        template_high.effectiveness.effectiveness_score = 0.9;
+
+        let fbcu = FBCUCore {
+            id: "test".into(),
+            compression_type: CompressionType::Hybrid,
+            compressed_data: vec![1],
+            original_size: 100,
+            compression_ratio: 0.01,
+            metadata: FBCUMetadata {
+                compressed_at: Utc::now().to_rfc3339(),
+                compression_time_ms: 5,
+                original_hash: "hash".into(),
+                wavelet_level: None,
+                fractal_level: None,
+            },
+        };
+
+        let pixels = vec![Pixel::new(50, 50, 50, 255); 64];
+        let path = voxel.write_template_qpx(&template_high, fbcu, pixels).unwrap();
+        let decoded = voxel.read_template_qpx(&path).unwrap();
+        
+        assert_eq!(decoded.alpha, 255); // Core template
+    }
+
+    #[test]
+    fn test_find_template_qpx() {
+        use tempfile::tempdir;
+        
+        let temp_dir = tempdir().unwrap();
+        let voxel = VoxelDB::new(temp_dir.path().to_path_buf()).unwrap();
+        
+        // Create and write template
+        let template = TemplateEntry::new(
+            "findable_template".to_string(),
+            TemplateCategory::Creative,
+            "content".to_string(),
+        );
+
+        let fbcu = FBCUCore {
+            id: "find_test".into(),
+            compression_type: CompressionType::Hybrid,
+            compressed_data: vec![1, 2, 3],
+            original_size: 500,
+            compression_ratio: 0.006,
+            metadata: FBCUMetadata {
+                compressed_at: Utc::now().to_rfc3339(),
+                compression_time_ms: 8,
+                original_hash: "xyz".into(),
+                wavelet_level: Some(2),
+                fractal_level: None,
+            },
+        };
+
+        let pixels = vec![Pixel::new(75, 100, 125, 128); 96];
+        voxel.write_template_qpx(&template, fbcu, pixels).unwrap();
+
+        // Find the template
+        let found_path = voxel.find_template_qpx(&template.id).unwrap();
+        
+        assert!(found_path.exists());
+        assert!(found_path.to_string_lossy().contains(&template.id));
     }
 }

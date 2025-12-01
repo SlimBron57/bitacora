@@ -1,0 +1,507 @@
+# 🌟 HUB TEMPLATE - Rust Programming Language
+
+hub_id: "hub_rust_language_001"
+version: "1.0.0"
+created_at: "2025-01-10T00:00:00Z"
+updated_at: "2025-11-24T16:00:00Z"
+
+# === BASIC INFO ===
+topic:
+  id: "topic_rust_programming"
+  name: "Rust Programming Language"
+  domain: "technology"
+  community: "community_programming_languages"
+  
+# === NETWORK METRICS ===
+degree: 47  # Total number of connections (in + out)
+in_degree: 22  # Topics pointing to Rust (dependencies, prerequisites)
+out_degree: 25  # Topics Rust points to (applications, advanced concepts)
+
+centrality_measures:
+  pagerank: 0.089  # PageRank score (0-1, higher = more important)
+  betweenness: 0.124  # Betweenness centrality (0-1, how often node is on shortest paths)
+  closeness: 0.156  # Closeness centrality (0-1, avg distance to other nodes)
+  eigenvector: 0.103  # Eigenvector centrality (0-1, influence via connections)
+
+# === SCALE-FREE PROPERTIES ===
+scale_free_properties:
+  hub_rank: 1  # Rank among all hubs (1 = highest degree)
+  power_law_fit: 0.93  # How well degree distribution fits power law (0-1)
+  preferential_attachment_score: 0.87  # New topics connect to this hub preferentially
+  formation_mechanism: "barabasi_albert"  # Barabási-Albert (1999) preferential attachment
+  
+# === GROWTH HISTORY ===
+growth_history:
+  - date: "2025-01-10"
+    degree: 5
+    event: "Initial topic creation"
+    connections: ["systems_programming", "memory_safety", "c_cpp_interop", "cargo_tooling", "rustup"]
+    
+  - date: "2025-03-15"
+    degree: 18
+    event: "Backend development expansion"
+    new_connections: ["async_programming", "tokio_runtime", "actix_web", "rocket_framework", 
+                     "diesel_orm", "sqlx", "api_development", "microservices", "rest_apis",
+                     "graphql", "error_handling", "logging", "testing"]
+    
+  - date: "2025-06-20"
+    degree: 31
+    event: "Systems & embedded growth"
+    new_connections: ["embedded_systems", "no_std_rust", "bare_metal", "rtos", "firmware",
+                     "kernel_development", "device_drivers", "interrupt_handling",
+                     "dma_programming", "hardware_abstraction", "cross_compilation",
+                     "target_architectures", "linker_scripts"]
+    
+  - date: "2025-11-24"
+    degree: 47
+    event: "Advanced concepts & tooling"
+    new_connections: ["macros", "procedural_macros", "trait_objects", "lifetime_elision",
+                     "pin_unpin", "async_traits", "zero_cost_abstractions", "llvm",
+                     "compiler_internals", "cargo_workspaces", "benchmarking",
+                     "profiling", "fuzzing", "property_testing", "miri", "clippy"]
+
+# === CONNECTIONS ===
+connections:
+  # === CORE DOMAIN (9 connections) ===
+  - topic_id: "topic_systems_programming"
+    name: "Systems Programming"
+    strength: 0.95
+    type: "core_domain"
+    direction: "bidirectional"
+    semantic_relationship: "Rust es diseñado específicamente para systems programming"
+    
+  - topic_id: "topic_memory_safety"
+    name: "Memory Safety"
+    strength: 0.92
+    type: "key_feature"
+    direction: "outgoing"
+    semantic_relationship: "Rust garantiza memory safety sin garbage collector"
+    
+  - topic_id: "topic_ownership_borrowing"
+    name: "Ownership & Borrowing"
+    strength: 0.98
+    type: "key_feature"
+    direction: "outgoing"
+    semantic_relationship: "Sistema único de ownership es la característica distintiva de Rust"
+    
+  - topic_id: "topic_zero_cost_abstractions"
+    name: "Zero-Cost Abstractions"
+    strength: 0.89
+    type: "core_principle"
+    direction: "outgoing"
+    semantic_relationship: "Abstracciones de alto nivel sin overhead en runtime"
+    
+  - topic_id: "topic_cargo_tooling"
+    name: "Cargo (Build System)"
+    strength: 0.91
+    type: "tooling"
+    direction: "outgoing"
+    semantic_relationship: "Cargo es el build system y package manager oficial"
+    
+  - topic_id: "topic_c_cpp_interop"
+    name: "C/C++ Interoperability"
+    strength: 0.87
+    type: "integration"
+    direction: "bidirectional"
+    semantic_relationship: "Rust puede llamar y ser llamado desde C/C++"
+    
+  - topic_id: "topic_fearless_concurrency"
+    name: "Fearless Concurrency"
+    strength: 0.94
+    type: "key_feature"
+    direction: "outgoing"
+    semantic_relationship: "Sistema de tipos previene data races en tiempo de compilación"
+    
+  - topic_id: "topic_trait_system"
+    name: "Trait System"
+    strength: 0.90
+    type: "language_feature"
+    direction: "outgoing"
+    semantic_relationship: "Traits permiten polimorfismo y code reuse"
+    
+  - topic_id: "topic_rustup_toolchain"
+    name: "Rustup (Toolchain Manager)"
+    strength: 0.85
+    type: "tooling"
+    direction: "outgoing"
+    semantic_relationship: "Rustup gestiona versiones de Rust y targets de compilación"
+
+  # === APPLICATION DOMAINS (12 connections) ===
+  - topic_id: "topic_webassembly"
+    name: "WebAssembly"
+    strength: 0.78
+    type: "application_domain"
+    direction: "outgoing"
+    semantic_relationship: "Rust es uno de los mejores lenguajes para compilar a WASM"
+    
+  - topic_id: "topic_backend_development"
+    name: "Backend Development"
+    strength: 0.82
+    type: "application_domain"
+    direction: "outgoing"
+    semantic_relationship: "Rust se usa para APIs, microservices, web servers"
+    
+  - topic_id: "topic_embedded_systems"
+    name: "Embedded Systems"
+    strength: 0.80
+    type: "application_domain"
+    direction: "outgoing"
+    semantic_relationship: "Rust es excelente para firmware y bare-metal programming"
+    
+  - topic_id: "topic_blockchain"
+    name: "Blockchain Development"
+    strength: 0.71
+    type: "application_domain"
+    direction: "outgoing"
+    semantic_relationship: "Polkadot, Solana, Near usan Rust para smart contracts"
+    
+  - topic_id: "topic_game_development"
+    name: "Game Development"
+    strength: 0.68
+    type: "application_domain"
+    direction: "outgoing"
+    semantic_relationship: "Bevy engine, Amethyst, game engines en Rust"
+    
+  - topic_id: "topic_cli_tools"
+    name: "CLI Tools"
+    strength: 0.79
+    type: "application_domain"
+    direction: "outgoing"
+    semantic_relationship: "ripgrep, fd, bat, exa - CLI tools populares en Rust"
+    
+  - topic_id: "topic_data_processing"
+    name: "Data Processing"
+    strength: 0.73
+    type: "application_domain"
+    direction: "outgoing"
+    semantic_relationship: "Polars, DataFusion - procesamiento de datos en Rust"
+    
+  - topic_id: "topic_networking"
+    name: "Network Programming"
+    strength: 0.81
+    type: "application_domain"
+    direction: "outgoing"
+    semantic_relationship: "Tokio, async-std, Quinn (QUIC), networking en Rust"
+    
+  - topic_id: "topic_operating_systems"
+    name: "Operating Systems"
+    strength: 0.76
+    type: "application_domain"
+    direction: "outgoing"
+    semantic_relationship: "Redox OS, Tock OS, kernel modules en Rust"
+    
+  - topic_id: "topic_compilers"
+    name: "Compiler Development"
+    strength: 0.70
+    type: "application_domain"
+    direction: "outgoing"
+    semantic_relationship: "Rust compiler, LLVM, salsa, compiler infra"
+    
+  - topic_id: "topic_databases"
+    name: "Database Systems"
+    strength: 0.75
+    type: "application_domain"
+    direction: "outgoing"
+    semantic_relationship: "TiKV, SurrealDB, databend - databases en Rust"
+    
+  - topic_id: "topic_security_tools"
+    name: "Security Tools"
+    strength: 0.77
+    type: "application_domain"
+    direction: "outgoing"
+    semantic_relationship: "Auditing, fuzzing, security-focused tools en Rust"
+
+  # === FRAMEWORKS & LIBRARIES (11 connections) ===
+  - topic_id: "topic_tokio_runtime"
+    name: "Tokio (Async Runtime)"
+    strength: 0.88
+    type: "framework"
+    direction: "outgoing"
+    semantic_relationship: "Runtime async más popular en Rust"
+    
+  - topic_id: "topic_actix_web"
+    name: "Actix Web"
+    strength: 0.84
+    type: "framework"
+    direction: "outgoing"
+    semantic_relationship: "Framework web de alto performance"
+    
+  - topic_id: "topic_rocket_framework"
+    name: "Rocket"
+    strength: 0.79
+    type: "framework"
+    direction: "outgoing"
+    semantic_relationship: "Framework web con type-safe routing"
+    
+  - topic_id: "topic_diesel_orm"
+    name: "Diesel (ORM)"
+    strength: 0.82
+    type: "library"
+    direction: "outgoing"
+    semantic_relationship: "ORM type-safe para SQL databases"
+    
+  - topic_id: "topic_sqlx"
+    name: "SQLx"
+    strength: 0.80
+    type: "library"
+    direction: "outgoing"
+    semantic_relationship: "Async SQL library con compile-time query validation"
+    
+  - topic_id: "topic_serde"
+    name: "Serde"
+    strength: 0.93
+    type: "library"
+    direction: "outgoing"
+    semantic_relationship: "Serialization/deserialization framework"
+    
+  - topic_id: "topic_clap"
+    name: "Clap (CLI Parser)"
+    strength: 0.78
+    type: "library"
+    direction: "outgoing"
+    semantic_relationship: "Library para parsear argumentos de CLI"
+    
+  - topic_id: "topic_bevy_engine"
+    name: "Bevy (Game Engine)"
+    strength: 0.72
+    type: "framework"
+    direction: "outgoing"
+    semantic_relationship: "Data-driven game engine en Rust"
+    
+  - topic_id: "topic_tauri"
+    name: "Tauri"
+    strength: 0.76
+    type: "framework"
+    direction: "outgoing"
+    semantic_relationship: "Framework para desktop apps (alternativa a Electron)"
+    
+  - topic_id: "topic_axum"
+    name: "Axum"
+    strength: 0.83
+    type: "framework"
+    direction: "outgoing"
+    semantic_relationship: "Web framework modular basado en tower/tokio"
+    
+  - topic_id: "topic_tracing"
+    name: "Tracing"
+    strength: 0.81
+    type: "library"
+    direction: "outgoing"
+    semantic_relationship: "Framework para logging y tracing async"
+
+  # === ADVANCED CONCEPTS (10 connections) ===
+  - topic_id: "topic_macros"
+    name: "Macros (Declarative & Procedural)"
+    strength: 0.86
+    type: "advanced_feature"
+    direction: "outgoing"
+    semantic_relationship: "Metaprogramming en Rust"
+    
+  - topic_id: "topic_lifetime_elision"
+    name: "Lifetime Elision"
+    strength: 0.84
+    type: "advanced_feature"
+    direction: "outgoing"
+    semantic_relationship: "Reglas para inferir lifetimes automáticamente"
+    
+  - topic_id: "topic_trait_objects"
+    name: "Trait Objects & dyn"
+    strength: 0.82
+    type: "advanced_feature"
+    direction: "outgoing"
+    semantic_relationship: "Dynamic dispatch usando traits"
+    
+  - topic_id: "topic_pin_unpin"
+    name: "Pin & Unpin"
+    strength: 0.77
+    type: "advanced_feature"
+    direction: "outgoing"
+    semantic_relationship: "Prevenir mover valores en memoria (futures async)"
+    
+  - topic_id: "topic_unsafe_rust"
+    name: "Unsafe Rust"
+    strength: 0.89
+    type: "advanced_feature"
+    direction: "outgoing"
+    semantic_relationship: "Escape hatch para operaciones que el compiler no puede verificar"
+    
+  - topic_id: "topic_compiler_internals"
+    name: "Compiler Internals (rustc, MIR, HIR)"
+    strength: 0.69
+    type: "advanced_topic"
+    direction: "outgoing"
+    semantic_relationship: "Internals del Rust compiler"
+    
+  - topic_id: "topic_llvm"
+    name: "LLVM Backend"
+    strength: 0.72
+    type: "advanced_topic"
+    direction: "outgoing"
+    semantic_relationship: "Rust compila a LLVM IR"
+    
+  - topic_id: "topic_miri"
+    name: "Miri (Interpreter)"
+    strength: 0.68
+    type: "tooling"
+    direction: "outgoing"
+    semantic_relationship: "Detector de undefined behavior"
+    
+  - topic_id: "topic_clippy"
+    name: "Clippy (Linter)"
+    strength: 0.87
+    type: "tooling"
+    direction: "outgoing"
+    semantic_relationship: "Linter con 500+ sugerencias de código idiomático"
+    
+  - topic_id: "topic_cargo_workspaces"
+    name: "Cargo Workspaces"
+    strength: 0.80
+    type: "advanced_tooling"
+    direction: "outgoing"
+    semantic_relationship: "Gestión de proyectos multi-crate"
+
+  # === PREREQUISITE TOPICS (5 connections incoming) ===
+  - topic_id: "topic_programming_fundamentals"
+    name: "Programming Fundamentals"
+    strength: 0.65
+    type: "prerequisite"
+    direction: "incoming"
+    semantic_relationship: "Conceptos básicos antes de aprender Rust"
+    
+  - topic_id: "topic_low_level_programming"
+    name: "Low-Level Programming Concepts"
+    strength: 0.71
+    type: "prerequisite"
+    direction: "incoming"
+    semantic_relationship: "Entender memoria, stack, heap ayuda con Rust"
+    
+  - topic_id: "topic_functional_programming"
+    name: "Functional Programming"
+    strength: 0.68
+    type: "prerequisite"
+    direction: "incoming"
+    semantic_relationship: "Rust toma conceptos de FP (iterators, map, filter, etc.)"
+    
+  - topic_id: "topic_type_theory"
+    name: "Type Theory"
+    strength: 0.66
+    type: "prerequisite"
+    direction: "incoming"
+    semantic_relationship: "Sistema de tipos de Rust es avanzado"
+    
+  - topic_id: "topic_compiler_theory"
+    name: "Compiler Theory"
+    strength: 0.64
+    type: "prerequisite"
+    direction: "incoming"
+    semantic_relationship: "Útil para entender borrow checker"
+
+# === USER EXPERTISE ===
+user_expertise:
+  user_id: "eduardo"
+  level: "intermediate"  # "beginner", "intermediate", "advanced", "expert"
+  confidence: 0.78  # 0-1, based on interactions
+  
+  strengths:
+    - "async_programming"  # Usuario demuestra buen entendimiento
+    - "backend_development"
+    - "api_development"
+    - "error_handling"
+    
+  weaknesses:
+    - "unsafe_rust"  # Usuario aún no explora mucho
+    - "macros"  # Procedural macros son complejos
+    - "embedded_systems"  # Poca experiencia en embedded
+    
+  learning_trajectory:
+    - date: "2025-01-10"
+      level: "beginner"
+      milestone: "First Rust program (Hello World)"
+      
+    - date: "2025-03-15"
+      level: "intermediate"
+      milestone: "Built first web API with Actix Web"
+      
+    - date: "2025-06-20"
+      level: "intermediate"
+      milestone: "Comfortable with async/await and Tokio"
+      
+    - date: "2025-11-24"
+      level: "intermediate"
+      milestone: "Working on Bitácora (complex async system)"
+
+# === HUB CRITICALITY ===
+criticality:
+  is_critical_hub: true  # Eliminar este hub fragmentaría la red significativamente
+  network_fragmentation_impact: 0.87  # 0-1, qué tan fragmentada quedaría la red sin este hub
+  
+  dependent_topics: 39  # Cuántos tópicos dependen directamente de este hub
+  
+  redundancy_score: 0.42  # 0-1, qué tan redundante es este hub (paths alternativos)
+  alternative_hubs:
+    - topic_id: "topic_c_plus_plus"
+      overlap: 0.31  # Overlap en application domains
+    - topic_id: "topic_go_lang"
+      overlap: 0.28  # Overlap en backend/networking
+    - topic_id: "topic_zig_lang"
+      overlap: 0.24  # Overlap en systems programming
+
+# === LEARNING RECOMMENDATIONS ===
+learning_recommendations:
+  immediate_next_steps:
+    - topic: "topic_macros"
+      reason: "Expandir expertise, macros son potentes en Rust"
+      priority: "high"
+      estimated_time: "8h"
+      
+    - topic: "topic_unsafe_rust"
+      reason: "Necesario para entender boundaries de safety"
+      priority: "medium"
+      estimated_time: "6h"
+      
+  deep_dive_opportunities:
+    - topic: "topic_embedded_systems"
+      reason: "Aplicar Rust en nuevo dominio (hardware)"
+      priority: "medium"
+      estimated_time: "20h"
+      
+    - topic: "topic_compiler_internals"
+      reason: "Entender cómo funciona Rust internamente"
+      priority: "low"
+      estimated_time: "40h"
+
+# === METADATA ===
+metadata:
+  hub_type: "technology"
+  stability: "stable"  # "emerging", "stable", "declining"
+  growth_rate: 0.12  # 12% monthly growth in connections
+  
+  community_size: 1200000  # Rust community size estimate
+  job_market_demand: 0.89  # 0-1, demand in job market
+  
+  tags:
+    - "systems_programming"
+    - "memory_safe"
+    - "high_performance"
+    - "modern_language"
+    - "critical_hub"
+    
+  notes: |
+    Rust es un HUB CRÍTICO en el grafo de conocimiento del usuario. Con 47 conexiones,
+    es el nodo más conectado en la red. El usuario tiene nivel intermediate y está
+    progresando bien. Se recomienda profundizar en macros y unsafe Rust para alcanzar
+    nivel advanced. El hub es estable y creciendo (12% monthly), con alta demanda
+    en el mercado laboral (0.89).
+
+# === MONITORING ===
+monitoring:
+  next_review_date: "2025-12-24T00:00:00Z"
+  growth_threshold: 0.15  # Si crece >15% en un mes, revisar estructura
+  
+  alerts:
+    - condition: "degree > 60"
+      action: "consider_splitting_into_sub_hubs"  # Rust backend, Rust embedded, etc.
+    - condition: "pagerank < 0.05"
+      action: "investigate_declining_importance"
+    - condition: "user_expertise == 'advanced'"
+      action: "suggest_contributing_to_rust_projects"

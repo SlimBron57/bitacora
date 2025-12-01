@@ -1,0 +1,499 @@
+name: "implementation_plan"
+category: "strategic"
+version: "1.0.0"
+description: "Template para documentar planes de implementación detallados de componentes complejos"
+
+# Triggers que activan este template
+trigger_patterns:
+  - "**/04_IMPLEMENTACION/*_IMPLEMENTATION_PLAN.md"
+  - "**/04_IMPLEMENTACION/*_PLAN.md"
+  - "implementation plan"
+  - "roadmap de implementación"
+  - "fase de desarrollo"
+
+# Personalidad del template
+personality:
+  tone: "strategic_and_technical"
+  depth: "comprehensive"
+  style: "narrative_with_code"
+  approach: "top-down"  # Desde visión hasta detalles
+
+# Estructura obligatoria
+structure:
+  # Metadatos de auditoría
+  audit_header:
+    required: true
+    format: "yaml"
+    fields:
+      - archivo
+      - version
+      - fecha_creacion
+      - ultima_actualizacion
+      - autor
+      - proposito
+      - estado
+      - relacionado_con
+      - implementa  # Qué DA-XXX implementa
+      - criticidad
+      - evolucion  # Historia evolutiva del componente (si aplica)
+
+  # Secciones principales
+  sections:
+    - name: "vision_statement"
+      title: "🌊 VISIÓN Y FILOSOFÍA"
+      required: true
+      prompt: |
+        - Título evocativo (ej: "ShuiDao (水道) - El Camino del Agua")
+        - Quote o filosofía que captura la esencia
+        - Contexto del problema (qué lo motivó)
+        - 2-3 párrafos explicando la visión general
+        
+        Estilo: Narrativo pero técnicamente fundamentado
+    
+    - name: "evolutionary_context"
+      title: "🧭 CONTEXTO EVOLUTIVO"
+      required: false
+      prompt: |
+        Si el componente EVOLUCIONA de una versión anterior:
+        
+        ### Fase Anterior (v1): Nombre
+        - ✅ Lo que se logró
+        - ✅ Fundamento técnico establecido
+        - **Logro:** Frase clave
+        
+        ### Fase Actual (v2): Nombre
+        - 🎯 Nueva capacidad 1
+        - 🎯 Nueva capacidad 2
+        - **Transformación:** De X a Y
+        
+        Incluir tabla comparativa si es útil.
+    
+    - name: "problem_statement"
+      title: "🎯 PROBLEMA Y SOLUCIÓN"
+      required: true
+      prompt: |
+        ### El Problema
+        - Descripción clara del problema (con ejemplos reales)
+        - Por qué los enfoques anteriores son insuficientes
+        - Impacto si no se resuelve
+        
+        ### La Solución Propuesta
+        - Enfoque de alto nivel
+        - Principios de diseño clave
+        - Diferenciadores vs alternativas
+        
+        ### Ejemplos Antes/Después
+        Casos de uso que muestren el cambio transformacional.
+    
+    - name: "core_architecture"
+      title: "🏗️ ARQUITECTURA CORE"
+      required: true
+      prompt: |
+        Diagramas ASCII mostrando:
+        - Componentes principales y sus relaciones
+        - Flujo de datos end-to-end
+        - Capas de abstracción
+        
+        Explicación de cada componente principal (1-2 párrafos c/u).
+    
+    - name: "components_detailed"
+      title: "📦 COMPONENTES DETALLADOS"
+      required: true
+      prompt: |
+        Para cada componente core:
+        
+        ### 1. Nombre del Componente
+        **Propósito:** Qué hace
+        **Responsabilidades:**
+        - Responsabilidad 1
+        - Responsabilidad 2
+        
+        **Estructuras de datos:**
+        ```rust
+        pub struct ComponentName {
+            // Campos con comentarios
+        }
+        ```
+        
+        **API Principal:**
+        ```rust
+        impl ComponentName {
+            pub fn method(...) -> Result<...>;
+        }
+        ```
+        
+        **Ejemplo de uso:**
+        ```rust
+        // Código de ejemplo realista
+        ```
+        
+        Repetir para cada componente (3-8 componentes típicamente).
+    
+    - name: "integration_points"
+      title: "🔗 PUNTOS DE INTEGRACIÓN"
+      required: true
+      prompt: |
+        Cómo este componente se integra con el resto del sistema:
+        
+        - **Con TelescopeDB:** Explicación + código
+        - **Con VoxelDB:** Explicación + código
+        - **Con FBCU:** Explicación + código
+        - **Con Context Token 7D:** Explicación + código
+        
+        Diagramas de secuencia si ayudan.
+    
+    - name: "data_flow"
+      title: "🌊 FLUJO DE DATOS"
+      required: true
+      prompt: |
+        ### Flujo Principal
+        1. Input: De dónde viene
+        2. Procesamiento: Qué transformaciones
+        3. Output: A dónde va
+        
+        ### Flujos Secundarios
+        - Manejo de caché
+        - Persistencia
+        - Eventos/notificaciones
+        
+        Diagramas ASCII detallados.
+    
+    - name: "implementation_phases"
+      title: "🚀 FASES DE IMPLEMENTACIÓN"
+      required: true
+      prompt: |
+        Dividir implementación en fases lógicas:
+        
+        ### Fase 1: Nombre (X horas)
+        **Objetivo:** Qué se logra
+        **Tareas:**
+        - [ ] Tarea 1 (subtarea A, B, C)
+        - [ ] Tarea 2
+        **Entregables:**
+        - Componente X funcional
+        - Tests Y pasando
+        
+        ### Fase 2: Nombre (Y horas)
+        ...
+        
+        Repetir para todas las fases (3-9 fases típicamente).
+        
+        **Total estimado:** X horas (~Y días)
+    
+    - name: "success_metrics"
+      title: "📊 MÉTRICAS DE ÉXITO"
+      required: true
+      prompt: |
+        ### Métricas Funcionales
+        | Métrica | Target | Cómo Medir |
+        |---------|--------|------------|
+        | Precisión detección | >90% | Test dataset |
+        | Cobertura casos | >85% | Test suite |
+        
+        ### Métricas de Performance
+        | Operación | Target | Actual | Status |
+        |-----------|--------|--------|--------|
+        | Latencia p95 | <50ms | TBD | ⏸️ |
+        
+        ### Métricas de Calidad
+        - Tests pasando: 100%
+        - Cobertura código: >80%
+        - Documentación completa: Sí
+    
+    - name: "testing_strategy"
+      title: "🧪 ESTRATEGIA DE TESTING"
+      required: true
+      prompt: |
+        ### Unit Tests
+        - Qué componentes
+        - Casos edge
+        
+        ### Integration Tests
+        - Qué integraciones
+        - Escenarios end-to-end
+        
+        ### Performance Tests
+        - Benchmarks críticos
+        - Stress testing
+        
+        ### Validation Scripts
+        ```bash
+        # Comandos para ejecutar tests
+        cargo test --lib [componente]
+        cargo test --example test_[componente]
+        ```
+    
+    - name: "dependencies_and_constraints"
+      title: "🔗 DEPENDENCIAS Y RESTRICCIONES"
+      required: true
+      prompt: |
+        ### Dependencias Técnicas
+        - Componentes Bitácora requeridos
+        - Crates externos + versiones
+        - Features de Rust necesarias
+        
+        ### Dependencias de Datos
+        - TelescopeDB: Qué tablas/esquemas
+        - VoxelDB: Qué templates
+        
+        ### Restricciones Arquitectónicas
+        - DA-XXX: Explicación de cómo se respeta
+        - DA-YYY: Explicación
+        
+        ### Decisiones de No-Uso
+        - ❌ NO usar X porque...
+        - ❌ NO implementar Y porque...
+    
+    - name: "extensibility_hooks"
+      title: "🔌 PUNTOS DE EXTENSIBILIDAD"
+      required: false
+      prompt: |
+        Traits/interfaces para futura extensión:
+        
+        ```rust
+        pub trait ExtensionPoint {
+            // Métodos que permiten customización
+        }
+        ```
+        
+        Casos de uso futuros que esto habilita.
+    
+    - name: "risks_and_mitigations"
+      title: "⚠️ RIESGOS Y MITIGACIONES"
+      required: true
+      prompt: |
+        | Riesgo | Impacto | Probabilidad | Mitigación |
+        |--------|---------|--------------|------------|
+        | Complejidad alta | Alto | Media | Dividir en fases |
+        | Dependencia X no lista | Medio | Baja | Mock/stub temporal |
+        
+        ### Contingencias
+        - Plan B si riesgo X se materializa
+        - Rollback strategy
+    
+    - name: "future_enhancements"
+      title: "🚀 MEJORAS FUTURAS"
+      required: true
+      prompt: |
+        ### Post-Beta (v1.1)
+        - Mejora 1: Descripción + Esfuerzo estimado
+        - Mejora 2: Descripción + Esfuerzo estimado
+        
+        ### v2.0 (Long-term)
+        - Feature visionaria 1
+        - Feature visionaria 2
+        
+        ### Research Directions
+        - Áreas de investigación abiertas
+    
+    - name: "references"
+      title: "📚 REFERENCIAS"
+      required: true
+      prompt: |
+        ### Documentos ROADMAP_V2
+        - 00_VISION/03_decisiones-arquitectonicas.md (DA-XXX, DA-YYY)
+        - 02_COMPONENTES/CRITICOS/[componente].md
+        - 01_ARQUITECTURA/[doc].md
+        
+        ### Especificaciones
+        - BITA-X: Título
+        - MTT-DSL: Templates relacionados
+        
+        ### Código de Referencia
+        - src/[modulo]/
+        - examples/test_[componente].rs
+        
+        ### Reflexiones y Análisis
+        - ROADMAP_V2/[reflexion].md (si aplica)
+    
+    - name: "implementation_checklist"
+      title: "✅ CHECKLIST DE IMPLEMENTACIÓN"
+      required: true
+      prompt: |
+        Resumen ejecutivo para CHECKLIST_V2.md:
+        
+        ### Bloque X.Y - Nombre del Componente
+        **Total:** X horas (Y días) | **Prioridad:** CRÍTICA/ALTA/MEDIA
+        
+        #### X.Y.1 - Fase 1 (Zhours)
+        - [ ] Subtarea 1
+        - [ ] Subtarea 2
+        - [ ] Subtarea 3
+        
+        #### X.Y.2 - Fase 2 (Zhours)
+        ...
+        
+        **Métricas de éxito:**
+        - Métrica 1 > X%
+        - Métrica 2 < Yms
+        - Tests pasando: 100%
+
+  # Footer estándar
+  footer:
+    required: true
+    format: "markdown"
+    content: |
+      ---
+      **Estado:** [📋 Plan | 🚧 En implementación | ✅ Completado]  
+      **Complejidad:** [🟢 BAJA | 🟡 MEDIA | 🔴 ALTA | 🔥 EXTREMA]  
+      **Criticidad:** [🔴 CRÍTICA | 🟡 ALTA | 🟢 MEDIA]  
+      **Tiempo Estimado:** X horas (~Y días)
+      
+      ---
+      *Generado: {fecha}*  
+      *Sistema Bitácora v1.0 - MTT-DSL Template: implementation_plan*
+
+# Validaciones automáticas
+validations:
+  - check: "has_phases_breakdown"
+    message: "Plan debe incluir fases de implementación con tareas"
+  
+  - check: "has_rust_code_examples"
+    message: "Plan técnico debe incluir ejemplos de código Rust"
+  
+  - check: "has_success_metrics"
+    message: "Debe especificar métricas cuantificables de éxito"
+  
+  - check: "references_architectural_decisions"
+    message: "Debe referenciar DAs relevantes (DA-XXX)"
+  
+  - check: "has_integration_points"
+    message: "Debe documentar integración con TelescopeDB/VoxelDB"
+  
+  - check: "has_time_estimates"
+    message: "Cada fase debe tener estimación de horas/días"
+
+# Métricas de calidad
+quality_metrics:
+  min_phases: 3
+  min_components: 3
+  min_rust_examples: 5
+  min_references: 4
+  min_success_metrics: 3
+  max_document_size_kb: 100
+
+# Instrucciones para LLMs
+llm_instructions: |
+  Cuando generes un PLAN DE IMPLEMENTACIÓN usando este template:
+  
+  1. CONTEXTO PREVIO:
+     LEE estos documentos primero:
+     - 00_VISION/03_decisiones-arquitectonicas.md (todas las DAs)
+     - 02_COMPONENTES/[componente].md (si existe la especificación)
+     - 01_ARQUITECTURA/*.md (diseño del sistema)
+     - shuidao_flowpacks_reflection.md (si es un plan evolutivo)
+     - GUIA.md SECCIÓN 1.5 (nomenclatura) y 1.7 (timestamps)
+  
+  2. EXTRAER CONTEXTO:
+     Del nombre del archivo y conversaciones previas:
+     - "FLOWPACKS_IMPLEMENTATION_PLAN.md" → Componente: FlowPacks
+     - Identificar si es evolución de versión anterior
+     - Identificar análisis/reflexiones que motivaron el plan
+  
+  3. VERIFICAR ARQUITECTURA DUAL DATABASE:
+     ⚠️ CRÍTICO: Bitácora usa SOLO TelescopeDB + VoxelDB
+     - ❌ NO mencionar PostgreSQL, MongoDB, Redis, MySQL, SQLite
+     - ✅ SÍ usar TelescopeDB (memoria biográfica)
+     - ✅ SÍ usar VoxelDB (templates/patrones)
+     - Validar que todos los ejemplos de código respeten esto
+  
+  4. ESTRUCTURA DEL PLAN:
+     a. Audit header completo (versión, fechas, DAs implementadas)
+     b. Visión filosófica (narrativa + cita/metáfora si aplica)
+     c. Contexto evolutivo (si aplica: Fase anterior → Fase actual)
+     d. Problema detallado + Solución propuesta + Ejemplos antes/después
+     e. Arquitectura core (diagramas ASCII + explicaciones)
+     f. Componentes detallados (8-12 componentes con código Rust)
+     g. Integración con sistema (TelescopeDB, VoxelDB, FBCU, CTX7D)
+     h. Flujo de datos (diagramas + explicaciones)
+     i. Fases de implementación (3-9 fases, cada una con tareas + horas)
+     j. Métricas de éxito (funcionales + performance + calidad)
+     k. Testing strategy (unit + integration + performance)
+     l. Dependencias y restricciones (DA-XXX que aplican)
+     m. Riesgos y mitigaciones (tabla + contingencias)
+     n. Referencias completas (docs + código + reflexiones)
+     o. Checklist ejecutivo (para CHECKLIST_V2.md)
+  
+  5. CÓDIGO RUST:
+     - Incluir structs realistas con comentarios
+     - Incluir traits para extensibilidad
+     - Incluir ejemplos de uso concretos
+     - Marcar TODOs donde algo es futuro
+     - Mantener consistencia con código existente (src/)
+  
+  6. NOMENCLATURA:
+     Seguir GUIA.md SECCIÓN 1.5:
+     - Usar nombres distintivos (TelescopeDB, VoxelDB, FBCU, ShuiDao)
+     - NO renombrar componentes existentes
+     - Consultar si nombre nuevo no es claro
+  
+  7. TIMESTAMPS:
+     Seguir GUIA.md SECCIÓN 1.7:
+     - Usar ./scripts/timestamp.sh para generar fecha/hora
+     - Formato: 2025-11-23 23:25:34
+     - Actualizar "Última Actualización" en audit header
+  
+  8. DIAGRAMAS ASCII:
+     - Usar caracteres ASCII art para diagramas
+     - Mantener ancho <80 caracteres
+     - Incluir leyenda si es complejo
+  
+  9. FASES DE IMPLEMENTACIÓN:
+     - Cada fase: Nombre, Objetivo, Tareas (3-6), Entregables, Horas
+     - Total horas debe sumar correctamente
+     - Orden lógico (dependencias respetadas)
+     - Marcar tareas como [ ] para checklist
+  
+  10. VALIDACIÓN FINAL:
+      Antes de entregar, verificar:
+      - ✅ NO hay menciones a DBs externas (Postgres/Redis/Mongo/etc)
+      - ✅ SOLO TelescopeDB + VoxelDB en ejemplos
+      - ✅ Al menos 5 bloques de código Rust
+      - ✅ Referencias a al menos 3 DAs (DA-XXX)
+      - ✅ Métricas cuantificables (>90%, <50ms, etc)
+      - ✅ Estimaciones de tiempo en todas las fases
+      - ✅ Timestamp correcto en audit header
+      - ✅ Tamaño <100 KB
+
+# Ejemplos de uso
+example_outputs:
+  - path: "ROADMAP_V2/04_IMPLEMENTACION/FLOWPACKS_IMPLEMENTATION_PLAN.md"
+    description: "Plan de evolución FlowPacks → ShuiDao"
+  
+  - path: "ROADMAP_V2/04_IMPLEMENTACION/TELESCOPEDB_IMPLEMENTATION_PLAN.md"
+    description: "Plan de implementación TelescopeDB desde cero"
+
+# Diferencias vs component_spec.yaml
+differences_from_component_spec: |
+  component_spec.yaml:
+  - Más bottom-up (detalles → visión)
+  - Enfocado en un solo componente
+  - Menos narrativo, más técnico directo
+  - ~30 KB máximo
+  
+  implementation_plan.yaml:
+  - Más top-down (visión → detalles)
+  - Abarca múltiples componentes relacionados
+  - Narrativa filosófica + técnica
+  - Incluye fases temporales
+  - ~100 KB máximo
+  - Incluye contexto evolutivo
+  - Incluye riesgos y mejoras futuras
+
+# Estado del template
+status: "active"
+created: "2025-11-23 23:25:34"
+last_updated: "2025-11-23 23:25:34"
+usage_count: 1  # FLOWPACKS_IMPLEMENTATION_PLAN.md ya existe
+effectiveness_score: null  # Se calculará después de validación
+
+# Changelog
+changelog:
+  - version: "1.0.0"
+    date: "2025-11-23 23:25:34"
+    changes:
+      - "Template inicial creado"
+      - "Basado en estructura de FLOWPACKS_IMPLEMENTATION_PLAN.md existente"
+      - "Validación de arquitectura dual database (TelescopeDB + VoxelDB)"
+      - "Sección de contexto evolutivo para planes que evolucionan componentes"
+      - "Énfasis en narrativa filosófica + precisión técnica"

@@ -1,0 +1,501 @@
+name: "testing_guide"
+category: "quality_assurance"
+version: "1.0.0"
+description: "Template para documentar estrategias de testing y validación en Bitácora"
+
+# Triggers
+trigger_patterns:
+  - "**/05_TESTING/*.md"
+  - "testing strategy"
+  - "test guide"
+  - "guía de pruebas"
+
+# Personalidad
+personality:
+  tone: "rigorous_methodical"
+  depth: "comprehensive"
+  style: "example-driven"
+  approach: "quality-first"
+
+# Estructura
+structure:
+  audit_header:
+    required: true
+    format: "yaml"
+    fields:
+      - archivo
+      - version
+      - fecha_creacion
+      - autor
+      - proposito
+      - estado
+      - relacionado_con
+      - testing_scope  # Unit/Integration/E2E/Performance
+
+  sections:
+    - name: "purpose"
+      title: "🎯 PROPÓSITO DEL TESTING"
+      required: true
+      prompt: |
+        Explicar:
+        - ¿Qué tipo de testing cubre este documento? (Unit/Integration/E2E)
+        - ¿Qué componentes/funcionalidad se testea?
+        - ¿Qué nivel de confidence aporta?
+        - ¿Cuándo ejecutar estos tests?
+      
+    - name: "testing_philosophy"
+      title: "💡 FILOSOFÍA DE TESTING"
+      required: true
+      prompt: |
+        Principios guía:
+        - Test pyramid (70% unit, 20% integration, 10% e2e)
+        - TDD vs. test-after
+        - Coverage targets (mínimo 80%)
+        - Fast feedback loops
+        
+        Para Bitácora específicamente:
+        - Local-first → Tests sin red
+        - Determinismo → Tests reproducibles
+        - Performance → Tests con benchmarks
+      
+    - name: "test_categories"
+      title: "📁 CATEGORÍAS DE TESTS"
+      required: true
+      prompt: |
+        ### 1. Unit Tests
+        - Scope: Funciones individuales, métodos
+        - Características: Rápidos (<1ms), aislados, deterministas
+        - Coverage: 80%+ de funciones públicas
+        
+        ### 2. Integration Tests
+        - Scope: Interacción entre componentes
+        - Características: Moderados (<100ms), state management
+        - Coverage: Flujos críticos end-to-end
+        
+        ### 3. Property-Based Tests
+        - Scope: Invariantes del sistema
+        - Herramienta: proptest, quickcheck
+        - Coverage: Propiedades matemáticas
+        
+        ### 4. Golden Tests
+        - Scope: Formatos de datos (CBOR, JSON)
+        - Características: Snapshot testing
+        - Coverage: Serialización/deserialización
+        
+        ### 5. Performance/Benchmark Tests
+        - Scope: Latencia, throughput, memoria
+        - Herramienta: criterion
+        - Coverage: Operaciones críticas
+      
+    - name: "test_structure"
+      title: "🏗️ ESTRUCTURA DE TESTS"
+      required: true
+      prompt: |
+        Organización de archivos:
+        ```
+        tests/
+        ├── unit/
+        │   ├── fbcu_tests.rs
+        │   ├── telescopedb_tests.rs
+        │   └── ctx7d_tests.rs
+        ├── integration/
+        │   ├── sensory_to_telescope_tests.rs
+        │   └── ctx7d_to_voxel_tests.rs
+        ├── property/
+        │   └── cbor_roundtrip_tests.rs
+        ├── golden/
+        │   └── serialization_snapshots/
+        └── benchmarks/
+            └── performance_tests.rs
+        ```
+        
+        Convenciones de nombres:
+        - Unit tests: `test_{function_name}_{scenario}`
+        - Integration: `test_{component_a}_to_{component_b}_{flow}`
+      
+    - name: "test_examples"
+      title: "📝 EJEMPLOS DE TESTS"
+      required: true
+      prompt: |
+        ### Example 1: Unit Test
+        ```rust
+        #[test]
+        fn test_fbcu_compress_small_input() {
+            let engine = FBCUEngine::new();
+            let input = vec![1, 2, 3, 4, 5];
+            
+            let result = engine.compress(&input).unwrap();
+            
+            assert!(result.compressed_size < input.len());
+            assert_eq!(result.version, 1);
+        }
+        ```
+        
+        ### Example 2: Integration Test
+        ```rust
+        #[tokio::test]
+        async fn test_sensory_to_telescopedb_flow() {
+            let sensory = SensoryEngine::new();
+            let telescope = TelescopeDB::new();
+            
+            let input = "Test biographical entry";
+            let sensory_output = sensory.process(input).unwrap();
+            let entry_id = telescope.insert(sensory_output).await.unwrap();
+            
+            let retrieved = telescope.get(&entry_id).await.unwrap();
+            assert!(retrieved.is_some());
+        }
+        ```
+        
+        ### Example 3: Property-Based Test
+        ```rust
+        use proptest::prelude::*;
+        
+        proptest! {
+            #[test]
+            fn test_cbor_roundtrip_property(data: Vec<u8>) {
+                let encoded = cbor_encode(&data)?;
+                let decoded = cbor_decode(&encoded)?;
+                
+                prop_assert_eq!(data, decoded);
+            }
+        }
+        ```
+        
+        ### Example 4: Golden Test
+        ```rust
+        #[test]
+        fn test_fbcu_serialization_snapshot() {
+            let fbcu = create_test_fbcu_core();
+            let serialized = fbcu.to_cbor().unwrap();
+            
+            insta::assert_snapshot!(hex::encode(&serialized));
+        }
+        ```
+        
+        ### Example 5: Benchmark Test
+        ```rust
+        use criterion::{black_box, criterion_group, Criterion};
+        
+        fn bench_fbcu_compress(c: &mut Criterion) {
+            let engine = FBCUEngine::new();
+            let data = vec![0u8; 1024];
+            
+            c.bench_function("fbcu_compress_1kb", |b| {
+                b.iter(|| engine.compress(black_box(&data)))
+            });
+        }
+        
+        criterion_group!(benches, bench_fbcu_compress);
+        ```
+      
+    - name: "test_data_fixtures"
+      title: "🗄️ FIXTURES Y TEST DATA"
+      required: true
+      prompt: |
+        Datos de prueba reutilizables:
+        
+        ```rust
+        // tests/common/fixtures.rs
+        
+        pub fn create_test_context_token() -> ContextToken7D {
+            ContextToken7D {
+                temporal: TemporalDimension { recency: 0.8 },
+                semantic: SemanticDimension { density: 0.7 },
+                // ...
+            }
+        }
+        
+        pub fn create_test_biographical_entry() -> BiographicalEntry {
+            // ...
+        }
+        ```
+        
+        Ubicación:
+        - `tests/common/` para fixtures compartidos
+        - `tests/data/` para archivos de datos (JSON, CBOR)
+      
+    - name: "mocking_stubbing"
+      title: "🎭 MOCKING Y STUBBING"
+      required: true
+      prompt: |
+        Para componentes con dependencias externas:
+        
+        ```rust
+        use mockall::*;
+        
+        #[automock]
+        pub trait LLMClient {
+            async fn generate(&self, prompt: &str) -> Result<String>;
+        }
+        
+        #[tokio::test]
+        async fn test_with_mock_llm() {
+            let mut mock_llm = MockLLMClient::new();
+            mock_llm.expect_generate()
+                .returning(|_| Ok("Mocked response".into()));
+            
+            let analyzer = ContextAnalyzer::new(Box::new(mock_llm));
+            let result = analyzer.analyze("test").await.unwrap();
+            
+            assert!(result.contains("Mocked"));
+        }
+        ```
+      
+    - name: "assertion_strategies"
+      title: "✅ ESTRATEGIAS DE ASSERTIONS"
+      required: true
+      prompt: |
+        Tipos de assertions:
+        
+        ### Exactitud
+        ```rust
+        assert_eq!(actual, expected);
+        assert_ne!(actual, unexpected);
+        ```
+        
+        ### Rangos
+        ```rust
+        assert!(value > 0.0 && value < 1.0);
+        approx::assert_relative_eq!(float_value, expected, epsilon = 0.001);
+        ```
+        
+        ### Opcionales
+        ```rust
+        assert!(result.is_some());
+        assert_eq!(result.unwrap().field, expected);
+        ```
+        
+        ### Errores
+        ```rust
+        assert!(result.is_err());
+        assert!(matches!(result, Err(SpecificError::Case)));
+        ```
+        
+        ### Custom Assertions
+        ```rust
+        fn assert_valid_fbcu(fbcu: &FBCUCore) {
+            assert!(fbcu.version > 0);
+            assert!(fbcu.compressed_data.len() > 0);
+            assert!(fbcu.metadata.compression_ratio < 1.0);
+        }
+        ```
+      
+    - name: "coverage_metrics"
+      title: "📊 MÉTRICAS DE COVERAGE"
+      required: true
+      prompt: |
+        Objetivos de cobertura:
+        
+        | Componente | Unit Coverage | Integration Coverage | Total |
+        |------------|---------------|---------------------|-------|
+        | FBCU Core  | 90%           | 80%                 | 85%   |
+        | TelescopeDB| 85%           | 70%                 | 78%   |
+        | CTX7D      | 80%           | 75%                 | 77%   |
+        
+        Herramientas:
+        ```bash
+        # Generate coverage report
+        cargo tarpaulin --out Html --output-dir coverage/
+        
+        # View report
+        open coverage/index.html
+        ```
+        
+        Mínimos aceptables:
+        - Critical components: 85%+
+        - Important components: 75%+
+        - Utilities: 70%+
+      
+    - name: "ci_cd_integration"
+      title: "🔄 INTEGRACIÓN CI/CD"
+      required: true
+      prompt: |
+        Tests en pipeline:
+        
+        ```yaml
+        # .github/workflows/test.yml
+        name: Tests
+        
+        on: [push, pull_request]
+        
+        jobs:
+          test:
+            runs-on: ubuntu-latest
+            steps:
+              - uses: actions/checkout@v2
+              - uses: actions-rs/toolchain@v1
+              
+              - name: Run unit tests
+                run: cargo test --lib
+              
+              - name: Run integration tests
+                run: cargo test --tests
+              
+              - name: Run benchmarks
+                run: cargo bench --no-run
+              
+              - name: Check coverage
+                run: |
+                  cargo tarpaulin --out Xml
+                  bash <(curl -s https://codecov.io/bash)
+        ```
+        
+        Gates de calidad:
+        - Coverage > 80%
+        - All tests passing
+        - Benchmarks dentro de targets
+      
+    - name: "debugging_failing_tests"
+      title: "🐛 DEBUGGING DE TESTS FALLIDOS"
+      required: true
+      prompt: |
+        Estrategias:
+        
+        ### 1. Output Detallado
+        ```bash
+        cargo test -- --nocapture --test-threads=1
+        ```
+        
+        ### 2. Ejecutar Test Específico
+        ```bash
+        cargo test test_fbcu_compress_small_input -- --exact
+        ```
+        
+        ### 3. Logging
+        ```rust
+        #[test]
+        fn test_with_logging() {
+            let _ = env_logger::builder().is_test(true).try_init();
+            
+            // Test code with tracing::info!() statements
+        }
+        ```
+        
+        ### 4. Backtrace
+        ```bash
+        RUST_BACKTRACE=1 cargo test
+        ```
+      
+    - name: "performance_benchmarks"
+      title: "⚡ BENCHMARKS DE PERFORMANCE"
+      required: true
+      prompt: |
+        Targets específicos:
+        
+        | Operación | Target | Current | Status |
+        |-----------|--------|---------|--------|
+        | FBCU compress 1KB | <5ms | 3ms | ✅ |
+        | TelescopeDB insert | <10ms | TBD | ⏸️ |
+        | CTX7D analysis | <30ms | TBD | ⏸️ |
+        
+        Benchmark suite:
+        ```rust
+        // benches/performance.rs
+        use criterion::{criterion_group, criterion_main, Criterion};
+        
+        fn fbcu_benchmarks(c: &mut Criterion) {
+            // ... benchmarks
+        }
+        
+        criterion_group!(benches, fbcu_benchmarks);
+        criterion_main!(benches);
+        ```
+        
+        Ejecutar:
+        ```bash
+        cargo bench
+        open target/criterion/report/index.html
+        ```
+      
+    - name: "references"
+      title: "📚 REFERENCIAS"
+      required: true
+      prompt: |
+        - Componentes bajo test (02_COMPONENTES/)
+        - Arquitectura (01_ARQUITECTURA/)
+        - Test utilities (tests/common/)
+        - CI/CD configs (.github/workflows/)
+      
+    - name: "next_steps"
+      title: "🚀 PRÓXIMOS PASOS"
+      required: true
+      prompt: |
+        - Implementar tests faltantes
+        - Mejorar coverage a targets
+        - Optimizar tests lentos
+        - Añadir más property-based tests
+
+  footer:
+    required: true
+    format: "markdown"
+    content: |
+      ---
+      **Estado:** [📋 Planificado | 🚧 En desarrollo | ✅ Implementado]  
+      **Coverage Target:** [70% | 80% | 90%]  
+      **Prioridad:** [🔴 CRÍTICA | 🟡 ALTA | 🟢 MEDIA]
+      
+      ---
+      *Generado: {fecha}*  
+      *Sistema Bitácora v1.0 - MTT-DSL Template: testing_guide*
+
+# Validaciones
+validations:
+  - check: "has_test_examples"
+    message: "Debe incluir al menos 3 ejemplos de tests"
+  
+  - check: "has_coverage_targets"
+    message: "Debe especificar objetivos de coverage"
+  
+  - check: "has_ci_integration"
+    message: "Debe documentar integración con CI/CD"
+
+# Métricas
+quality_metrics:
+  min_test_examples: 5
+  min_coverage_targets: 3
+  min_sections_completed: 12
+  max_document_size_kb: 25
+
+# Instrucciones para LLMs
+llm_instructions: |
+  Para guías de testing:
+  
+  1. IDENTIFICA el scope del nombre:
+     - "UNIT_TESTS_GUIDE.md" → Unit testing strategy
+     - "INTEGRATION_TESTS.md" → Integration testing
+     - "PERFORMANCE_BENCHMARKS.md" → Performance/benchmarking
+  
+  2. DEFINE la filosofía de testing:
+     - Test pyramid distribution
+     - Coverage targets
+     - Fast feedback loops
+  
+  3. CATEGORIZA los tests:
+     - Unit (aislados, rápidos)
+     - Integration (componentes conectados)
+     - Property-based (invariantes)
+     - Golden (snapshots)
+     - Performance (benchmarks)
+  
+  4. PROPORCIONA ejemplos reales:
+     - Mínimo 5 ejemplos de código
+     - Diferentes categorías de tests
+     - Happy path + error cases
+  
+  5. DOCUMENTA fixtures:
+     - Test data reutilizable
+     - Mocking strategies
+     - Common utilities
+  
+  6. ESTABLECE targets:
+     - Coverage percentages
+     - Performance benchmarks
+     - Quality gates para CI/CD
+
+example_output_path: "ROADMAP_V2/05_TESTING/METAMORPHIC_TESTS.md"
+
+status: "active"
+last_updated: "2025-10-26"
+usage_count: 0
+effectiveness_score: null

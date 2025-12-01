@@ -1,0 +1,531 @@
+# 🏘️ COMMUNITY TEMPLATE - Backend Technology Cluster
+
+community_id: "community_backend_tech_001"
+version: "1.0.0"
+created_at: "2025-11-20T12:00:00Z"
+updated_at: "2025-11-24T16:00:00Z"
+
+# === BASIC INFO ===
+name: "Tecnología Backend"
+description: |
+  Cluster de conocimiento sobre desarrollo backend: lenguajes, frameworks,
+  APIs, bases de datos, arquitectura de microservicios, y patrones de diseño.
+
+domain: "technology"
+subdomain: "software_development"
+
+# === COMMUNITY METRICS ===
+size: 23  # Number of topics in this community
+modularity: 0.67  # Quality of partition (0-1, >0.3 is good)
+internal_density: 0.82  # Density of connections within community (0-1)
+external_density: 0.18  # Density of connections to other communities (0-1)
+
+algorithm: "louvain"  # Louvain algorithm for community detection
+algorithm_params:
+  resolution: 1.0  # Louvain resolution parameter
+  iterations: 15  # Number of iterations until convergence
+  stability: 0.94  # Stability across multiple runs (0-1)
+
+detection_date: "2025-11-20T12:00:00Z"
+last_validation: "2025-11-24T16:00:00Z"
+
+# === COMMUNITY MEMBERS ===
+topics:
+  # === CORE HUBS (high centrality within community) ===
+  - topic_id: "topic_rust_programming"
+    name: "Rust Programming"
+    centrality: 0.89  # Centrality within this community (0-1)
+    role: "hub"  # "hub", "connector", "specialist", "peripheral"
+    degree_internal: 18  # Connections within community
+    degree_external: 29  # Connections outside community
+    pagerank_local: 0.12  # PageRank within community
+    
+  - topic_id: "topic_api_design"
+    name: "API Design"
+    centrality: 0.71
+    role: "connector"  # Bridges multiple sub-communities
+    degree_internal: 15
+    degree_external: 12
+    pagerank_local: 0.09
+    
+  - topic_id: "topic_database_optimization"
+    name: "Database Optimization"
+    centrality: 0.68
+    role: "specialist"  # Deep expertise in specific area
+    degree_internal: 12
+    degree_external: 8
+    pagerank_local: 0.07
+
+  # === FRAMEWORKS & LANGUAGES ===
+  - topic_id: "topic_actix_web"
+    name: "Actix Web"
+    centrality: 0.64
+    role: "specialist"
+    degree_internal: 10
+    degree_external: 3
+    pagerank_local: 0.06
+    
+  - topic_id: "topic_tokio_runtime"
+    name: "Tokio (Async Runtime)"
+    centrality: 0.69
+    role: "connector"
+    degree_internal: 13
+    degree_external: 9
+    pagerank_local: 0.08
+    
+  - topic_id: "topic_rocket_framework"
+    name: "Rocket Framework"
+    centrality: 0.58
+    role: "specialist"
+    degree_internal: 8
+    degree_external: 2
+    pagerank_local: 0.05
+    
+  - topic_id: "topic_python_backend"
+    name: "Python Backend (FastAPI, Django)"
+    centrality: 0.62
+    role: "hub"
+    degree_internal: 11
+    degree_external: 15
+    pagerank_local: 0.07
+    
+  - topic_id: "topic_nodejs"
+    name: "Node.js"
+    centrality: 0.66
+    role: "hub"
+    degree_internal: 12
+    degree_external: 18
+    pagerank_local: 0.08
+
+  # === DATA LAYER ===
+  - topic_id: "topic_postgresql"
+    name: "PostgreSQL"
+    centrality: 0.70
+    role: "hub"
+    degree_internal: 14
+    degree_external: 10
+    pagerank_local: 0.09
+    
+  - topic_id: "topic_redis"
+    name: "Redis (Caching)"
+    centrality: 0.63
+    role: "specialist"
+    degree_internal: 9
+    degree_external: 6
+    pagerank_local: 0.06
+    
+  - topic_id: "topic_orm_patterns"
+    name: "ORM Patterns"
+    centrality: 0.59
+    role: "connector"
+    degree_internal: 10
+    degree_external: 8
+    pagerank_local: 0.06
+    
+  - topic_id: "topic_sql_optimization"
+    name: "SQL Query Optimization"
+    centrality: 0.67
+    role: "specialist"
+    degree_internal: 11
+    degree_external: 5
+    pagerank_local: 0.07
+
+  # === ARCHITECTURE PATTERNS ===
+  - topic_id: "topic_microservices_architecture"
+    name: "Microservices Architecture"
+    centrality: 0.65
+    role: "connector"
+    degree_internal: 11
+    degree_external: 14
+    pagerank_local: 0.08
+    
+  - topic_id: "topic_event_driven_design"
+    name: "Event-Driven Design"
+    centrality: 0.57
+    role: "specialist"
+    degree_internal: 8
+    degree_external: 7
+    pagerank_local: 0.05
+    
+  - topic_id: "topic_rest_apis"
+    name: "REST API Design"
+    centrality: 0.72
+    role: "connector"
+    degree_internal: 13
+    degree_external: 11
+    pagerank_local: 0.09
+    
+  - topic_id: "topic_graphql"
+    name: "GraphQL"
+    centrality: 0.60
+    role: "specialist"
+    degree_internal: 9
+    degree_external: 9
+    pagerank_local: 0.06
+
+  # === OPERATIONS & DEPLOYMENT ===
+  - topic_id: "topic_containerization"
+    name: "Docker & Containerization"
+    centrality: 0.68
+    role: "connector"  # Bridge to DevOps community
+    degree_internal: 12
+    degree_external: 16
+    pagerank_local: 0.08
+    
+  - topic_id: "topic_kubernetes"
+    name: "Kubernetes Orchestration"
+    centrality: 0.61
+    role: "connector"  # Bridge to DevOps community
+    degree_internal: 9
+    degree_external: 13
+    pagerank_local: 0.07
+    
+  - topic_id: "topic_monitoring_observability"
+    name: "Monitoring & Observability"
+    centrality: 0.64
+    role: "connector"
+    degree_internal: 10
+    degree_external: 11
+    pagerank_local: 0.07
+
+  # === TESTING & QUALITY ===
+  - topic_id: "topic_integration_testing"
+    name: "Integration Testing"
+    centrality: 0.56
+    role: "specialist"
+    degree_internal: 8
+    degree_external: 6
+    pagerank_local: 0.05
+    
+  - topic_id: "topic_performance_testing"
+    name: "Performance Testing"
+    centrality: 0.58
+    role: "specialist"
+    degree_internal: 9
+    degree_external: 7
+    pagerank_local: 0.06
+    
+  - topic_id: "topic_ci_cd_pipelines"
+    name: "CI/CD Pipelines"
+    centrality: 0.62
+    role: "connector"
+    degree_internal: 10
+    degree_external: 12
+    pagerank_local: 0.07
+
+  # === SECURITY ===
+  - topic_id: "topic_api_security"
+    name: "API Security (OAuth, JWT)"
+    centrality: 0.66
+    role: "specialist"
+    degree_internal: 11
+    degree_external: 8
+    pagerank_local: 0.07
+
+# === SUB-COMMUNITIES ===
+sub_communities:
+  - name: "Languages & Frameworks"
+    size: 8
+    topics: 
+      - "topic_rust_programming"
+      - "topic_actix_web"
+      - "topic_tokio_runtime"
+      - "topic_rocket_framework"
+      - "topic_python_backend"
+      - "topic_nodejs"
+    internal_density: 0.87
+    description: "Core programming languages and web frameworks"
+    
+  - name: "Data Layer"
+    size: 5
+    topics:
+      - "topic_postgresql"
+      - "topic_redis"
+      - "topic_orm_patterns"
+      - "topic_sql_optimization"
+      - "topic_database_optimization"
+    internal_density: 0.79
+    description: "Databases, caching, ORM patterns, query optimization"
+    
+  - name: "Architecture Patterns"
+    size: 5
+    topics:
+      - "topic_microservices_architecture"
+      - "topic_event_driven_design"
+      - "topic_rest_apis"
+      - "topic_graphql"
+      - "topic_api_design"
+    internal_density: 0.74
+    description: "Architectural patterns and API design principles"
+    
+  - name: "Operations & Deployment"
+    size: 3
+    topics:
+      - "topic_containerization"
+      - "topic_kubernetes"
+      - "topic_monitoring_observability"
+    internal_density: 0.83
+    description: "Containerization, orchestration, observability"
+    
+  - name: "Testing & Quality"
+    size: 3
+    topics:
+      - "topic_integration_testing"
+      - "topic_performance_testing"
+      - "topic_ci_cd_pipelines"
+    internal_density: 0.76
+    description: "Testing strategies and CI/CD automation"
+
+# === BRIDGES TO OTHER COMMUNITIES ===
+bridges:
+  - to_community_id: "community_devops"
+    to_community_name: "DevOps & Infrastructure"
+    strength: 0.42  # 0-1, how strong the connection is
+    num_edges: 18  # Number of edges connecting the communities
+    bridge_topics:
+      - from: "topic_containerization"
+        to: "topic_deployment_automation"
+        strength: 0.87
+      - from: "topic_kubernetes"
+        to: "topic_cluster_management"
+        strength: 0.83
+      - from: "topic_monitoring_observability"
+        to: "topic_infrastructure_monitoring"
+        strength: 0.79
+      - from: "topic_ci_cd_pipelines"
+        to: "topic_gitops"
+        strength: 0.71
+    weak_tie_type: "operational_continuity"  # Backend → DevOps is natural extension
+    
+  - to_community_id: "community_frontend"
+    to_community_name: "Frontend Development"
+    strength: 0.31  # Weaker connection (different specializations)
+    num_edges: 9
+    bridge_topics:
+      - from: "topic_api_design"
+        to: "topic_api_consumption"
+        strength: 0.82
+      - from: "topic_rest_apis"
+        to: "topic_fetch_axios"
+        strength: 0.76
+      - from: "topic_graphql"
+        to: "topic_apollo_client"
+        strength: 0.74
+      - from: "topic_api_security"
+        to: "topic_frontend_auth"
+        strength: 0.68
+    weak_tie_type: "cross_domain"  # Backend ↔ Frontend are separate specializations
+    
+  - to_community_id: "community_data_science"
+    to_community_name: "Data Science & ML"
+    strength: 0.27  # Weaker connection (different domains)
+    num_edges: 6
+    bridge_topics:
+      - from: "topic_python_backend"
+        to: "topic_python_data_analysis"
+        strength: 0.79
+      - from: "topic_database_optimization"
+        to: "topic_data_warehousing"
+        strength: 0.72
+      - from: "topic_api_design"
+        to: "topic_ml_model_serving"
+        strength: 0.68
+    weak_tie_type: "cross_domain"
+    
+  - to_community_id: "community_security"
+    to_community_name: "Cybersecurity"
+    strength: 0.35
+    num_edges: 11
+    bridge_topics:
+      - from: "topic_api_security"
+        to: "topic_penetration_testing"
+        strength: 0.81
+      - from: "topic_database_optimization"
+        to: "topic_sql_injection_prevention"
+        strength: 0.77
+      - from: "topic_rust_programming"
+        to: "topic_memory_safety"
+        strength: 0.92
+    weak_tie_type: "quality_attribute"  # Security is cross-cutting concern
+
+# === USER EXPERTISE IN COMMUNITY ===
+user_expertise:
+  user_id: "eduardo"
+  overall_level: "intermediate"  # "beginner", "intermediate", "advanced", "expert"
+  confidence: 0.74  # 0-1, based on interactions
+  
+  topic_proficiency:
+    high:  # Topics where user demonstrates strong understanding
+      - "topic_rust_programming" (0.88)
+      - "topic_api_design" (0.82)
+      - "topic_rest_apis" (0.79)
+      - "topic_tokio_runtime" (0.76)
+      
+    medium:  # Topics where user has working knowledge
+      - "topic_postgresql" (0.68)
+      - "topic_containerization" (0.65)
+      - "topic_microservices_architecture" (0.63)
+      - "topic_integration_testing" (0.61)
+      
+    low:  # Topics where user has limited experience
+      - "topic_kubernetes" (0.42)
+      - "topic_event_driven_design" (0.38)
+      - "topic_graphql" (0.35)
+      
+  learning_velocity: 0.12  # 12% monthly improvement in community expertise
+  
+  engagement_metrics:
+    messages_in_community: 347  # Messages related to backend topics
+    topics_explored: 19  # Out of 23 topics
+    avg_session_duration: "45min"
+    last_interaction: "2025-11-24T15:30:00Z"
+
+# === COMMUNITY HEALTH ===
+health_metrics:
+  cohesion: 0.82  # How well-integrated the community is (0-1)
+  balance: 0.71  # How balanced topic coverage is (0-1, 1 = all topics equally used)
+  growth_rate: 0.08  # 8% monthly growth in community size
+  
+  engagement:
+    active_topics: 21  # Out of 23 topics (91% active)
+    dormant_topics: 2  # "topic_event_driven_design", "topic_graphql"
+    
+  stability:
+    membership_stability: 0.89  # How stable topic membership is (0-1)
+    structural_stability: 0.92  # How stable internal connections are (0-1)
+    
+  diversity:
+    topic_diversity: 0.76  # Shannon diversity index (0-1)
+    role_distribution:
+      hubs: 4
+      connectors: 6
+      specialists: 11
+      peripheral: 2
+
+# === LEARNING RECOMMENDATIONS ===
+learning_recommendations:
+  immediate_opportunities:
+    - topic: "topic_event_driven_design"
+      reason: "Actualmente aislado dentro de la comunidad, pero creciente en industria"
+      priority: "high"
+      estimated_time: "12h"
+      prerequisites: ["topic_microservices_architecture"]
+      
+    - topic: "topic_kubernetes"
+      reason: "Fortalecer bridge con DevOps community"
+      priority: "medium"
+      estimated_time: "16h"
+      prerequisites: ["topic_containerization"]
+      
+  cross_community_expansion:
+    - target_community: "community_devops"
+      bridge_topics: ["topic_containerization", "topic_ci_cd_pipelines"]
+      reason: "Natural progression from backend development"
+      estimated_time: "20h"
+      
+    - target_community: "community_security"
+      bridge_topics: ["topic_api_security"]
+      reason: "Critical for production-grade backend systems"
+      estimated_time: "15h"
+      
+  deep_dive_paths:
+    - name: "Backend Performance Expert"
+      topics:
+        - "topic_database_optimization"
+        - "topic_performance_testing"
+        - "topic_sql_optimization"
+        - "topic_redis"
+      estimated_time: "30h"
+      
+    - name: "Cloud-Native Backend"
+      topics:
+        - "topic_containerization"
+        - "topic_kubernetes"
+        - "topic_microservices_architecture"
+        - "topic_monitoring_observability"
+      estimated_time: "40h"
+
+# === COMMUNITY EVOLUTION ===
+evolution_history:
+  - date: "2025-01-15"
+    size: 15
+    modularity: 0.54
+    event: "Initial community detection"
+    
+  - date: "2025-03-20"
+    size: 19
+    modularity: 0.61
+    event: "Rust backend expansion (Actix, Tokio, Rocket added)"
+    
+  - date: "2025-06-10"
+    size: 21
+    modularity: 0.64
+    event: "Operations topics added (Kubernetes, monitoring)"
+    
+  - date: "2025-11-24"
+    size: 23
+    modularity: 0.67
+    event: "Testing & security topics integrated"
+
+predicted_evolution:
+  - timeframe: "3_months"
+    predicted_size: 26
+    predicted_modularity: 0.69
+    likely_additions:
+      - "topic_service_mesh"  # Istio, Linkerd
+      - "topic_grpc"  # Alternative to REST
+      - "topic_serverless_backend"  # Lambda, Cloud Functions
+      
+  - timeframe: "6_months"
+    predicted_size: 29
+    predicted_modularity: 0.71
+    likely_additions:
+      - "topic_edge_computing"
+      - "topic_message_queues"  # RabbitMQ, Kafka
+      - "topic_cqrs_event_sourcing"
+
+# === METADATA ===
+metadata:
+  community_type: "professional_skill_cluster"
+  stability: "stable_growing"  # "emerging", "stable_growing", "mature", "declining"
+  industry_relevance: 0.91  # 0-1, how relevant to job market
+  
+  tags:
+    - "backend"
+    - "web_development"
+    - "server_side"
+    - "api_development"
+    - "data_layer"
+    
+  related_certifications:
+    - "AWS Certified Solutions Architect"
+    - "Kubernetes Administrator (CKA)"
+    - "PostgreSQL Certified Professional"
+    
+  notes: |
+    La comunidad "Backend Technology" es un cluster estable y bien definido (modularity 0.67).
+    Con 23 tópicos y alta cohesión (0.82), representa un área profesional coherente.
+    
+    El usuario (eduardo) tiene nivel intermediate con fuerte competencia en Rust, APIs, y
+    async programming. Se recomienda:
+    1. Profundizar en Event-Driven Design (actualmente dormant pero creciente)
+    2. Fortalecer Kubernetes (bridge importante con DevOps)
+    3. Explorar cross-community learning hacia Security (API security es crítico)
+    
+    La comunidad está creciendo saludablemente (8% monthly) y se predice expansión hacia
+    service mesh, gRPC, y serverless en próximos 6 meses.
+
+# === MONITORING ===
+monitoring:
+  next_review_date: "2025-12-24T00:00:00Z"
+  review_frequency: "monthly"
+  
+  alerts:
+    - condition: "modularity < 0.5"
+      action: "investigate_community_fragmentation"
+    - condition: "dormant_topics > 5"
+      action: "review_topic_relevance"
+    - condition: "user_expertise.confidence < 0.6"
+      action: "suggest_learning_focus"
+    - condition: "bridges.to_community_devops.strength > 0.6"
+      action: "consider_merging_communities"  # Si conexión muy fuerte, ¿son realmente comunidades separadas?

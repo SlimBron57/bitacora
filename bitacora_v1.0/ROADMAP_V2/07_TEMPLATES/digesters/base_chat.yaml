@@ -1,0 +1,152 @@
+# Base Chat Template v1.0
+# Template genérico para plataformas de chat (WhatsApp, Telegram, etc.)
+
+version: "1.0"
+source: "BaseChat"
+author: "Eduardo Gil + B"
+date: "2025-11-29"
+description: "Template base con reglas comunes a todas las plataformas de chat"
+
+# EXTRACTION RULES
+extraction:
+  # Identity extraction
+  identity:
+    patterns:
+      - field: "sender"
+        regex: "^[A-Z][a-z]+.*$"
+        confidence: 0.7
+        description: "Nombres que empiezan con mayúscula"
+      
+      - field: "sender"
+        regex: "^[A-Z][a-z]+ [A-Z][a-z]+$"
+        confidence: 0.85
+        description: "Nombre completo (FirstName LastName)"
+    
+    age_indicators:
+      - pattern: "tengo (\\d+) años"
+        confidence: 0.95
+      - pattern: "(\\d+) years old"
+        confidence: 0.95
+    
+    location_indicators:
+      - pattern: "en ([A-Z][a-z]+)"
+        confidence: 0.70
+        description: "Ciudad después de 'en'"
+  
+  # Interests extraction
+  interests:
+    keywords:
+      technology:
+        general: ["tech", "software", "programming", "código"]
+      
+      learning:
+        general: ["aprender", "learning", "tutorial", "curso"]
+    
+    context_boost:
+      - condition: "keyword repeated in message"
+        boost: 0.1
+        description: "Mención repetida indica énfasis"
+      
+      - condition: "keyword + question mark"
+        boost: 0.15
+        description: "Pregunta sobre tema = interés activo"
+  
+  # Relationships extraction
+  relationships:
+    strength_indicators:
+      very_strong:
+        - daily_messages: "> 10"
+          description: "Comunicación muy frecuente"
+        - multimedia_shared: "> 3"
+          description: "Comparten contenido multimedia"
+      
+      strong:
+        - daily_messages: "> 5"
+        - response_time: "< 5 minutes"
+      
+      medium:
+        - daily_messages: "> 1"
+        - weekly_messages: "> 7"
+      
+      weak:
+        - weekly_messages: "> 1"
+        - monthly_messages: "> 4"
+  
+  # Emotional baseline
+  emotional:
+    sentiment_keywords:
+      positive: ["feliz", "genial", "excelente", "🎉", "😊", "❤️"]
+      negative: ["frustrado", "problema", "error", "😢", "😞"]
+      neutral: ["ok", "bien", "normal"]
+    
+    intensity_modifiers:
+      high: ["muy", "super", "extremely", "!!!"]
+      medium: ["bastante", "algo", "somewhat"]
+      low: ["un poco", "slightly"]
+
+# HYPERLINKS PROCESSING
+hyperlinks:
+  enabled: true
+  expand_short_urls: true
+  fetch_metadata: true
+  cache_duration: 86400  # 24 hours
+  rate_limit: 10  # requests per second
+  
+  platforms_priority:
+    - YouTube
+    - Spotify
+    - GitHub
+    - Twitter
+    - Medium
+    - Wikipedia
+  
+  intent_inference:
+    self_reference:
+      patterns: ["shared to myself", "para mi", "save", "bookmark"]
+      confidence: 0.90
+    
+    recommendation:
+      patterns: ["deberías", "recomiendo", "check", "mira esto"]
+      confidence: 0.80
+    
+    question:
+      patterns: ["qué opinas", "has visto", "what do you think"]
+      confidence: 0.75
+  
+  content_categories:
+    educational:
+      keywords: ["tutorial", "learn", "course", "guide", "documentation"]
+    
+    technical:
+      keywords: ["github", "stackoverflow", "code", "programming"]
+    
+    entertainment:
+      keywords: ["video", "music", "movie", "game"]
+    
+    social:
+      keywords: ["twitter", "facebook", "instagram"]
+
+# DISTRIBUTION MAPPING
+distribution:
+  biographical: "TelescopeDB"
+  interests: "TopicGraph"
+  emotional: "EmotionalSpace"
+  relationships: "SocialGraph"
+  temporal: "MemoryBridge"
+  behavioral: "MemoryBridge"
+  hyperlinks:
+    - "TopicGraph"
+    - "BiographicalProfile"
+
+# VALIDATION RULES
+validation:
+  min_confidence: 0.5
+  max_conflicts: 10
+  require_user_approval_for_conflicts: true
+
+# PERFORMANCE SETTINGS
+performance:
+  batch_size: 100
+  parallel_extraction: true
+  cache_enabled: true
+  cache_ttl: 3600  # 1 hour

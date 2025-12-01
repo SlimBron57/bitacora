@@ -1,0 +1,244 @@
+# Telegram Template v1.0
+# Template específico para Telegram (hereda de base_chat.yaml)
+
+version: "1.0"
+source: "Telegram"
+author: "Eduardo Gil + B"
+date: "2025-11-29"
+description: "Digester para Telegram con comprensión de channels, bots y stickers"
+
+# Heredar reglas base de chat
+extends: "base_chat.yaml"
+
+# TELEGRAM-SPECIFIC EXTRACTION
+extraction:
+  # Telegram identity (permite @usernames)
+  identity:
+    patterns:
+      - field: "sender"
+        regex: "^@[a-zA-Z0-9_]{5,32}$"
+        confidence: 0.95
+        description: "Telegram username (único, público)"
+      
+      - field: "sender"
+        regex: "^[A-Z][a-z]+ [A-Z][a-z]+$"
+        confidence: 0.80
+        description: "Nombre mostrado (puede cambiar)"
+  
+  # Telegram-specific interests (channels subscription = strong signal)
+  interests:
+    channel_subscriptions:
+      technology:
+        rust: ["@rustlang", "@rust_beginners", "@tokio_rs"]
+        ai: ["@openai", "@anthropic_ai", "@llm_news"]
+        crypto: ["@bitcoin", "@ethereum", "@defi"]
+      
+      news:
+        tech: ["@techcrunch", "@theverge"]
+        general: ["@nytimes", "@bbc"]
+      
+      learning:
+        courses: ["@freecodecamp", "@coursera"]
+    
+    bot_interactions:
+      productivity:
+        - "@todoist_bot"
+        - "@notion_bot"
+      
+      entertainment:
+        - "@music_dl_bot"
+        - "@youtube_dl_bot"
+    
+    context_boost:
+      - condition: "subscribed to channel"
+        boost: 0.40
+        description: "Suscripción = interés sostenido"
+      
+      - condition: "frequent bot interaction (>10/week)"
+        boost: 0.30
+        description: "Uso frecuente de bot = herramienta esencial"
+      
+      - condition: "message forwarded from channel"
+        boost: 0.25
+        description: "Forward = contenido valioso para compartir"
+  
+  # Telegram group dynamics (diferentes a WhatsApp)
+  relationships:
+    group_types:
+      supergroup:
+        significance: 0.7
+        description: "Grupos grandes (>200 miembros)"
+      
+      channel:
+        significance: 0.9
+        description: "Canales (consumo pasivo pero selectivo)"
+      
+      private_group:
+        significance: 0.95
+        description: "Grupos privados (<200 miembros, muy cercanos)"
+    
+    strength_indicators:
+      very_strong:
+        - daily_messages: "> 20"
+        - sticker_usage: "> 5"
+        - media_shared: "> 3"
+        - voice_messages: "> 1"
+      
+      strong:
+        - daily_messages: "> 10"
+        - replies_to_messages: "> 5"
+        - mentions: "> 3"
+  
+  # Emotional extraction (sticker-heavy)
+  emotional:
+    sticker_packs:
+      positive:
+        - pack: "Pepe the Frog"
+          confidence: 0.80
+        - pack: "Happy Animals"
+          confidence: 0.85
+      
+      negative:
+        - pack: "Sad Cat"
+          confidence: 0.85
+        - pack: "Frustrated Pepe"
+          confidence: 0.80
+      
+      technical:
+        - pack: "Programmer Humor"
+          confidence: 0.90
+    
+    sentiment_keywords:
+      positive: ["🔥", "💯", "👍", "✅", "🎉"]
+      negative: ["💀", "😢", "❌", "👎"]
+      sarcastic: ["🙃", "🤡"]  # Telegram usa mucho sarcasmo
+
+# TELEGRAM CHANNELS UNDERSTANDING
+channels:
+  subscription_indicates:
+    strong_interest: 0.85
+    passive_consumption: 0.70
+  
+  forward_indicates:
+    valuable_content: 0.90
+    share_worthy: 0.85
+  
+  comment_indicates:
+    active_engagement: 0.95
+
+# TELEGRAM BOTS UNDERSTANDING
+bots:
+  interaction_frequency:
+    daily: 0.95  # Bot diario = herramienta crítica
+    weekly: 0.80
+    monthly: 0.60
+  
+  bot_categories:
+    productivity:
+      significance: 0.90
+      examples: ["@todoist_bot", "@notion_bot", "@calendar_bot"]
+    
+    entertainment:
+      significance: 0.60
+      examples: ["@music_dl_bot", "@gif_bot"]
+    
+    utility:
+      significance: 0.85
+      examples: ["@weatherbot", "@translator_bot"]
+
+# TELEGRAM MULTIMEDIA
+multimedia:
+  sticker:
+    significance: 0.75
+    description: "Stickers = lenguaje visual Telegram"
+  
+  voice_message:
+    significance: 0.95
+    description: "Voice = comunicación muy personal (como WhatsApp)"
+  
+  video_message:
+    significance: 0.90
+    description: "Video circular = momento espontáneo"
+  
+  file:
+    significance: 0.85
+    description: "Archivo = recurso útil/importante"
+
+# TELEGRAM TIMING PATTERNS
+temporal:
+  channel_reading_windows:
+    morning_commute: "07:00-09:00"
+    lunch_break: "12:00-14:00"
+    evening_relax: "19:00-22:00"
+  
+  significance:
+    channel_reading: 0.70  # Consumo pasivo
+    active_messaging: 0.85  # Envío activo = engagement
+
+# HYPERLINKS (Telegram-specific)
+hyperlinks:
+  enabled: true
+  expand_short_urls: true
+  
+  # Telegram = alta proporción de links (channels, forwards)
+  significance_boost: 1.5
+  
+  intent_inference:
+    channel_forward:
+      patterns: ["Forwarded from"]
+      confidence: 0.95
+      description: "Forward de channel = contenido curado"
+    
+    self_saved:
+      patterns: ["Saved Messages"]
+      confidence: 0.98
+      description: "Saved Messages = archivo personal"
+    
+    bot_generated:
+      patterns: ["@.*_bot"]
+      confidence: 0.80
+      description: "Link de bot = automatizado"
+  
+  # Telegram inline URLs
+  inline_buttons:
+    enabled: true
+    significance: 0.85
+    description: "Inline buttons = acción esperada"
+
+# TELEGRAM FORMAT PARSING
+format:
+  timestamp_pattern: "\\[(\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2})\\]"
+  sender_pattern: "([^\\n]+)\\n"
+  message_pattern: "\\n(.+)"
+  
+  # Telegram JSON export
+  json_export:
+    enabled: true
+    fields:
+      - "date"
+      - "from"
+      - "text"
+      - "media_type"
+      - "sticker_emoji"
+      - "forwarded_from"
+  
+  # Telegram system messages
+  system_messages:
+    - "joined Telegram"
+    - "created the group"
+    - "changed group photo"
+    - "pinned a message"
+
+# PERFORMANCE (Telegram JSON puede ser grande)
+performance:
+  batch_size: 300  # JSON más eficiente que text
+  parallel_extraction: true
+  cache_enabled: true
+  max_channel_messages: 100000  # Channels muy grandes
+
+# QUALITY THRESHOLDS
+quality:
+  min_message_length: 1  # Stickers cuenta como mensaje
+  min_confidence: 0.65   # Telegram data más estructurado que WhatsApp
+  skip_system_messages: true
+  parse_json_preferred: true

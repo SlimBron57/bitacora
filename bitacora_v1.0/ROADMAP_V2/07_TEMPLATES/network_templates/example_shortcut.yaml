@@ -1,0 +1,156 @@
+# 🔗 SHORTCUT TEMPLATE - Cerámica ↔ Química
+
+shortcut_id: "shortcut_ceramics_chemistry_001"
+version: "1.0.0"
+created_at: "2025-11-15T14:32:00Z"
+updated_at: "2025-11-23T10:15:00Z"
+
+# === BASIC INFO ===
+from_topic:
+  id: "topic_ceramics_techniques"
+  name: "Técnicas de Cerámica"
+  community: "community_arts_crafts"
+  
+to_topic:
+  id: "topic_molecular_chemistry"
+  name: "Química Molecular"
+  community: "community_chemistry_science"
+
+# === CONNECTION STRENGTH ===
+strength: 0.72  # 0-1, calculated from user interactions
+confidence: 0.85  # 0-1, how confident we are this is a useful shortcut
+surprise_factor: 0.89  # 0-1, how unexpected this connection is (high = serendipity)
+
+# === DISCOVERY CONTEXT ===
+discovery:
+  user_id: "eduardo"
+  timestamp: "2025-11-15T14:32:00Z"
+  trigger_event: "conversation"
+  conversation_snippet: |
+    Usuario: "¿Por qué algunos esmaltes quedan opacos y otros transparentes?"
+    Sistema: "Depende de la estructura molecular del vidrio formado durante la vitrificación..."
+    Usuario: "¡Ah! Entonces es química pura"
+    [SHORTCUT DETECTED: ceramics ↔ chemistry via "vitrification" bridge]
+
+# === SEMANTIC JUSTIFICATION ===
+semantic_bridges:
+  - concept: "vitrificación"
+    from_context: "Proceso de fusión del esmalte cerámico a alta temperatura"
+    to_context: "Formación de estructura vítrea mediante enlaces Si-O"
+    similarity_score: 0.91
+    
+  - concept: "óxidos metálicos"
+    from_context: "Pigmentos cerámicos (óxido de cobalto, óxido de hierro)"
+    to_context: "Química inorgánica de metales de transición"
+    similarity_score: 0.87
+    
+  - concept: "control de temperatura"
+    from_context: "Curvas de cocción en hornos cerámicos (cono 04, cono 6, etc.)"
+    to_context: "Energía de activación de reacciones químicas"
+    similarity_score: 0.73
+
+embeddings:
+  from_embedding: [0.23, 0.41, -0.12, 0.67, ...]  # MiniLM-L6-v2 384D (truncated)
+  to_embedding: [0.19, 0.38, -0.09, 0.71, ...]    # MiniLM-L6-v2 384D (truncated)
+  cosine_similarity: 0.72
+  
+keywords_overlap:
+  - "temperatura"
+  - "estructura"
+  - "transformación"
+  - "proceso"
+  - "composición"
+
+# === USAGE STATISTICS ===
+usage:
+  traversal_count: 3  # Cuántas veces el usuario ha usado este atajo
+  last_traversal: "2025-11-23T10:15:00Z"
+  contexts:
+    - timestamp: "2025-11-15T14:32:00Z"
+      query: "¿Por qué algunos esmaltes son opacos?"
+      outcome: "success"  # El atajo fue útil
+      
+    - timestamp: "2025-11-18T09:20:00Z"
+      query: "¿Cómo funciona la cristalización en esmaltes?"
+      outcome: "success"
+      
+    - timestamp: "2025-11-23T10:15:00Z"
+      query: "¿Puedo usar óxido de cobre en mi esmalte?"
+      outcome: "success"
+
+# === NETWORK IMPACT ===
+network_impact:
+  path_reduction: 8  # De 10 saltos → 2 saltos directos
+  original_path:
+    - "ceramics_techniques"
+    - "pottery_materials"
+    - "clay_mineralogy"
+    - "silicate_structures"
+    - "crystalline_solids"
+    - "material_science"
+    - "inorganic_compounds"
+    - "chemical_bonds"
+    - "molecular_structures"
+    - "molecular_chemistry"
+  
+  shortcut_path:
+    - "ceramics_techniques"
+    - "molecular_chemistry"
+  
+  efficiency_gain: 80%  # (10-2)/10 = 80% reducción en path length
+
+# === WEAK TIE CLASSIFICATION ===
+weak_tie_properties:
+  type: "cross_domain"  # Conexión entre dominios diferentes (artes ↔ ciencias)
+  granovetter_strength: "weak"  # Granovetter (1973): Weak ties → nueva información
+  information_novelty: 0.89  # Alta novedad (usuario descubre conexión inesperada)
+  bridge_communities: true  # Une dos comunidades distintas
+  structural_hole: true  # Llena un "agujero estructural" en la red
+
+# === LEARNING RECOMMENDATIONS ===
+learning_recommendations:
+  - topic: "glass_chemistry"
+    reason: "Profundizar en química del vidrio para entender mejor vitrificación"
+    priority: "high"
+    
+  - topic: "ceramic_glaze_calculation"
+    reason: "Aplicar conocimiento químico a cálculo de recetas de esmaltes"
+    priority: "medium"
+    
+  - topic: "material_science_fundamentals"
+    reason: "Puente conceptual entre cerámica y química"
+    priority: "medium"
+
+# === METADATA ===
+metadata:
+  algorithm: "cosine_similarity_detection"  # Cómo se detectó el shortcut
+  validation_method: "user_interaction"  # Usuario validó el atajo usándolo 3 veces
+  stability: "stable"  # "emerging", "stable", "deprecated"
+  quality_score: 0.82  # Overall quality (strength + confidence + usage)
+  
+  tags:
+    - "cross_domain"
+    - "serendipity"
+    - "arts_science_bridge"
+    - "practical_application"
+    
+  notes: |
+    Este shortcut es un excelente ejemplo de cómo el conocimiento artístico
+    (cerámica) se beneficia del entendimiento científico (química). El usuario
+    ha usado este atajo 3 veces con éxito, validando su utilidad. Se recomienda
+    mantenerlo como shortcut permanente y sugerir aprendizaje complementario
+    en "glass_chemistry" para profundizar la conexión.
+
+# === MONITORING ===
+monitoring:
+  next_review_date: "2025-12-24T00:00:00Z"  # Revisar cada mes
+  deprecation_threshold: 0.3  # Si strength < 0.3, considerar eliminar
+  auto_promote_threshold: 0.9  # Si quality_score > 0.9, promover en UI
+  
+  alerts:
+    - condition: "usage_count > 10"
+      action: "promote_to_permanent_shortcut"
+    - condition: "strength < 0.3"
+      action: "mark_for_review"
+    - condition: "last_traversal > 90_days"
+      action: "check_if_still_relevant"
